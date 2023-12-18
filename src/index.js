@@ -1,4 +1,9 @@
-const http = require("http");
+import http from "http";
+import { networkInterfaces } from 'os';
+
+const nets = networkInterfaces();
+const {address} = nets.wlan0[0]
+console.log(address)
 
 const PORT = 3000;
 
@@ -9,5 +14,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}.`);
+  console.log(`Server running at http://${address}:${PORT}.`);
 });
