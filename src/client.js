@@ -1,11 +1,11 @@
 import io from 'socket.io-client';
-import { CHANNEL_LED_PIN_STATE } from './utilities/constant.js';
-
-const buttonState = document.querySelector('.button-state');
-const toggleLedBtn = document.getElementById('toggle-led');
-let ledPinState = {};
+import { CHANNEL_LED_PIN_STATE, DEFAULT_LED_PIN_STATE } from './utilities/constant.js';
 
 const socket = io();
+const buttonState = document.querySelector('.button-state');
+const toggleLedBtn = document.getElementById('toggle-led');
+let ledPinState = DEFAULT_LED_PIN_STATE;
+
 socket.on('connect', () => {
   console.log('socket.on.connect');
 });

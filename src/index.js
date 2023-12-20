@@ -3,7 +3,7 @@ import { createServer } from 'node:http';
 import _gpio from 'rpi-gpio';
 import { Server } from 'socket.io';
 import { startClientServer } from './utilities/client-server.js';
-import { CHANNEL_LED_PIN_STATE } from './utilities/constant.js';
+import { CHANNEL_LED_PIN_STATE, DEFAULT_LED_PIN_STATE } from './utilities/constant.js';
 import { ipAddress } from './utilities/ipAddress.js';
 
 const app = express();
@@ -14,7 +14,7 @@ const { PORT = 3000 } = process.env;
 
 const gpiop = _gpio.promise
 const ledPinPos = 7;
-let ledPinState = { isOn: false }
+let ledPinState = DEFAULT_LED_PIN_STATE;
 
 try {
   await gpiop.setup(ledPinPos, gpiop.DIR_OUT)
