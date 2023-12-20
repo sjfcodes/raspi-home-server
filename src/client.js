@@ -1,25 +1,28 @@
 import io from 'socket.io-client';
+import { CHANNEL_LED_PIN_STATE } from './utilities/constant.js';
 
 const buttonState = document.querySelector('.button-state');
-const potState = document.querySelector('.pot-state');
-
-// Add in client-side socket.io code here.
+const toggleLedBtn = document.getElementById('toggle-led');
+let ledPinState = {};
 
 const socket = io();
 socket.on('connect', () => {
   console.log('socket.on.connect');
 });
 
-socket.on('button-down', (message) => {
-  console.log(message);
-  buttonState.textContent = message;
+socket.on(CHANNEL_LED_PIN_STATE, (newLedState) => {
+  console.log(CHANNEL_LED_PIN_STATE, newLedState)
+  ledPinState = newLedState;
+  buttonState.textContent = newLedState.isOn ? 'on' : 'off';
 });
-socket.on('button-up', (message) => {
-  console.log(message);
-  buttonState.textContent = message;
-});
-socket.on('pot', (value, raw) => {
-  console.log(value, raw);
-  potState.textContent = value;
-  document.body.style.backgroundColor = `rgb(${value}, ${value}, ${value})`;
-});
+
+toggleLedBtn.addEventListener('click', () => {
+  ledPinState.isOn = !ledPinState.isOn
+  socket.emit(CHANNEL_LED_PIN_STATE, ledPinState)
+})
+
+// socket.on('pot', (value, raw) => {
+//   console.log(value, raw);
+//   potState.textContent = value;
+//   document.body.style.backgroundColor = `rgb(${value}, ${value}, ${value})`;
+// });

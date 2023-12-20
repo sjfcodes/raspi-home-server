@@ -1,43 +1,50 @@
-import bodyParser from 'body-parser';
 import express from 'express';
-import http from 'http';
-// import five from 'johnny-five';
+import { createServer } from 'node:http';
+import _gpio from 'rpi-gpio';
 import { Server } from 'socket.io';
 import { startClientServer } from './utilities/client-server.js';
+import { CHANNEL_LED_PIN_STATE } from './utilities/constant.js';
 import { ipAddress } from './utilities/ipAddress.js';
 
 const app = express();
-const server = http.createServer(app);
+const server = createServer(app);
 const io = new Server(server);
+
 const { PORT = 3000 } = process.env;
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+const gpiop = _gpio.promise
+const ledPinPos = 7;
+let ledPinState = { isOn: false }
 
-// await createBoard({ repl: false });
-
-// const button = new five.Button(2);
-// const led = new five.Led(11);
-// const pot = new five.Sensor('A0');
-// pot.scale([0, 255]);
-
-app.get('/', (req, res) => {
-  res.status(200).send('helloWorld')
-})
+try {
+  await gpiop.setup(ledPinPos, gpiop.DIR_OUT)
+} catch (error) {
+  console.error(error)
+}
 
 io.on('connection', (socket) => {
-  console.log('connection');
-  // button.on('down', () => {
-  //   socket.emit('button-down', 'down');
-  // });
-  // button.on('up', () => {
-  //   socket.emit('button-up', 'up');
-  // });
+  // when user connects
+  console.log('io.on.connection');
+  // send current state to user
+  socket.emit(CHANNEL_LED_PIN_STATE, ledPinState)
 
-  // pot.on('change', () => {
-  //   console.log(pot.value.toFixed(0));
-  //   socket.emit('pot', pot.value.toFixed(0), pot.raw);
-  // });
+  // when user sends new state
+  socket.on(CHANNEL_LED_PIN_STATE, (newLedState) => {
+    console.log({ newLedState });
+    try {
+      gpiop.write(ledPinPos, newLedState.isOn);
+      // send new state to all users (including sender)
+      io.emit(CHANNEL_LED_PIN_STATE, newLedState);
+      ledPinState.isOn = newLedState.isOn
+    } catch (error) {
+      console.error(error)
+    }
+  })
+
+  // when user disconnects
+  socket.on('disconnect', () => {
+    console.log('socket.on.disconnect');
+  });
 });
 
 // Add in server-side socket.io code here.

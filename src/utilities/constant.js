@@ -1,0 +1,1 @@
+export const CHANNEL_LED_PIN_STATE = 'led-pin-state'
