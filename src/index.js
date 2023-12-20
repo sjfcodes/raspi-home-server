@@ -6,7 +6,6 @@ import { startClientServer } from './utilities/client-server.js';
 import { CHANNEL_LED_PIN_STATE, DEFAULT_LED_PIN_STATE } from './utilities/constant.js';
 import { ipAddress } from './utilities/ipAddress.js';
 
-
 const app = express();
 const server = createServer(app);
 const io = new Server(server);
@@ -14,6 +13,14 @@ const gpio4 = new DigitalOutput('GPIO4');
 
 const { PORT = 3000 } = process.env;
 let ledPinState = DEFAULT_LED_PIN_STATE;
+
+const turnOff = (pin) => {
+  pin.write(0)
+}
+
+const turnOn = (pin) => {
+  pin.write(1)
+}
 
 // user disconnect
 const onDisconnect = () => {
@@ -32,16 +39,23 @@ const onConnect = (socket) => {
 
 // user updates pin state
 const onUpdatePinState = (newLedState) => {
-  gpio4.write(newLedState.isOn ? 1 : 0);
+  (newLedState.isOn ? turnOn : turnOff)(gpio4);
   ledPinState.isOn = newLedState.isOn
   // send new state to all users (including sender)
   io.emit(CHANNEL_LED_PIN_STATE, ledPinState);
-  console.log('ledPinState:', ledPinState);
+  console.log(CHANNEL_LED_PIN_STATE, ledPinState);
 }
 
+turnOff(gpio4)
 io.on('connection', onConnect);
-
 server.listen(PORT, () => {
   console.log(`Server running at http://${ipAddress}:${PORT}.`);
   startClientServer();
 });
+
+['SIGINT', 'SIGTERM', 'SIGQUIT']
+  .forEach(signal => process.on(signal, () => {
+    turnOff(gpio4);
+    gpio4.destroy();
+    process.exit();
+  }));
