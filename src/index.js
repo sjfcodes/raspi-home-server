@@ -1,53 +1,45 @@
 import express from 'express';
 import { createServer } from 'node:http';
-import _gpio from 'rpi-gpio';
+import { DigitalOutput } from 'raspi-gpio';
 import { Server } from 'socket.io';
 import { startClientServer } from './utilities/client-server.js';
 import { CHANNEL_LED_PIN_STATE, DEFAULT_LED_PIN_STATE } from './utilities/constant.js';
 import { ipAddress } from './utilities/ipAddress.js';
 
+
 const app = express();
 const server = createServer(app);
 const io = new Server(server);
+const gpio4 = new DigitalOutput('GPIO4');
 
 const { PORT = 3000 } = process.env;
-
-const gpiop = _gpio.promise
-const ledPinPos = 7;
 let ledPinState = DEFAULT_LED_PIN_STATE;
 
-try {
-  await gpiop.setup(ledPinPos, gpiop.DIR_OUT)
-} catch (error) {
-  console.error(error)
+// user disconnect
+const onDisconnect = () => {
+  console.log('socket.on.disconnect');
 }
 
-io.on('connection', (socket) => {
-  // when user connects
+// user connect
+const onConnect = (socket) => {
   console.log('io.on.connection');
   // send current state to user
   socket.emit(CHANNEL_LED_PIN_STATE, ledPinState)
+  // listen for events from user
+  socket.on(CHANNEL_LED_PIN_STATE, onUpdatePinState)
+  socket.on('disconnect', onDisconnect);
+}
 
-  // when user sends new state
-  socket.on(CHANNEL_LED_PIN_STATE, (newLedState) => {
-    console.log({ newLedState });
-    try {
-      gpiop.write(ledPinPos, newLedState.isOn);
-      // send new state to all users (including sender)
-      io.emit(CHANNEL_LED_PIN_STATE, newLedState);
-      ledPinState.isOn = newLedState.isOn
-    } catch (error) {
-      console.error(error)
-    }
-  })
+// user updates pin state
+const onUpdatePinState = (newLedState) => {
+  gpio4.write(newLedState.isOn ? 1 : 0);
+  ledPinState.isOn = newLedState.isOn
+  // send new state to all users (including sender)
+  io.emit(CHANNEL_LED_PIN_STATE, ledPinState);
+  console.log('ledPinState:', ledPinState);
+}
 
-  // when user disconnects
-  socket.on('disconnect', () => {
-    console.log('socket.on.disconnect');
-  });
-});
-
-// Add in server-side socket.io code here.
+io.on('connection', onConnect);
 
 server.listen(PORT, () => {
   console.log(`Server running at http://${ipAddress}:${PORT}.`);
