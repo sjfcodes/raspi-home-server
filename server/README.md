@@ -14,6 +14,9 @@ $ sudo reboot
 $ sudo shutdown -h now
 # view pinout info
 $ pinout
+
+# download image from web
+$ curl https://elinux.org/images/c/cb/Raspberry_Pi_Logo.svg > raspberry_pi.svg
 ```
 
 With exception of power pins, pin 27, and pin 28, use any pin as regular GPIO pin.
