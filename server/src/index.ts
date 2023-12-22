@@ -1,3 +1,4 @@
+import bodyparser from "body-parser";
 import express from "express";
 import { createServer } from "node:http";
 import { DigitalOutput } from 'raspi-gpio';
@@ -7,6 +8,9 @@ import { CHANNEL_LED_PIN_STATE, DEFAULT_LED_PIN_STATE } from "./utils/constant";
 import { ipAddress } from "./utils/ipAddress";
 
 const app = express();
+app.use(bodyparser.urlencoded({ extended: true }))
+app.use(bodyparser.json())
+
 const server = createServer(app);
 const io = new Server(server);
 const gpio4 = new DigitalOutput('GPIO4');
@@ -48,7 +52,18 @@ const onUpdatePinState = (newLedState: LedState) => {
 
 io.on("connection", onConnect);
 
-app.get("/", (_, res) => res.status(200).send("raspi-home-server"));
+app.get("/", (req, res) => {
+  onUpdatePinState({ isOn: !ledPinState.isOn })
+  console.log('req.query', req.query)
+  res.status(200).send("GET:raspi-home-server")
+});
+app.post("/api/temperature", (req, res) => {
+  console.log('req.body', req.body)
+  res.status(200).send("success")
+});
+
+app.put("/", (_, res) => res.status(200).send("PUT:raspi-home-server"));
+app.patch("/", (_, res) => res.status(200).send("PATCH:raspi-home-server"));
 server.listen(PORT, () => {
   turnOff(gpio4);
   console.log(`Server running at http://${ipAddress}:${PORT}.`);
