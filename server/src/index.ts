@@ -2,7 +2,7 @@ import express from "express";
 import { createServer } from "node:http";
 import { DigitalOutput } from 'raspi-gpio';
 import { Server, Socket } from "socket.io";
-import { LedState } from "./types";
+import { LedState } from "../../types/main";
 import { CHANNEL_LED_PIN_STATE, DEFAULT_LED_PIN_STATE } from "./utils/constant";
 import { ipAddress } from "./utils/ipAddress";
 
