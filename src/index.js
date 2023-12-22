@@ -49,9 +49,9 @@ const onUpdatePinState = (newLedState) => {
   console.log(CHANNEL_LED_PIN_STATE, ledPinState);
 };
 
-turnOff(gpio4)
 io.on('connection', onConnect);
 server.listen(PORT, () => {
+  turnOff(gpio4);
   console.log(`Server running at http://${ipAddress}:${PORT}.`);
   startClientServer();
 });
