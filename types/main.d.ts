@@ -1,3 +1,4 @@
-export type LedState = {
-  isOn: boolean;
+export type PinState = {
+  isOn?: boolean;
+  tempF?: number;
 };

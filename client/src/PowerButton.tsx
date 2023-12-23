@@ -4,16 +4,15 @@ import { socket } from "./utils/socket";
 
 
 export default function PowerButton() {
-    const [ledState, setLedState] = useState(DEFAULT_LED_PIN_STATE)
+    const [pinState, setPinState] = useState(DEFAULT_LED_PIN_STATE)
 
     useEffect(() => {
-        socket.on(CHANNEL_LED_PIN_STATE, setLedState);
+        socket.on(CHANNEL_LED_PIN_STATE, setPinState);
     }, [])
 
     const onClick = () => {
-        setLedState((curr) => {
-            const newState = { ...curr, isOn: !curr.isOn }
-            console.log('socket.on.' + CHANNEL_LED_PIN_STATE, newState)
+        setPinState((curr) => {
+            const newState = { ...curr, isOn: !curr.isOn }                  
             socket.emit(CHANNEL_LED_PIN_STATE, newState)
 
             return newState
@@ -21,8 +20,11 @@ export default function PowerButton() {
     }
 
     return (
-        <button className={`background-${ledState.isOn ? 'on' : 'off'}`} onClick={onClick}>
-            led is {ledState.isOn ? 'on' : 'off'}
-        </button>
+        <>
+            <h2>Temp: {pinState.tempF}</h2>
+            <button className={`background-${pinState.isOn ? 'on' : 'off'}`} onClick={onClick}>
+                led is {pinState.isOn ? 'on' : 'off'}
+            </button>
+        </>
     )
 }

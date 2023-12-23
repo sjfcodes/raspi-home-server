@@ -3,7 +3,7 @@ import express from "express";
 import { createServer } from "node:http";
 import { DigitalOutput } from 'raspi-gpio';
 import { Server, Socket } from "socket.io";
-import { LedState } from "../../types/main";
+import { PinState } from "../../types/main";
 import { CHANNEL_LED_PIN_STATE, DEFAULT_LED_PIN_STATE } from "./utils/constant";
 import { ipAddress } from "./utils/ipAddress";
 
@@ -42,9 +42,9 @@ const onConnect = (socket: Socket) => {
 };
 
 // user updates pin state
-const onUpdatePinState = (newLedState: LedState) => {
-  (newLedState.isOn ? turnOn : turnOff)(gpio4);
-  ledPinState.isOn = newLedState.isOn;
+const onUpdatePinState = (newPinState: PinState) => {
+  (newPinState.isOn ? turnOn : turnOff)(gpio4);
+  ledPinState = newPinState;
   // send new state to all users (including sender)
   io.emit(CHANNEL_LED_PIN_STATE, ledPinState);
   console.log(CHANNEL_LED_PIN_STATE, ledPinState);
@@ -54,12 +54,14 @@ io.on("connection", onConnect);
 
 app.get("/", (req, res) => {
   onUpdatePinState({ isOn: !ledPinState.isOn })
-  console.log('req.query', req.query)
-  res.status(200).send("GET:raspi-home-server")
+  console.log(new Date().toISOString() + ': ', JSON.stringify(req.query))
+  res.status(200).send({ ...req.query, serverName: "raspi-home-server" })
 });
+
 app.post("/api/temperature", (req, res) => {
-  console.log('req.body', req.body)
-  res.status(200).send("success")
+  onUpdatePinState({ isOn: !ledPinState.isOn, tempF: req.body.tempF })
+  console.log(new Date().toISOString() + ': ', req.body)
+  res.status(200).send({ ...req.body, serverName: "raspi-home-server" })
 });
 
 app.put("/", (_, res) => res.status(200).send("PUT:raspi-home-server"));
