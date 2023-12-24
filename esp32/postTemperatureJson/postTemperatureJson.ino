@@ -25,30 +25,6 @@ void connectToWifi() {
   Serial.println(WiFi.localIP());
 }
 
-void post() {
-  // Prepare JSON document
-  DynamicJsonDocument doc(2048);
-  doc["clientName"] = "esp32";
-
-  // Serialize JSON document
-  String json;
-  serializeJson(doc, json);
-
-  WiFiClient client;  // or WiFiClientSecure for HTTPS
-  HTTPClient http;
-
-  // Send request
-  http.begin(client, "http://192.168.68.142:3000/api/temperature");
-  http.addHeader("Content-Type", "application/json");
-  http.POST(json);
-
-  // Read response
-  Serial.println(http.getString());
-
-  // Disconnect
-  http.end();
-}
-
 float average(int* array, int len) {  // assuming array is int.
   long sum = 0L;                      // sum will be larger than an item, long for safety.
   for (int i = 0; i < len; i++)
@@ -58,7 +34,6 @@ float average(int* array, int len) {  // assuming array is int.
 
 int getTemperature(int pin) {
   tempVal = analogRead(pin);
-  Serial.println("GPIO" + String(pin) + ": " + String(tempVal));
 
   int reads = 1000;
   int tempVals[reads];
@@ -88,10 +63,8 @@ int getTemperature(int pin) {
 }
 
 void httpPost(int tempF) {
-  //get chip id
+  // get chip id
   String chipId = String((uint32_t)ESP.getEfuseMac(), HEX);
-  // chipId.toUpperCase();
-  // Serial.printf("Chip id: %s\n", chipId.c_str());
 
   // Prepare JSON document
   DynamicJsonDocument doc(2048);
@@ -127,8 +100,7 @@ void setup() {
 void loop() {
   if ((WiFi.status() == WL_CONNECTED)) {
     int tempF = getTemperature(tempPin);
-    Serial.println("TempF : " + String(tempF));
-
+    Serial.println("TempF: " + String(tempF));
     httpPost(tempF);
   } else {
     Serial.println("onffline");
