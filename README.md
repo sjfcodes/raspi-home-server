@@ -20,3 +20,6 @@ pm2 reload pm2.config.js --env development
 # Delete all
 pm2 delete pm2.config.js --env development
 ```
+
+[To enable autostart node apps on reboot](https://pm2.keymetrics.io/docs/usage/startup/)
+Needed to use sudo for the scripts to get to work

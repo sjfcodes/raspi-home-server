@@ -47,7 +47,7 @@ const onConnect = (socket: Socket) => {
 io.on("connection", onConnect);
 
 app.post("/api/temperature", (req, res) => {
-  console.log("POST ", new Date().toISOString() + ": ", req.body);
+  console.log("POST: ", req.body);
   if (req.body) setEsp32Client(req.body, io);
   res.status(200).send({ ...req.body, serverName: "raspi-home-server" });
 });
