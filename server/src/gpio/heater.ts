@@ -1,5 +1,5 @@
 import { DigitalOutput } from "raspi-gpio";
-import { Server } from "socket.io";
+import { Server, Socket } from "socket.io";
 import { CHANNEL, HEATER_GPIO_DEFAULT_STATE } from "../../../constant/constant";
 import { HeaterGpioState } from "../../../types/main";
 
@@ -15,7 +15,7 @@ export const heaterGpioOn = () => {
 };
 
 // user updates pin state
-export const setHeaterGpioState = (newState: HeaterGpioState, io: Server) => {
+export const setHeaterGpioState = (newState: HeaterGpioState, io?: Server, socket?: Socket) => {
     if (newState === undefined) {
         console.error(new Error('newState must be defined'))
         return;
@@ -23,7 +23,10 @@ export const setHeaterGpioState = (newState: HeaterGpioState, io: Server) => {
 
     (newState.isOn ? heaterGpioOn : heaterGpioOff)();
     heaterGpioState = newState;
-    // send new state to all users (including sender)
-    io.emit(CHANNEL.HEATER_GPIO_0, heaterGpioState);
+    if (socket) {
+        socket.broadcast.emit(CHANNEL.HEATER_GPIO_0, heaterGpioState);
+    } else if (io) {
+        io.emit(CHANNEL.HEATER_GPIO_0, heaterGpioState);
+    }
     console.log("EMIT: ", CHANNEL.HEATER_GPIO_0, JSON.stringify(heaterGpioState));
 };
