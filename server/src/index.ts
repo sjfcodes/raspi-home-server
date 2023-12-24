@@ -46,7 +46,7 @@ const setGpioHeaterPinState = (newState: GpioHeaterPinState) => {
   console.log("EMIT: ", CHANNEL.GPIO_HEATER_0, JSON.stringify(gpioHeaterPinState));
 };
 
-const setEsp32Client = (client: Esp32Client) => {
+const setEsp32Client = (client: Esp32Client, socket?: Socket) => {
   if (client === undefined) {
     console.error(new Error('client must be defined'))
     return;
@@ -64,8 +64,13 @@ const setEsp32Client = (client: Esp32Client) => {
     updatedAt: new Date().toLocaleTimeString()
   }
 
-  // send new state to all users (including sender)
-  io.emit(CHANNEL.ESP32_TEMP_CLIENT_MAP, clientMap);
+  if (socket) {
+    socket.broadcast.emit(CHANNEL.ESP32_TEMP_CLIENT_MAP, clientMap);
+  } else {
+    // send new state to all users (including sender)
+    io.emit(CHANNEL.ESP32_TEMP_CLIENT_MAP, clientMap);
+  }
+
   console.log("EMIT: ", CHANNEL.GPIO_HEATER_0, JSON.stringify(clientMap));
 }
 
@@ -74,10 +79,13 @@ const onConnect = (socket: Socket) => {
   console.log("io.on.connection");
   // send current state to user
   socket.emit(CHANNEL.GPIO_HEATER_0, gpioHeaterPinState);
-  socket.broadcast.emit(CHANNEL.GPIO_HEATER_0, gpioHeaterPinState);
+
+  // broadcast update to other users if needed
+  // socket.broadcast.emit(CHANNEL.GPIO_HEATER_0, gpioHeaterPinState);
+  
   // listen for events from user
   socket.on(CHANNEL.GPIO_HEATER_0, setGpioHeaterPinState);
-  socket.on(CHANNEL.ESP32_TEMP_CLIENT_MAP, setEsp32Client);
+  socket.on(CHANNEL.ESP32_TEMP_CLIENT_MAP, (newState: Esp32Client) => setEsp32Client(newState, socket));
   socket.on("disconnect", onDisconnect);
 };
 

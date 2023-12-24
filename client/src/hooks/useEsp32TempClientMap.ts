@@ -8,7 +8,7 @@ export default function useEsp32TempClientMap() {
 
     useEffect(() => {
         socket.on(CHANNEL.ESP32_TEMP_CLIENT_MAP, (newState: Esp32ClientMap) => {
-            console.log('in :', newState)
+            // console.log('in :', newState)
             setEsp32TempClientMap(newState);
         });
     }, [])
