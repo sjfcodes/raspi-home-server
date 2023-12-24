@@ -1,19 +1,13 @@
-export type AppState = {
-  client: ThermostatState;
-  ledPinState: PinState;
+export type Esp32ClientMap = {
+  [key: string]: Esp32Client;
 }
 
-export type PinState = {
+export type GpioHeaterPinState = {
   isOn?: boolean;
 };
 
-
-export type ThermostatState = {
-  [ket: string]: Thermostat
-}
-
-export type Thermostat = {
+export type Esp32Client = {
   clientName: string;
-  tempF: string;
+  tempF: number;
   updatedAt: string;
 }

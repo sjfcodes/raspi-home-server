@@ -1,4 +1,5 @@
 import './App.css';
+import Esp32TempClients from './Esp32TempClients';
 import PowerButton from './PowerButton';
 import SocketStatus from './SocketStatus';
 import raspberryPiLogo from '/raspberry_pi.svg';
@@ -15,6 +16,9 @@ function App() {
           <SocketStatus />
         </h1>
       </div>
+      <div className="card">
+        <Esp32TempClients />
+      </div >
       <div className="card">
         <PowerButton />
       </div >
