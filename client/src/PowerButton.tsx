@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react";
-import { CHANNEL_LED_PIN_STATE, DEFAULT_LED_PIN_STATE } from "./utils/constant";
+import { CHANNEL_LED_PIN_STATE, DEFAULT_APP_STATE } from "./utils/constant";
 import { socket } from "./utils/socket";
 
 
 export default function PowerButton() {
-    const [pinState, setPinState] = useState(DEFAULT_LED_PIN_STATE)
+    const [appState, setAppState] = useState(DEFAULT_APP_STATE)
 
     useEffect(() => {
-        socket.on(CHANNEL_LED_PIN_STATE, setPinState);
+        socket.on(CHANNEL_LED_PIN_STATE, (state) => {
+            // console.log(state)
+            setAppState(state)
+        });
     }, [])
 
     const onClick = () => {
-        setPinState((curr) => {
-            const newState = { ...curr, isOn: !curr.isOn }                  
+        setAppState((curr) => {
+            const newState = { ...curr, ledPinState: { isOn: !curr.ledPinState?.isOn } }
+            // console.log(newState)
             socket.emit(CHANNEL_LED_PIN_STATE, newState)
 
             return newState
@@ -21,9 +25,11 @@ export default function PowerButton() {
 
     return (
         <>
-            <h2>Temp: {pinState.tempF}</h2>
-            <button className={`background-${pinState.isOn ? 'on' : 'off'}`} onClick={onClick}>
-                led is {pinState.isOn ? 'on' : 'off'}
+            <div>
+                <textarea style={{ width: '300px' }} rows={12} value={JSON.stringify(appState, null, 2)} onChange={() => null} />
+            </div>
+            <button className={`background-${appState?.ledPinState?.isOn ? 'on' : 'off'}`} onClick={onClick}>
+                led is {appState?.ledPinState?.isOn ? 'on' : 'off'}
             </button>
         </>
     )

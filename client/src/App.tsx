@@ -1,9 +1,7 @@
 import './App.css';
 import PowerButton from './PowerButton';
 import SocketStatus from './SocketStatus';
-import reactLogo from './assets/react.svg';
 import raspberryPiLogo from '/raspberry_pi.svg';
-import viteLogo from '/vite.svg';
 
 function App() {
 
@@ -20,7 +18,7 @@ function App() {
       <div className="card">
         <PowerButton />
       </div >
-      <hr />
+      {/* <hr />
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -29,7 +27,7 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React + Pi</h1>
+      <h1>Vite + React + Pi</h1> */}
     </>
   )
 }
