@@ -10,8 +10,8 @@ float volts;             // variable for storing voltage
 float tempC;             // actual temperature variable
 
 void connectToWifi() {
-  const char* ssid = "";
-  const char* password = "";
+  const char* ssid = "new-new-internet";
+  const char* password = "mileymo19";
   WiFi.begin(ssid, password);
   Serial.print("Connecting to WiFi");
 
@@ -23,62 +23,6 @@ void connectToWifi() {
   Serial.println("\nConnected");
   Serial.print("ip address: ");
   Serial.println(WiFi.localIP());
-}
-
-void get() {
-  long rnd = random(1, 10);
-  HTTPClient client;
-  client.begin("http://192.168.68.142:3000/?rnd=" + String(rnd));
-  int httpCode = client.GET();
-
-  if (httpCode > 0) {
-    String payload = client.getString();
-    Serial.println("\nhttpCode: " + String(httpCode));
-    Serial.println(payload);
-
-    // parse JSON
-    JSONVar parsed = JSON.parse(payload);
-
-    // JSON.typeof(jsonVar) can be used to get the type of the variable
-    if (JSON.typeof(parsed) == "undefined") {
-      Serial.println("Parsing payload failed!");
-      return;
-    }
-
-    // JSONVars can be printed using print or println
-    Serial.println(parsed);
-
-    if (parsed.hasOwnProperty("serverName")) {
-      Serial.print("parsed[\"serverName\"] = ");
-      Serial.println((const char*)parsed["serverName"]);
-    }
-
-    if (parsed.hasOwnProperty("rnd")) {
-      Serial.print("parsed[\"rnd\"] = ");
-      // Serial.println((int)parsed["rnd"]); // [QUESTION]: what is int, why did it always print 0 ?
-      // Serial.println((double)parsed["rnd"]); // printed nan ?
-      Serial.println((const char*)parsed["rnd"]);
-    }
-
-  } else {
-    Serial.println("Error on HTTP request!");
-  }
-}
-
-void get2() {
-  WiFiClient client;  // or WiFiClientSecure for HTTPS
-  HTTPClient http;
-  long rnd = random(1, 10);
-
-  // Send request
-  http.begin(client, "http://192.168.68.142:3000/?rnd=" + String(rnd));
-  http.GET();
-
-  // Print the response
-  Serial.print(http.getString());
-
-  // Disconnect
-  http.end();
 }
 
 void post() {
@@ -125,14 +69,15 @@ int getTemperature(int pin) {
     // delay(10);
   }
 
+  // How to print an array of items
   // Serial.print("GPIO" + String(pin) + ": [ ");
   // for (int i = 0; i < reads; i++) {
   //   Serial.print(String(tempVals[i]) + ", ");
   // }
   // Serial.println(" ]");
 
-  float avgTemp = average(tempVals, reads);
-  Serial.println("avgTemp: " + String(avgTemp));
+  float averageRead = average(tempVals, reads);
+  Serial.println("averageRead: " + String(averageRead));
 
   volts = tempVal / 1023.0;                  // normalize by the maximum temperature raw reading range
   tempC = (volts - 0.5) * 100;               // calculate temperature celsius from voltage as per the equation found on the sensor spec sheet.
@@ -143,10 +88,15 @@ int getTemperature(int pin) {
 }
 
 void httpPost(int tempF) {
-  // JSON
+  //get chip id
+  String chipId = String((uint32_t)ESP.getEfuseMac(), HEX);
+  // chipId.toUpperCase();
+  // Serial.printf("Chip id: %s\n", chipId.c_str());
+
   // Prepare JSON document
   DynamicJsonDocument doc(2048);
-  doc["clientName"] = "esp32";
+  doc["chipName"] = "esp32";
+  doc["chipId"] = chipId.c_str();
   doc["tempF"] = tempF;
 
   // Serialize JSON document
@@ -176,9 +126,6 @@ void setup() {
 
 void loop() {
   if ((WiFi.status() == WL_CONNECTED)) {
-    // get();
-    // get2();
-    // post();
     int tempF = getTemperature(tempPin);
     Serial.println("TempF : " + String(tempF));
 
