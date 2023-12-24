@@ -2,7 +2,7 @@ export type Esp32ClientMap = {
   [key: string]: Esp32Client;
 }
 
-export type GpioHeaterPinState = {
+export type HeaterGpioState = {
   isOn?: boolean;
 };
 
