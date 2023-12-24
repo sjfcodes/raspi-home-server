@@ -5,5 +5,4 @@ export const CHANNEL = {
     ESP32_TEMP_CLIENT_MAP: "esp32-temp-0"
 };
 export const GPIO_HEATER_DEFAULT_STATE: GpioHeaterPinState = { isOn: false };
-export const ESP32_TEMP_DEFAULT_STATE: Esp32Client = { clientName: 'offline', tempF: 0, updatedAt: '' };
-
+export const ESP32_TEMP_DEFAULT_STATE: Esp32Client = { chipName: 'offline', chipId: '', tempF: 0, updatedAt: '' };

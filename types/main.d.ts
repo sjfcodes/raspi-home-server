@@ -7,7 +7,8 @@ export type GpioHeaterPinState = {
 };
 
 export type Esp32Client = {
-  clientName: string;
+  chipName: string;
+  chipId: string;
   tempF: number;
   updatedAt: string;
 }
