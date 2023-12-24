@@ -52,14 +52,15 @@ const setEsp32Client = (client: Esp32Client) => {
     return;
   }
 
-  if (!client.clientName) {
-    console.error(new Error('client.clientName must be defined'))
+  if (!client.chipId) {
+    console.error(new Error('client.chipId must be defined'))
     return;
   }
 
-  clientMap[client.clientName as string] = {
+  clientMap[client.chipId as string] = {
+    chipId: client?.chipId,
+    chipName: client?.chipName,
     tempF: client?.tempF || 0,
-    clientName: client?.clientName,
     updatedAt: new Date().toLocaleTimeString()
   }
 
