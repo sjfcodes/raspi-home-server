@@ -28,5 +28,5 @@ export const setEsp32Client = (client: Esp32Client, io?: Server, socket?: Socket
         io.emit(CHANNEL.ESP32_TEMP_CLIENT_MAP, clientMap);
     }
 
-    console.log("EMIT: ", CHANNEL.HEATER_GPIO_0, JSON.stringify(clientMap));
+    console.log("EMIT: ", CHANNEL.ESP32_TEMP_CLIENT_MAP, JSON.stringify(clientMap));
 };

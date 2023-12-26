@@ -12,3 +12,10 @@ export type Esp32Client = {
   tempF: number;
   updatedAt: string;
 }
+
+export type PiTemp = {
+  tempC: number;
+  tempF: number;
+  message: string;
+  updatedAt: string;
+}

@@ -12,6 +12,7 @@ import {
   heaterGpioState,
   setHeaterGpioState,
 } from "./gpio/heater";
+import { emitPiTemp } from "./pi/temperature";
 import { ipAddress } from "./utils/ipAddress";
 
 const app = express();
@@ -54,6 +55,7 @@ app.post("/api/temperature", (req, res) => {
 
 server.listen(PORT, () => {
   heaterGpioOff();
+  setInterval(emitPiTemp, 1000)
   console.log(`Server running at http://${ipAddress}:${PORT}.`);
 });
 
