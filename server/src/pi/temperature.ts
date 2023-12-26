@@ -1,10 +1,10 @@
 import { readFileSync } from "node:fs";
-import { Server, Socket } from "socket.io";
+import { Server } from "socket.io";
 import { CHANNEL } from "../../../constant/constant";
 import { PiTemp } from "../../../types/main";
 
 
-export const emitPiTemp = (io?: Server, socket?: Socket) => {
+export const emitPiTemp = (io: Server) => {
     const temp = Number(readFileSync("/sys/class/thermal/thermal_zone0/temp", { encoding: 'utf8' }));
     const data = {
         tempC: 0,
@@ -21,9 +21,7 @@ export const emitPiTemp = (io?: Server, socket?: Socket) => {
         data.message = 'ok';
     }
 
-    if (socket) {
-        socket.broadcast.emit(CHANNEL.PI_TEMP, data);
-    } else if (io) {
+    if (io) {
         io.emit(CHANNEL.PI_TEMP, data);
     }
 

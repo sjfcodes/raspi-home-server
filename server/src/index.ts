@@ -55,7 +55,7 @@ app.post("/api/temperature", (req, res) => {
 
 server.listen(PORT, () => {
   heaterGpioOff();
-  setInterval(emitPiTemp, 1000)
+  setInterval(() => emitPiTemp(io), 1000)
   console.log(`Server running at http://${ipAddress}:${PORT}.`);
 });
 
