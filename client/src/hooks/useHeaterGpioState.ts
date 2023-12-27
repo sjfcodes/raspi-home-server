@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { CHANNEL, HEATER_GPIO_DEFAULT_STATE } from "../../../constant/constant";
-import { HeaterGpioState } from "../../../types/main";
+import { CHANNEL, HEATER_GPIO_DEFAULT_STATE, HEATER_OVERRIDE } from "../../../constant/constant";
+import { HeaterGpioState, HeaterManualOverride } from "../../../types/main";
 import { socket } from "../utils/socket";
 
 export default function useHeaterGpioState() {
@@ -22,5 +22,23 @@ export default function useHeaterGpioState() {
         })
     }
 
-    return { heaterGpio, togglePin }
+    const setRestUntil = (mins: number | null) => {
+        let manualOverride: HeaterManualOverride | null = null;
+        if (typeof mins === 'number' && mins > 0) {
+
+            manualOverride = {
+                status: HEATER_OVERRIDE.OFF,
+                expireAt: new Date(((60 * mins) * 1000) + Date.now()).toISOString()
+            }
+        }
+
+        setHeaterGpio((curr) => {
+            const newState: HeaterGpioState = { ...curr, manualOverride }
+            console.log('out:', newState)
+            socket.emit(CHANNEL.HEATER_GPIO_0, newState)
+            return newState
+        })
+    }
+
+    return { heaterGpio, togglePin, setRestUntil }
 }
