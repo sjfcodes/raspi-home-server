@@ -1,7 +1,7 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  text-align: center;
+  /* text-align: center; */
 }
 
 .logo {
@@ -37,6 +37,21 @@
   margin: 0;
 }
 
-.read-the-docs {
-  color: #888;
+.text-on {
+  color: green;
+}
+.text-off {
+  color: red;
+}
+.background-on {
+  color: white;
+  background-color: green;
+}
+.background-off {
+  color: white;
+  background-color: #1a1a1a;
+}
+
+textarea {
+  width: 375px;
 }

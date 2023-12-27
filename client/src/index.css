@@ -30,10 +30,6 @@ body {
   min-height: 100vh;
 }
 
-textarea {
-  width: 375px;
-}
-
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -50,21 +46,6 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
-
-.text-on {
-  color: green;
-}
-.text-off {
-  color: red;
-}
-.background-on {
-  color: white;
-  background-color: green;
-}
-.background-off {
-  color: white;
-  background-color: #1a1a1a;
 }
 
 @media (prefers-color-scheme: light) {

@@ -1,8 +1,9 @@
 import './App.css';
-import Esp32TempClients from './Esp32TempClients';
-import PiTemp from './PiTemp';
-import PowerButton from './PowerButton';
 import SocketStatus from './SocketStatus';
+import Esp32TempClients from './components/Esp32TempClients';
+import GpioHeaterState from './components/GpioHeaterState';
+import OverrideButtons from './components/OverrideButtons';
+import PiTemp from './components/PiTemp';
 import raspberryPiLogo from '/raspberry_pi.svg';
 
 function App() {
@@ -17,15 +18,12 @@ function App() {
           <SocketStatus />
         </h2>
       </div>
-      <div className="card">
+      <div>
         <PiTemp />
-      </div >
-      <div className="card">
         <Esp32TempClients />
-      </div >
-      <div className="card">
-        <PowerButton />
-      </div >
+        <GpioHeaterState />
+        <OverrideButtons />
+      </div>
     </>
   )
 }
