@@ -13,6 +13,7 @@ import {
   setHeaterGpioOn,
   setHeaterGpioState
 } from "./gpio/heater";
+import { getLogs, writeLog } from "./logs/logger";
 import { setPiTemp } from "./pi/temperature";
 import { roomTempState, setRoomTempState } from "./room/temperature";
 import { ipAddress } from "./utils/ipAddress";
@@ -32,6 +33,7 @@ const LOOP_MS = 10000;
 setInterval(() => {
   // esp32 board id for living room is "abe342a8"
   const curTemp = clientMapState?.abe342a8?.tempF + clientMapState?.abe342a8?.calibrate;
+  writeLog(`current temp is ${curTemp}`, io);
 
   // if current temp is below min
   const shouldTurnOn = curTemp <= roomTempState.min;
@@ -68,6 +70,8 @@ const onConnect = (socket: Socket) => {
   socket.on(CHANNEL.ROOM_TEMP, (newState: RoomTempState) =>
     setRoomTempState(newState, undefined, socket)
   );
+
+  socket.emit(CHANNEL.LOG_STREAM, getLogs());
 
   socket.on("disconnect", onDisconnect);
 };

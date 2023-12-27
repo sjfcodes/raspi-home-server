@@ -2,6 +2,7 @@ import { DigitalOutput } from "raspi-gpio";
 import { Server, Socket } from "socket.io";
 import { CHANNEL, HEATER_GPIO_DEFAULT_STATE, HEATER_OVERRIDE } from "../../../constant/constant";
 import { HeaterGpioState, HeaterManualOverride } from "../../../types/main";
+import { writeLog } from "../logs/logger";
 import { emitStateUpdate } from "../websocket/emit";
 
 export const heaterGpio = new DigitalOutput("GPIO4");
@@ -16,6 +17,7 @@ export const setHeaterGpioOff = (io?: Server, socket?: Socket) => {
     heaterGpio.write(0);
     heaterGpioState.isOn = false;
     emitStateUpdate(CHANNEL.HEATER_GPIO_0, heaterGpioState, io, socket);
+    writeLog('heater off', io, socket);
 };
 
 export const setHeaterGpioOn = (io?: Server, socket?: Socket) => {
@@ -27,6 +29,7 @@ export const setHeaterGpioOn = (io?: Server, socket?: Socket) => {
     heaterGpio.write(1);
     heaterGpioState.isOn = true;
     emitStateUpdate(CHANNEL.HEATER_GPIO_0, heaterGpioState, io, socket);
+    writeLog('heater on', io, socket);
 };
 
 let timeout: NodeJS.Timeout;

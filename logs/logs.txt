@@ -1,0 +1,22 @@
+
+2023-12-27T09:11:43.314Z: current temp is 66
+2023-12-27T09:11:53.313Z: current temp is 66
+2023-12-27T09:12:03.313Z: current temp is 66
+2023-12-27T09:12:13.313Z: current temp is 66
+2023-12-27T09:17:37.274Z: current temp is 67
+2023-12-27T09:17:47.274Z: current temp is 67
+2023-12-27T09:17:57.274Z: current temp is 67
+2023-12-27T09:18:07.274Z: current temp is 67
+2023-12-27T09:18:17.274Z: current temp is 67
+2023-12-27T09:18:27.274Z: current temp is 67
+2023-12-27T09:18:37.277Z: current temp is 67
+2023-12-27T09:18:47.277Z: current temp is 67
+2023-12-27T09:18:57.278Z: current temp is 67
+2023-12-27T09:19:07.281Z: current temp is 67
+2023-12-27T09:19:17.281Z: current temp is 67
+2023-12-27T09:19:27.283Z: current temp is 67
+2023-12-27T09:19:37.285Z: current temp is 67
+2023-12-27T09:19:47.286Z: current temp is 67
+2023-12-27T09:19:57.287Z: current temp is 67
+2023-12-27T09:20:07.289Z: current temp is 67
+2023-12-27T09:20:17.289Z: current temp is 67

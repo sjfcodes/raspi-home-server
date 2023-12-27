@@ -10,7 +10,7 @@ export default function Card({ label, content, toggle = true, showContent: _init
     return (
         <div className="card">
             <h2 onClick={toggleContent}>{label}</h2>
-            {showContent ? content : null}
+            {showContent ? content : <br />}
         </div>
     )
 }

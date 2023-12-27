@@ -2,6 +2,7 @@ import './App.css';
 import SocketStatus from './SocketStatus';
 import Esp32TempClients from './components/Esp32TempClients';
 import GpioHeaterState from './components/GpioHeaterState';
+import LogStream from './components/LogStream';
 import OverrideButtons from './components/OverrideButtons';
 import PiTemp from './components/PiTemp';
 import RoomTemp from './components/RoomTemp';
@@ -10,7 +11,7 @@ import raspberryPiLogo from '/raspberry_pi.svg';
 function App() {
   return (
     <>
-      <div style={{ display: 'flex' }} >
+      <div style={{ display: 'flex', alignItems: 'center' }} >
         <a href="https://react.dev" target="_blank">
           <img src={raspberryPiLogo} className="logo" alt="Raspbery Pi logo" />
         </a>
@@ -18,11 +19,13 @@ function App() {
           <SocketStatus />
         </h2>
       </div>
+      <hr />
       <div>
         <Esp32TempClients />
         <RoomTemp />
         <GpioHeaterState />
         <OverrideButtons />
+        <LogStream />
         <PiTemp />
       </div>
     </>

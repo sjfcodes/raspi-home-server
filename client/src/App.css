@@ -6,7 +6,7 @@
 
 .logo {
   height: 3em;
-  padding: 1em;
+  padding: .5em .5em 0 .5em;
   will-change: filter;
   transition: filter 300ms;
 }
@@ -33,7 +33,7 @@
   }
 }
 
-.card > div > h2 {
+h1, h2 {
   margin: 0;
 }
 
@@ -53,5 +53,13 @@
 }
 
 textarea {
-  width: 375px;
+  width: 400px;
+}
+
+@media only screen and (max-width: 600px) {
+  #root {
+    /* background-color: lightblue; */
+    width: 100%;
+    margin: 0;
+  }
 }

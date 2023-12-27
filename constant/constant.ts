@@ -4,7 +4,8 @@ export enum CHANNEL {
     HEATER_GPIO_0 = "gpio-heater-0",
     ESP32_TEMP_CLIENT_MAP = "esp32-temp-0",
     PI_TEMP = "pi-temp-0",
-    ROOM_TEMP = 'target-temp-0'
+    ROOM_TEMP = 'target-temp-0',
+    LOG_STREAM = 'log-stream-0',
 };
 
 export enum HEATER_OVERRIDE {
