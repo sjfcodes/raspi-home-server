@@ -36,8 +36,10 @@ export default function PowerButton() {
                     onChange={() => null}
                 />
             </div>
-            <h2>Set override (minutes)</h2>
-            {controlButtons}
+            <div>
+                <h2>Set override (minutes)</h2>
+                {controlButtons}
+            </div>
         </>
     );
 }

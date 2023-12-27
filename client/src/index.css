@@ -30,13 +30,8 @@ body {
   min-height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
 textarea {
-  width: 500px;
+  width: 375px;
 }
 
 button {
