@@ -8,6 +8,6 @@ export default function PiTemp() {
     const percentage = (piTemp.tempF / 185) * 100
 
     return (
-        <Card label={`Pi Temp: ${piTemp.tempF}℉ (${percentage.toFixed(0)}%)`} content={<textarea rows={6} value={JSON.stringify(piTemp, null, 4)} onChange={() => null} />} />
+        <Card label={`Pi Temp: ${piTemp.tempF}℉ (${percentage.toFixed(0)}%)`} showContent={false} content={<textarea rows={6} value={JSON.stringify(piTemp, null, 4)} onChange={() => null} />} />
     )
 }

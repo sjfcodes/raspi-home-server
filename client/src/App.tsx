@@ -4,10 +4,10 @@ import Esp32TempClients from './components/Esp32TempClients';
 import GpioHeaterState from './components/GpioHeaterState';
 import OverrideButtons from './components/OverrideButtons';
 import PiTemp from './components/PiTemp';
+import RoomTemp from './components/RoomTemp';
 import raspberryPiLogo from '/raspberry_pi.svg';
 
 function App() {
-
   return (
     <>
       <div style={{ display: 'flex' }} >
@@ -19,10 +19,11 @@ function App() {
         </h2>
       </div>
       <div>
-        <PiTemp />
         <Esp32TempClients />
+        <RoomTemp />
         <GpioHeaterState />
         <OverrideButtons />
+        <PiTemp />
       </div>
     </>
   )

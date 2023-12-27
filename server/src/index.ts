@@ -4,8 +4,8 @@ import { createServer } from "node:http";
 
 import { Server, Socket } from "socket.io";
 import { CHANNEL } from "../../constant/constant";
-import { Esp32Client, HeaterGpioState } from "../../types/main";
-import { setEsp32Client } from "./esp32/temperature";
+import { Esp32ClientState, HeaterGpioState, RoomTempState } from "../../types/main";
+import { clientMapState, setEsp32Client } from "./esp32/temperature";
 import {
   heaterGpio,
   heaterGpioState,
@@ -13,7 +13,8 @@ import {
   setHeaterGpioOn,
   setHeaterGpioState
 } from "./gpio/heater";
-import { emitPiTemp } from "./pi/temperature";
+import { setPiTemp } from "./pi/temperature";
+import { roomTempState, setRoomTempState } from "./room/temperature";
 import { ipAddress } from "./utils/ipAddress";
 
 const app = express();
@@ -24,32 +25,25 @@ const server = createServer(app);
 const io = new Server(server);
 
 const { PORT = 3000 } = process.env;
+const LOOP_MS = 10000;
 
-const shouldTurnOn = true;
 
-/**
- * loop
- * if manual override until date, apply ovverride until date
- * else if room temp less then target temp, turn heater on
- * else if room temp greater then target temp, turn heater off
- */
+// check heater status changes every x seconds
 setInterval(() => {
-  if (heaterGpioState.isOn) {
-    // if heater on
-    //     if room temp greater than target temp, turn heater off
-    if (!shouldTurnOn) {
-      setHeaterGpioOff(io);
-    }
+  // esp32 board id for living room is "abe342a8"
+  const curTemp = clientMapState?.abe342a8?.tempF + clientMapState?.abe342a8?.calibrate;
 
-  } else {
-    // if heater off
-    //     if room temp less than target temp, turn heater on
-    if (shouldTurnOn) {
-      setHeaterGpioOn(io);
-    }
+  // if current temp is below min
+  const shouldTurnOn = curTemp <= roomTempState.min;
+  const shouldTurnOff = curTemp > roomTempState.max;
+
+  if (shouldTurnOn) {
+    setHeaterGpioOn(io);
+  } else if (shouldTurnOff) {
+    setHeaterGpioOff(io);
   }
 
-}, 1000)
+}, LOOP_MS)
 
 // user disconnect
 const onDisconnect = () => {
@@ -59,17 +53,22 @@ const onDisconnect = () => {
 // user connect
 const onConnect = (socket: Socket) => {
   console.log("io.on.connection");
-  // send current state to user
-  socket.emit(CHANNEL.HEATER_GPIO_0, heaterGpioState);
 
-  // listen for events from user
+  socket.emit(CHANNEL.HEATER_GPIO_0, heaterGpioState);
   socket.on(CHANNEL.HEATER_GPIO_0, (newState: HeaterGpioState) =>
     setHeaterGpioState(newState, undefined, socket)
   );
 
-  socket.on(CHANNEL.ESP32_TEMP_CLIENT_MAP, (newState: Esp32Client) =>
+  socket.emit(CHANNEL.ESP32_TEMP_CLIENT_MAP, clientMapState);
+  socket.on(CHANNEL.ESP32_TEMP_CLIENT_MAP, (newState: Esp32ClientState) =>
     setEsp32Client(newState, undefined, socket)
   );
+
+  socket.emit(CHANNEL.ROOM_TEMP, roomTempState);
+  socket.on(CHANNEL.ROOM_TEMP, (newState: RoomTempState) =>
+    setRoomTempState(newState, undefined, socket)
+  );
+
   socket.on("disconnect", onDisconnect);
 };
 
@@ -83,7 +82,7 @@ app.post("/api/temperature", (req, res) => {
 
 server.listen(PORT, () => {
   // setHeaterGpioOff(io);
-  setInterval(() => emitPiTemp(io), 1000)
+  setInterval(() => setPiTemp(io), LOOP_MS)
   console.log(`Server running at http://${ipAddress}:${PORT}.`);
 });
 

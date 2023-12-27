@@ -12,7 +12,7 @@ export default function OverrideButtons() {
                 className={`background-${heaterGpio?.isOn ? "on" : "off"}`}
                 onClick={() => setRestUntil(null)}
             >
-                cancel override
+                cancel timeout
             </button>
         ) : (
             <>
@@ -30,6 +30,6 @@ export default function OverrideButtons() {
         );
 
     return (
-        <Card label="Override (in minutes)" content={<div style={{ maxWidth: '375px', display: 'flex', justifyContent: 'space-evenly', flexWrap: 'wrap' }} >{controlButtons}</div>} showContent={false} />
+        <Card label="Take a timeout" showContent={true} content={<div style={{ maxWidth: '375px', display: 'flex', justifyContent: 'space-evenly', flexWrap: 'wrap' }} >{controlButtons}</div>} />
     );
 }
