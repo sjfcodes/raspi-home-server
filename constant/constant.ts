@@ -6,7 +6,7 @@ export const CHANNEL = {
     PI_TEMP: "pi-temp-0"
 };
 export const HEATER_GPIO_DEFAULT_STATE: HeaterGpioState = { isOn: false, manualOverride: null };
-export const ESP32_TEMP_DEFAULT_STATE: Esp32Client = { chipName: 'offline', chipId: '', tempF: 0, updatedAt: '' };
+export const ESP32_TEMP_DEFAULT_STATE: Esp32Client = { chipName: 'offline', chipId: '', tempF: 0, tempFHistory: [], updatedAt: '' };
 export const PI_TEMP_DEFAULT_STATE: PiTemp = { tempC: 0, tempF: 0, updatedAt: '', message: '' };
 
 export enum HEATER_OVERRIDE {

@@ -18,6 +18,7 @@ export type Esp32Client = {
   chipName: string;
   chipId: string;
   tempF: number;
+  tempFHistory: number[];
   updatedAt: string;
 }
 

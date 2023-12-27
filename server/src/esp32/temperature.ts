@@ -15,10 +15,21 @@ export const setEsp32Client = (client: Esp32Client, io?: Server, socket?: Socket
         return;
     }
 
+    let history = clientMap[client.chipId as string]?.tempFHistory || [];
+    if (client?.tempF) {
+        if (!history.length) history.push(client?.tempF);
+        else {
+            history = [client.tempF, ...history.slice(0, 59)]
+        }
+    }
+
+    const tempAverage = (history.reduce((acc, curr) => acc + curr, 0) / history.length).toFixed(0);
+
     clientMap[client.chipId as string] = {
         chipId: client?.chipId,
         chipName: client?.chipName,
-        tempF: client?.tempF || 0,
+        tempF: Number(tempAverage),
+        tempFHistory: history,
         updatedAt: new Date().toLocaleTimeString(),
     };
 
