@@ -10,7 +10,7 @@ export default function Esp32TempClients() {
     esp32TempClientMap?.abe342a8?.calibrate;
   return (
     <Card
-      label={<h2>{`House temp is ${isNaN(curTemp) ? "-" : curTemp}℉`}</h2>}
+      label={<h2>{`House temp:  ${isNaN(curTemp) ? "-" : curTemp + "℉"}`}</h2>}
       showContent={false}
       content={
         <textarea

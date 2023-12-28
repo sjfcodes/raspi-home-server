@@ -10,7 +10,7 @@ export default function RoomTemp() {
   const setTempMax: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setRoomTempMax(Number(e.target.value));
   };
-  const inputStyle = { width: "2.5rem", marginInline: ".5rem", fontSize: '2rem' };
+  const inputStyle = { width: "3.5rem", marginInline: ".5rem", fontSize: '2rem' };
 
   return (
     <Card

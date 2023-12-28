@@ -21,9 +21,9 @@ function App() {
       </div>
       <hr />
       <div>
+        <HeaterState />
         <Esp32TempClients />
         <RoomTemp />
-        <HeaterState />
         <OverrideButtons />
         <PiTemp />
         <LogStream />
