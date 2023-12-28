@@ -20,7 +20,7 @@ export default function RoomTemp() {
           <input
             type="number"
             style={inputStyle}
-            value={roomTemp.min}
+            value={roomTemp.min || 0}
             onChange={setTempMin}
             onClick={(e) => e.stopPropagation()}
           />
@@ -28,7 +28,7 @@ export default function RoomTemp() {
           <input
             type="number"
             style={inputStyle}
-            value={roomTemp.max}
+            value={roomTemp.max || 0}
             onChange={setTempMax}
             onClick={(e) => e.stopPropagation()}
           />

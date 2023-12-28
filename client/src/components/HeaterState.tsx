@@ -4,6 +4,7 @@ import Slider from "./Slider/Slider";
 
 export default function HeaterState() {
   const { heaterGpio, togglePin } = useHeaterGpioState();
+  const value = JSON.stringify(heaterGpio, null, 4);
   return (
     <Card
       label={
@@ -15,8 +16,8 @@ export default function HeaterState() {
       showContent={false}
       content={
         <textarea
-          rows={7}
-          value={JSON.stringify(heaterGpio, null, 4)}
+          value={value}
+          rows={value.split("\n").length}
           onChange={() => null}
         />
       }

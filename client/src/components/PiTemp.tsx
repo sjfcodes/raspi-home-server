@@ -7,6 +7,7 @@ export default function PiTemp() {
   // 85℃ (185℉) max rasbperry pi temp
   const percentage = (piTemp.tempF / 185) * 100;
 
+  const value = JSON.stringify(piTemp, null, 4);
   return (
     <Card
       label={
@@ -17,8 +18,8 @@ export default function PiTemp() {
       showContent={false}
       content={
         <textarea
-          rows={6}
-          value={JSON.stringify(piTemp, null, 4)}
+          rows={value.split("\n").length}
+          value={value}
           onChange={() => null}
         />
       }
