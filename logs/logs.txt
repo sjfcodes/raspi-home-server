@@ -1,22 +1,773 @@
 
-2023-12-27T09:11:43.314Z: current temp is 66
-2023-12-27T09:11:53.313Z: current temp is 66
-2023-12-27T09:12:03.313Z: current temp is 66
-2023-12-27T09:12:13.313Z: current temp is 66
-2023-12-27T09:17:37.274Z: current temp is 67
-2023-12-27T09:17:47.274Z: current temp is 67
-2023-12-27T09:17:57.274Z: current temp is 67
-2023-12-27T09:18:07.274Z: current temp is 67
-2023-12-27T09:18:17.274Z: current temp is 67
-2023-12-27T09:18:27.274Z: current temp is 67
-2023-12-27T09:18:37.277Z: current temp is 67
-2023-12-27T09:18:47.277Z: current temp is 67
-2023-12-27T09:18:57.278Z: current temp is 67
-2023-12-27T09:19:07.281Z: current temp is 67
-2023-12-27T09:19:17.281Z: current temp is 67
-2023-12-27T09:19:27.283Z: current temp is 67
-2023-12-27T09:19:37.285Z: current temp is 67
-2023-12-27T09:19:47.286Z: current temp is 67
-2023-12-27T09:19:57.287Z: current temp is 67
-2023-12-27T09:20:07.289Z: current temp is 67
-2023-12-27T09:20:17.289Z: current temp is 67
+2023-12-27T17:09:34.553Z: current temp is 68
+2023-12-27T17:13:02.924Z: heater off
+2023-12-27T17:13:34.569Z: current temp is 69
+2023-12-27T17:13:54.570Z: current temp is 68
+2023-12-27T17:25:34.594Z: current temp is 67
+2023-12-27T17:25:44.595Z: current temp is 68
+2023-12-27T17:25:54.595Z: current temp is 67
+2023-12-27T17:26:04.595Z: current temp is 68
+2023-12-27T17:27:34.598Z: current temp is 67
+2023-12-27T17:28:44.601Z: current temp is 68
+2023-12-27T17:29:04.601Z: current temp is 67
+2023-12-27T17:30:24.604Z: current temp is 68
+2023-12-27T17:30:44.604Z: current temp is 67
+2023-12-27T17:30:54.604Z: current temp is 68
+2023-12-27T17:31:04.604Z: current temp is 67
+2023-12-27T17:31:14.604Z: current temp is 68
+2023-12-27T17:31:24.605Z: current temp is 67
+2023-12-27T17:44:14.635Z: current temp is 66
+2023-12-27T17:44:34.635Z: current temp is 67
+2023-12-27T17:48:44.642Z: current temp is 66
+2023-12-27T17:49:54.645Z: current temp is 67
+2023-12-27T17:50:34.647Z: current temp is 66
+2023-12-27T17:50:44.647Z: current temp is 67
+2023-12-27T17:52:24.653Z: current temp is 66
+2023-12-27T17:53:04.655Z: current temp is 65
+2023-12-27T17:53:04.659Z: heater on
+2023-12-27T17:53:14.656Z: heater on
+2023-12-27T17:53:24.655Z: current temp is 66
+2023-12-27T17:56:14.661Z: current temp is 65
+2023-12-27T17:56:14.664Z: heater on
+2023-12-27T17:56:24.663Z: heater on
+2023-12-27T17:56:34.664Z: heater on
+2023-12-27T17:56:44.664Z: heater on
+2023-12-27T17:56:54.667Z: heater on
+2023-12-27T17:57:04.666Z: heater on
+2023-12-27T17:57:14.665Z: heater on
+2023-12-27T17:57:24.664Z: current temp is 66
+2023-12-27T17:58:54.664Z: current temp is 67
+2023-12-27T17:59:04.665Z: current temp is 66
+2023-12-27T17:59:44.666Z: current temp is 67
+2023-12-27T18:00:34.667Z: current temp is 66
+2023-12-27T18:01:44.670Z: current temp is 67
+2023-12-27T18:08:04.684Z: current temp is 68
+2023-12-27T18:15:54.706Z: current temp is 69
+2023-12-27T18:18:34.713Z: current temp is 68
+2023-12-27T18:19:44.715Z: current temp is 69
+2023-12-27T18:22:24.721Z: current temp is 68
+2023-12-27T18:23:24.725Z: current temp is 69
+2023-12-27T18:35:44.757Z: current temp is 70
+2023-12-27T18:36:44.760Z: current temp is 69
+2023-12-27T18:37:44.762Z: current temp is 70
+2023-12-27T18:39:44.766Z: current temp is 69
+2023-12-27T18:40:24.768Z: current temp is 70
+2023-12-27T18:40:34.769Z: current temp is 69
+2023-12-27T18:40:44.769Z: current temp is 70
+2023-12-27T18:47:34.788Z: current temp is 69
+2023-12-27T18:48:44.790Z: current temp is 70
+2023-12-27T18:53:35.083Z: heater off
+2023-12-27T18:59:44.818Z: current temp is 69
+2023-12-27T19:12:04.845Z: current temp is 68
+2023-12-27T19:14:14.849Z: current temp is 69
+2023-12-27T19:14:24.849Z: current temp is 68
+2023-12-27T19:23:44.878Z: current temp is 67
+2023-12-27T19:25:24.883Z: current temp is 68
+2023-12-27T19:25:34.883Z: current temp is 67
+2023-12-27T19:27:04.888Z: current temp is 68
+2023-12-27T19:29:04.895Z: current temp is 67
+2023-12-27T19:35:34.914Z: current temp is 66
+2023-12-27T19:36:54.917Z: current temp is 67
+2023-12-27T19:44:34.938Z: current temp is 68
+2023-12-27T19:44:44.939Z: current temp is 67
+2023-12-27T19:47:04.943Z: current temp is 68
+2023-12-27T19:47:44.944Z: current temp is 67
+2023-12-27T20:02:44.985Z: current temp is 66
+2023-12-27T20:03:54.986Z: current temp is 67
+2023-12-27T20:04:14.988Z: current temp is 66
+2023-12-27T20:05:04.991Z: current temp is 65
+2023-12-27T20:05:04.993Z: heater on
+2023-12-27T20:05:14.992Z: heater on
+2023-12-27T20:05:24.992Z: current temp is 66
+2023-12-27T20:12:05.007Z: current temp is 67
+2023-12-27T20:12:25.008Z: current temp is 66
+2023-12-27T20:13:15.009Z: current temp is 67
+2023-12-27T20:18:35.014Z: current temp is 68
+2023-12-27T20:20:16.038Z: heater off
+2023-12-27T20:20:35.015Z: current temp is 67
+2023-12-27T20:20:55.016Z: current temp is 68
+2023-12-27T20:26:35.022Z: current temp is 69
+2023-12-27T20:26:55.023Z: current temp is 68
+2023-12-27T20:27:05.024Z: current temp is 69
+2023-12-27T20:27:15.024Z: current temp is 68
+2023-12-27T20:38:25.040Z: current temp is 67
+2023-12-27T20:50:45.058Z: current temp is 66
+2023-12-27T20:52:25.062Z: current temp is 67
+2023-12-27T20:53:35.065Z: current temp is 66
+2023-12-27T21:05:15.077Z: current temp is 65
+2023-12-27T21:05:15.079Z: heater off
+2023-12-27T21:05:25.078Z: heater off
+2023-12-27T21:05:35.079Z: heater off
+2023-12-27T21:05:45.079Z: heater off
+2023-12-27T21:05:55.078Z: current temp is 66
+2023-12-27T21:07:45.079Z: current temp is 65
+2023-12-27T21:07:45.081Z: heater off
+2023-12-27T21:07:55.079Z: current temp is 66
+2023-12-27T21:08:55.081Z: current temp is 65
+2023-12-27T21:08:55.083Z: heater off
+2023-12-27T21:09:05.082Z: heater off
+2023-12-27T21:09:15.082Z: heater off
+2023-12-27T21:09:25.082Z: heater off
+2023-12-27T21:09:35.082Z: heater off
+2023-12-27T21:09:45.082Z: heater off
+2023-12-27T21:09:55.082Z: heater off
+2023-12-27T21:10:05.082Z: current temp is 66
+2023-12-27T21:14:15.086Z: current temp is 65
+2023-12-27T21:14:15.088Z: heater off
+2023-12-27T21:14:25.087Z: heater off
+2023-12-27T21:14:35.088Z: heater off
+2023-12-27T21:14:45.088Z: heater off
+2023-12-27T21:14:55.088Z: current temp is 66
+2023-12-27T21:15:45.088Z: current temp is 65
+2023-12-27T21:15:45.090Z: heater off
+2023-12-27T21:15:55.089Z: heater off
+2023-12-27T21:16:05.089Z: heater off
+2023-12-27T21:16:15.089Z: heater off
+2023-12-27T21:16:25.089Z: heater off
+2023-12-27T21:16:35.088Z: current temp is 66
+2023-12-27T21:25:55.097Z: current temp is 65
+2023-12-27T21:25:55.099Z: heater on
+2023-12-27T21:26:05.098Z: heater on
+2023-12-27T21:26:15.097Z: current temp is 66
+2023-12-27T21:28:45.099Z: current temp is 65
+2023-12-27T21:28:45.100Z: heater on
+2023-12-27T21:28:55.099Z: current temp is 66
+2023-12-27T21:29:05.099Z: current temp is 65
+2023-12-27T21:29:05.101Z: heater on
+2023-12-27T21:29:15.100Z: current temp is 66
+2023-12-27T21:30:35.102Z: current temp is 65
+2023-12-27T21:30:35.104Z: heater on
+2023-12-27T21:30:45.102Z: heater on
+2023-12-27T21:30:55.103Z: heater on
+2023-12-27T21:31:05.103Z: heater on
+2023-12-27T21:31:15.102Z: current temp is 66
+2023-12-27T21:33:55.104Z: current temp is 65
+2023-12-27T21:33:55.105Z: heater on
+2023-12-27T21:34:05.105Z: heater on
+2023-12-27T21:34:15.104Z: current temp is 66
+2023-12-27T21:34:25.104Z: current temp is 65
+2023-12-27T21:34:25.106Z: heater on
+2023-12-27T21:34:35.105Z: heater on
+2023-12-27T21:34:45.104Z: heater on
+2023-12-27T21:34:55.104Z: heater on
+2023-12-27T21:35:05.105Z: current temp is 66
+2023-12-27T21:41:45.117Z: current temp is 67
+2023-12-27T21:51:25.133Z: current temp is 68
+2023-12-27T22:03:45.152Z: current temp is 67
+2023-12-27T22:04:45.153Z: current temp is 68
+2023-12-27T22:06:35.153Z: current temp is 67
+2023-12-27T22:06:45.153Z: current temp is 68
+2023-12-27T22:16:35.168Z: current temp is 69
+2023-12-27T22:30:35.205Z: current temp is 68
+2023-12-27T22:31:45.206Z: current temp is 69
+2023-12-27T22:31:55.206Z: current temp is 68
+2023-12-27T22:32:05.206Z: current temp is 69
+2023-12-27T22:33:45.206Z: current temp is 68
+2023-12-27T22:39:45.219Z: current temp is 69
+2023-12-27T22:40:55.221Z: current temp is 68
+2023-12-27T22:42:15.225Z: current temp is 69
+2023-12-27T22:42:25.225Z: current temp is 68
+2023-12-27T22:43:35.229Z: current temp is 69
+2023-12-27T22:45:15.232Z: current temp is 68
+2023-12-27T22:46:25.234Z: current temp is 69
+2023-12-27T22:57:35.250Z: current temp is 70
+2023-12-27T23:06:15.262Z: current temp is 71
+2023-12-27T23:06:15.264Z: heater off
+2023-12-27T23:06:25.263Z: heater off
+2023-12-27T23:06:35.263Z: heater off
+2023-12-27T23:06:45.262Z: heater off
+2023-12-27T23:06:55.263Z: heater off
+2023-12-27T23:07:05.264Z: heater off
+2023-12-27T23:07:15.265Z: heater off
+2023-12-27T23:07:25.265Z: heater off
+2023-12-27T23:07:35.265Z: heater off
+2023-12-27T23:07:45.266Z: heater off
+2023-12-27T23:07:55.267Z: heater off
+2023-12-27T23:08:05.267Z: heater off
+2023-12-27T23:08:15.266Z: heater off
+2023-12-27T23:08:25.267Z: heater off
+2023-12-27T23:08:35.268Z: heater off
+2023-12-27T23:08:45.267Z: heater off
+2023-12-27T23:08:55.267Z: heater off
+2023-12-27T23:09:05.268Z: heater off
+2023-12-27T23:09:15.269Z: heater off
+2023-12-27T23:09:25.268Z: heater off
+2023-12-27T23:09:35.269Z: heater off
+2023-12-27T23:09:45.269Z: heater off
+2023-12-27T23:09:55.269Z: heater off
+2023-12-27T23:10:05.269Z: heater off
+2023-12-27T23:10:15.271Z: heater off
+2023-12-27T23:10:25.271Z: heater off
+2023-12-27T23:10:35.272Z: heater off
+2023-12-27T23:10:45.273Z: heater off
+2023-12-27T23:10:55.273Z: heater off
+2023-12-27T23:11:05.274Z: heater off
+2023-12-27T23:11:15.274Z: heater off
+2023-12-27T23:11:25.275Z: heater off
+2023-12-27T23:11:35.276Z: heater off
+2023-12-27T23:11:45.275Z: heater off
+2023-12-27T23:11:55.275Z: heater off
+2023-12-27T23:12:05.277Z: heater off
+2023-12-27T23:12:15.278Z: heater off
+2023-12-27T23:12:25.279Z: heater off
+2023-12-27T23:12:35.279Z: heater off
+2023-12-27T23:12:45.280Z: heater off
+2023-12-27T23:12:55.280Z: heater off
+2023-12-27T23:13:05.281Z: heater off
+2023-12-27T23:13:15.282Z: heater off
+2023-12-27T23:13:25.282Z: heater off
+2023-12-27T23:13:35.284Z: heater off
+2023-12-27T23:13:45.284Z: heater off
+2023-12-27T23:13:55.285Z: heater off
+2023-12-27T23:14:05.285Z: current temp is 70
+2023-12-27T23:14:45.287Z: current temp is 71
+2023-12-27T23:14:45.289Z: heater off
+2023-12-27T23:14:55.289Z: heater off
+2023-12-27T23:15:05.288Z: heater off
+2023-12-27T23:15:15.288Z: heater off
+2023-12-27T23:15:25.288Z: heater off
+2023-12-27T23:15:35.288Z: heater off
+2023-12-27T23:15:45.288Z: heater off
+2023-12-27T23:15:55.289Z: heater off
+2023-12-27T23:16:05.290Z: heater off
+2023-12-27T23:16:15.290Z: heater off
+2023-12-27T23:16:25.291Z: heater off
+2023-12-27T23:16:35.292Z: heater off
+2023-12-27T23:16:45.293Z: heater off
+2023-12-27T23:16:55.293Z: heater off
+2023-12-27T23:17:05.294Z: current temp is 70
+2023-12-27T23:17:15.294Z: current temp is 71
+2023-12-27T23:17:15.295Z: heater off
+2023-12-27T23:17:25.295Z: current temp is 70
+2023-12-27T23:18:05.296Z: current temp is 71
+2023-12-27T23:18:05.298Z: heater off
+2023-12-27T23:18:15.297Z: heater off
+2023-12-27T23:18:25.297Z: heater off
+2023-12-27T23:18:35.298Z: heater off
+2023-12-27T23:18:45.298Z: heater off
+2023-12-27T23:18:55.299Z: heater off
+2023-12-27T23:19:05.298Z: heater off
+2023-12-27T23:19:15.299Z: heater off
+2023-12-27T23:19:25.299Z: heater off
+2023-12-27T23:19:35.300Z: heater off
+2023-12-27T23:19:45.300Z: heater off
+2023-12-27T23:19:55.300Z: heater off
+2023-12-27T23:20:05.300Z: current temp is 70
+2023-12-27T23:50:55.358Z: current temp is 69
+2023-12-27T23:52:15.360Z: current temp is 70
+2023-12-28T00:10:15.405Z: current temp is 71
+2023-12-28T00:10:15.407Z: heater off
+2023-12-28T00:10:25.405Z: current temp is 70
+2023-12-28T00:11:15.407Z: current temp is 71
+2023-12-28T00:11:15.409Z: heater off
+2023-12-28T00:11:25.407Z: current temp is 70
+2023-12-28T00:11:45.408Z: current temp is 71
+2023-12-28T00:11:45.409Z: heater off
+2023-12-28T00:11:55.409Z: heater off
+2023-12-28T00:12:05.410Z: current temp is 70
+2023-12-28T00:12:45.412Z: current temp is 71
+2023-12-28T00:12:45.414Z: heater off
+2023-12-28T00:12:55.413Z: current temp is 70
+2023-12-28T00:14:35.419Z: current temp is 71
+2023-12-28T00:14:35.420Z: heater off
+2023-12-28T00:14:45.419Z: heater off
+2023-12-28T00:14:55.420Z: heater off
+2023-12-28T00:15:05.420Z: heater off
+2023-12-28T00:15:15.421Z: heater off
+2023-12-28T00:15:25.422Z: heater off
+2023-12-28T00:15:35.422Z: current temp is 70
+2023-12-28T00:16:55.426Z: current temp is 71
+2023-12-28T00:16:55.427Z: heater off
+2023-12-28T00:17:05.426Z: current temp is 70
+2023-12-28T00:17:35.427Z: current temp is 71
+2023-12-28T00:17:35.429Z: heater off
+2023-12-28T00:17:45.427Z: heater off
+2023-12-28T00:17:55.428Z: heater off
+2023-12-28T00:18:05.428Z: heater off
+2023-12-28T00:18:15.429Z: heater off
+2023-12-28T00:18:25.430Z: heater off
+2023-12-28T00:18:35.431Z: heater off
+2023-12-28T00:18:45.431Z: heater off
+2023-12-28T00:18:55.432Z: current temp is 70
+2023-12-28T00:19:05.432Z: current temp is 71
+2023-12-28T00:19:05.434Z: heater off
+2023-12-28T00:19:15.433Z: heater off
+2023-12-28T00:19:25.433Z: heater off
+2023-12-28T00:19:35.434Z: heater off
+2023-12-28T00:19:45.435Z: heater off
+2023-12-28T00:19:55.435Z: heater off
+2023-12-28T00:20:05.436Z: heater off
+2023-12-28T00:20:15.436Z: heater off
+2023-12-28T00:20:25.436Z: heater off
+2023-12-28T00:20:35.436Z: heater off
+2023-12-28T00:20:45.436Z: heater off
+2023-12-28T00:20:55.436Z: heater off
+2023-12-28T00:21:05.436Z: heater off
+2023-12-28T00:21:15.436Z: heater off
+2023-12-28T00:21:25.436Z: heater off
+2023-12-28T00:21:35.437Z: heater off
+2023-12-28T00:21:45.438Z: heater off
+2023-12-28T00:21:55.439Z: heater off
+2023-12-28T00:22:05.439Z: heater off
+2023-12-28T00:22:15.439Z: heater off
+2023-12-28T00:22:25.440Z: heater off
+2023-12-28T00:22:35.442Z: heater off
+2023-12-28T00:22:45.442Z: heater off
+2023-12-28T00:22:55.443Z: heater off
+2023-12-28T00:23:05.444Z: heater off
+2023-12-28T00:23:15.445Z: heater off
+2023-12-28T00:23:25.446Z: heater off
+2023-12-28T00:23:35.446Z: heater off
+2023-12-28T00:23:45.447Z: heater off
+2023-12-28T00:23:55.446Z: current temp is 70
+2023-12-28T00:25:05.451Z: current temp is 71
+2023-12-28T00:25:05.452Z: heater off
+2023-12-28T00:25:15.451Z: heater off
+2023-12-28T00:25:25.452Z: heater off
+2023-12-28T00:25:35.452Z: heater off
+2023-12-28T00:25:45.453Z: heater off
+2023-12-28T00:25:55.454Z: heater off
+2023-12-28T00:26:05.454Z: heater off
+2023-12-28T00:26:15.453Z: heater off
+2023-12-28T00:26:25.453Z: current temp is 70
+2023-12-28T00:27:05.455Z: current temp is 71
+2023-12-28T00:27:05.457Z: heater off
+2023-12-28T00:27:15.456Z: heater off
+2023-12-28T00:27:25.455Z: heater off
+2023-12-28T00:27:35.456Z: heater off
+2023-12-28T00:27:45.458Z: heater off
+2023-12-28T00:27:55.458Z: heater off
+2023-12-28T00:28:05.458Z: heater off
+2023-12-28T00:28:15.458Z: heater off
+2023-12-28T00:28:25.457Z: current temp is 70
+2023-12-28T00:29:25.459Z: current temp is 71
+2023-12-28T00:29:25.460Z: heater off
+2023-12-28T00:29:35.460Z: heater off
+2023-12-28T00:29:45.461Z: heater off
+2023-12-28T00:29:55.461Z: heater off
+2023-12-28T00:30:05.462Z: heater off
+2023-12-28T00:30:15.463Z: heater off
+2023-12-28T00:30:25.463Z: heater off
+2023-12-28T00:30:35.463Z: heater off
+2023-12-28T00:30:45.463Z: heater off
+2023-12-28T00:30:55.463Z: heater off
+2023-12-28T00:31:05.463Z: heater off
+2023-12-28T00:31:15.463Z: heater off
+2023-12-28T00:31:25.464Z: heater off
+2023-12-28T00:31:35.464Z: current temp is 70
+2023-12-28T00:32:15.464Z: current temp is 71
+2023-12-28T00:32:15.466Z: heater off
+2023-12-28T00:32:25.465Z: heater off
+2023-12-28T00:32:35.466Z: heater off
+2023-12-28T00:32:45.466Z: heater off
+2023-12-28T00:32:55.467Z: heater off
+2023-12-28T00:33:05.466Z: heater off
+2023-12-28T00:33:15.466Z: current temp is 70
+2023-12-28T00:33:35.467Z: current temp is 71
+2023-12-28T00:33:35.473Z: heater off
+2023-12-28T00:33:45.467Z: current temp is 70
+2023-12-28T00:35:25.470Z: current temp is 71
+2023-12-28T00:35:25.472Z: heater off
+2023-12-28T00:35:35.470Z: heater off
+2023-12-28T00:35:45.471Z: heater off
+2023-12-28T00:35:55.472Z: heater off
+2023-12-28T00:36:05.471Z: current temp is 70
+2023-12-28T00:38:25.478Z: current temp is 71
+2023-12-28T00:38:25.479Z: heater off
+2023-12-28T00:38:35.479Z: heater off
+2023-12-28T00:38:45.479Z: heater off
+2023-12-28T00:38:55.479Z: heater off
+2023-12-28T00:39:05.480Z: heater off
+2023-12-28T00:39:15.480Z: heater off
+2023-12-28T00:39:25.481Z: heater off
+2023-12-28T00:39:35.480Z: current temp is 70
+2023-12-28T00:41:45.482Z: current temp is 71
+2023-12-28T00:41:45.484Z: heater off
+2023-12-28T00:41:55.482Z: current temp is 70
+2023-12-28T00:44:25.488Z: current temp is 69
+2023-12-28T00:45:25.491Z: current temp is 70
+2023-12-28T00:45:35.491Z: current temp is 71
+2023-12-28T00:45:35.493Z: heater off
+2023-12-28T00:45:45.491Z: heater off
+2023-12-28T00:45:55.492Z: heater off
+2023-12-28T00:46:05.492Z: heater off
+2023-12-28T00:46:15.492Z: heater off
+2023-12-28T00:46:25.493Z: heater off
+2023-12-28T00:46:35.495Z: heater off
+2023-12-28T00:46:45.495Z: heater off
+2023-12-28T00:46:55.495Z: current temp is 70
+2023-12-28T00:48:55.501Z: current temp is 71
+2023-12-28T00:48:55.503Z: heater off
+2023-12-28T00:49:05.502Z: heater off
+2023-12-28T00:49:15.502Z: heater off
+2023-12-28T00:49:25.502Z: current temp is 70
+2023-12-28T00:51:15.508Z: current temp is 71
+2023-12-28T00:51:15.510Z: heater off
+2023-12-28T00:51:25.509Z: heater off
+2023-12-28T00:51:35.509Z: current temp is 70
+2023-12-28T00:51:45.509Z: current temp is 71
+2023-12-28T00:51:45.511Z: heater off
+2023-12-28T00:51:55.509Z: heater off
+2023-12-28T00:52:05.509Z: current temp is 70
+2023-12-28T00:53:35.513Z: current temp is 71
+2023-12-28T00:53:35.515Z: heater off
+2023-12-28T00:53:45.513Z: heater off
+2023-12-28T00:53:55.514Z: heater off
+2023-12-28T00:54:05.515Z: heater off
+2023-12-28T00:54:15.516Z: heater off
+2023-12-28T00:54:25.516Z: heater off
+2023-12-28T00:54:35.516Z: heater off
+2023-12-28T00:54:45.517Z: heater off
+2023-12-28T00:54:55.516Z: current temp is 70
+2023-12-28T00:55:25.518Z: current temp is 71
+2023-12-28T00:55:25.520Z: heater off
+2023-12-28T00:55:35.519Z: heater off
+2023-12-28T00:55:45.520Z: heater off
+2023-12-28T00:55:55.523Z: heater off
+2023-12-28T00:56:05.522Z: heater off
+2023-12-28T00:56:15.521Z: heater off
+2023-12-28T00:56:25.522Z: heater off
+2023-12-28T00:56:35.522Z: heater off
+2023-12-28T00:56:45.522Z: heater off
+2023-12-28T00:56:55.522Z: heater off
+2023-12-28T00:57:05.523Z: heater off
+2023-12-28T00:57:15.523Z: heater off
+2023-12-28T00:57:25.523Z: heater off
+2023-12-28T00:57:35.523Z: heater off
+2023-12-28T00:57:45.523Z: heater off
+2023-12-28T00:57:55.524Z: heater off
+2023-12-28T00:58:05.524Z: heater off
+2023-12-28T00:58:15.525Z: heater off
+2023-12-28T00:58:25.525Z: heater off
+2023-12-28T00:58:35.525Z: heater off
+2023-12-28T00:58:45.525Z: heater off
+2023-12-28T00:58:55.526Z: heater off
+2023-12-28T00:59:05.526Z: heater off
+2023-12-28T00:59:15.527Z: heater off
+2023-12-28T00:59:25.528Z: heater off
+2023-12-28T00:59:35.528Z: heater off
+2023-12-28T00:59:45.529Z: heater off
+2023-12-28T00:59:55.530Z: heater off
+2023-12-28T01:00:05.529Z: current temp is 70
+2023-12-28T01:01:05.531Z: current temp is 71
+2023-12-28T01:01:05.532Z: heater off
+2023-12-28T01:01:15.532Z: heater off
+2023-12-28T01:01:25.532Z: heater off
+2023-12-28T01:01:35.533Z: heater off
+2023-12-28T01:01:45.535Z: heater off
+2023-12-28T01:01:55.535Z: heater off
+2023-12-28T01:02:05.536Z: heater off
+2023-12-28T01:02:15.536Z: heater off
+2023-12-28T01:02:25.537Z: heater off
+2023-12-28T01:02:35.537Z: heater off
+2023-12-28T01:02:45.538Z: heater off
+2023-12-28T01:02:55.539Z: heater off
+2023-12-28T01:03:05.539Z: heater off
+2023-12-28T01:03:15.541Z: heater off
+2023-12-28T01:03:25.540Z: current temp is 70
+2023-12-28T01:04:45.544Z: current temp is 71
+2023-12-28T01:04:45.546Z: heater off
+2023-12-28T01:04:55.545Z: current temp is 70
+2023-12-28T01:05:55.547Z: current temp is 71
+2023-12-28T01:05:55.552Z: heater off
+2023-12-28T01:06:05.548Z: heater off
+2023-12-28T01:06:15.549Z: heater off
+2023-12-28T01:06:25.549Z: heater off
+2023-12-28T01:06:35.550Z: heater off
+2023-12-28T01:06:45.551Z: heater off
+2023-12-28T01:06:55.551Z: heater off
+2023-12-28T01:07:05.552Z: heater off
+2023-12-28T01:07:15.552Z: heater off
+2023-12-28T01:07:25.552Z: heater off
+2023-12-28T01:07:35.553Z: heater off
+2023-12-28T01:07:45.554Z: heater off
+2023-12-28T01:07:55.553Z: current temp is 70
+2023-12-28T01:08:05.553Z: current temp is 71
+2023-12-28T01:08:05.555Z: heater off
+2023-12-28T01:08:15.554Z: heater off
+2023-12-28T01:08:25.556Z: heater off
+2023-12-28T01:08:35.556Z: heater off
+2023-12-28T01:08:45.556Z: current temp is 70
+2023-12-28T01:09:35.558Z: current temp is 71
+2023-12-28T01:09:35.560Z: heater off
+2023-12-28T01:09:45.558Z: current temp is 70
+2023-12-28T01:09:55.558Z: current temp is 71
+2023-12-28T01:09:55.559Z: heater off
+2023-12-28T01:10:05.558Z: heater off
+2023-12-28T01:10:15.559Z: heater off
+2023-12-28T01:10:25.560Z: heater off
+2023-12-28T01:10:35.560Z: heater off
+2023-12-28T01:10:45.560Z: heater off
+2023-12-28T01:10:55.560Z: heater off
+2023-12-28T01:11:05.560Z: heater off
+2023-12-28T01:11:15.560Z: heater off
+2023-12-28T01:11:25.560Z: heater off
+2023-12-28T01:11:35.561Z: heater off
+2023-12-28T01:11:45.562Z: heater off
+2023-12-28T01:11:55.562Z: heater off
+2023-12-28T01:12:05.564Z: heater off
+2023-12-28T01:12:15.563Z: heater off
+2023-12-28T01:12:25.564Z: heater off
+2023-12-28T01:12:35.564Z: heater off
+2023-12-28T01:12:45.565Z: heater off
+2023-12-28T01:12:55.565Z: heater off
+2023-12-28T01:13:05.565Z: heater off
+2023-12-28T01:13:15.565Z: heater off
+2023-12-28T01:13:25.565Z: heater off
+2023-12-28T01:13:35.564Z: heater off
+2023-12-28T01:13:45.564Z: current temp is 70
+2023-12-28T01:13:55.565Z: current temp is 71
+2023-12-28T01:13:55.567Z: heater off
+2023-12-28T01:14:05.566Z: current temp is 70
+2023-12-28T01:14:15.566Z: current temp is 71
+2023-12-28T01:14:15.568Z: heater off
+2023-12-28T01:14:25.567Z: heater off
+2023-12-28T01:14:35.566Z: current temp is 70
+2023-12-28T01:15:55.569Z: current temp is 71
+2023-12-28T01:15:55.571Z: heater off
+2023-12-28T01:16:05.570Z: heater off
+2023-12-28T01:16:15.572Z: heater off
+2023-12-28T01:16:25.572Z: heater off
+2023-12-28T01:16:35.573Z: heater off
+2023-12-28T01:16:45.574Z: heater off
+2023-12-28T01:16:55.574Z: heater off
+2023-12-28T01:17:05.575Z: heater off
+2023-12-28T01:17:15.575Z: heater off
+2023-12-28T01:17:25.575Z: heater off
+2023-12-28T01:17:35.575Z: current temp is 70
+2023-12-28T01:17:45.576Z: current temp is 71
+2023-12-28T01:17:45.578Z: heater off
+2023-12-28T01:17:55.577Z: heater off
+2023-12-28T01:18:05.577Z: heater off
+2023-12-28T01:18:15.577Z: heater off
+2023-12-28T01:18:25.577Z: heater off
+2023-12-28T01:18:35.578Z: heater off
+2023-12-28T01:18:45.578Z: heater off
+2023-12-28T01:18:55.578Z: heater off
+2023-12-28T01:19:05.578Z: heater off
+2023-12-28T01:19:15.578Z: heater off
+2023-12-28T01:19:25.579Z: heater off
+2023-12-28T01:19:35.579Z: heater off
+2023-12-28T01:19:45.580Z: heater off
+2023-12-28T01:19:55.580Z: heater off
+2023-12-28T01:20:05.580Z: heater off
+2023-12-28T01:20:15.580Z: heater off
+2023-12-28T01:20:25.580Z: heater off
+2023-12-28T01:20:35.581Z: heater off
+2023-12-28T01:20:45.581Z: heater off
+2023-12-28T01:20:55.581Z: heater off
+2023-12-28T01:21:05.582Z: heater off
+2023-12-28T01:21:15.582Z: heater off
+2023-12-28T01:21:25.583Z: heater off
+2023-12-28T01:21:35.582Z: heater off
+2023-12-28T01:21:45.583Z: heater off
+2023-12-28T01:21:55.584Z: heater off
+2023-12-28T01:22:05.583Z: heater off
+2023-12-28T01:22:15.584Z: heater off
+2023-12-28T01:22:25.584Z: heater off
+2023-12-28T01:22:35.584Z: heater off
+2023-12-28T01:22:45.584Z: heater off
+2023-12-28T01:22:55.585Z: heater off
+2023-12-28T01:23:05.585Z: heater off
+2023-12-28T01:23:15.585Z: heater off
+2023-12-28T01:23:25.586Z: heater off
+2023-12-28T01:23:35.588Z: heater off
+2023-12-28T01:23:45.588Z: heater off
+2023-12-28T01:23:55.588Z: heater off
+2023-12-28T01:24:05.588Z: heater off
+2023-12-28T01:24:15.589Z: heater off
+2023-12-28T01:24:25.590Z: heater off
+2023-12-28T01:24:35.590Z: heater off
+2023-12-28T01:24:45.590Z: heater off
+2023-12-28T01:24:55.591Z: heater off
+2023-12-28T01:25:05.592Z: heater off
+2023-12-28T01:25:15.592Z: heater off
+2023-12-28T01:25:25.592Z: heater off
+2023-12-28T01:25:35.592Z: heater off
+2023-12-28T01:25:45.593Z: heater off
+2023-12-28T01:25:55.593Z: heater off
+2023-12-28T01:26:05.594Z: heater off
+2023-12-28T01:26:15.594Z: heater off
+2023-12-28T01:26:25.595Z: heater off
+2023-12-28T01:26:35.596Z: heater off
+2023-12-28T01:26:45.597Z: heater off
+2023-12-28T01:26:55.598Z: heater off
+2023-12-28T01:27:05.598Z: heater off
+2023-12-28T01:27:15.599Z: current temp is 70
+2023-12-28T01:27:25.600Z: current temp is 71
+2023-12-28T01:27:25.602Z: heater off
+2023-12-28T01:27:35.601Z: heater off
+2023-12-28T01:27:45.600Z: heater off
+2023-12-28T01:27:55.601Z: heater off
+2023-12-28T01:28:05.601Z: heater off
+2023-12-28T01:28:15.601Z: heater off
+2023-12-28T01:28:25.601Z: heater off
+2023-12-28T01:28:35.602Z: heater off
+2023-12-28T01:28:45.602Z: heater off
+2023-12-28T01:28:55.603Z: heater off
+2023-12-28T01:29:05.604Z: heater off
+2023-12-28T01:29:15.605Z: heater off
+2023-12-28T01:29:25.605Z: heater off
+2023-12-28T01:29:35.605Z: heater off
+2023-12-28T01:29:45.605Z: heater off
+2023-12-28T01:29:55.605Z: heater off
+2023-12-28T01:30:05.606Z: heater off
+2023-12-28T01:30:15.606Z: heater off
+2023-12-28T01:30:25.607Z: current temp is 70
+2023-12-28T01:31:15.610Z: current temp is 71
+2023-12-28T01:31:15.612Z: heater off
+2023-12-28T01:31:25.612Z: heater off
+2023-12-28T01:31:35.612Z: heater off
+2023-12-28T01:31:45.613Z: heater off
+2023-12-28T01:31:55.613Z: heater off
+2023-12-28T01:32:05.613Z: heater off
+2023-12-28T01:32:15.613Z: current temp is 70
+2023-12-28T01:33:25.618Z: current temp is 71
+2023-12-28T01:33:25.620Z: heater off
+2023-12-28T01:33:35.620Z: heater off
+2023-12-28T01:33:45.620Z: heater off
+2023-12-28T01:33:55.620Z: heater off
+2023-12-28T01:34:05.621Z: heater off
+2023-12-28T01:34:15.625Z: heater off
+2023-12-28T01:34:25.625Z: heater off
+2023-12-28T01:34:35.627Z: heater off
+2023-12-28T01:34:45.626Z: current temp is 70
+2023-12-28T01:34:55.627Z: current temp is 71
+2023-12-28T01:34:55.629Z: heater off
+2023-12-28T01:35:05.628Z: current temp is 70
+2023-12-28T01:35:25.629Z: current temp is 71
+2023-12-28T01:35:25.631Z: heater off
+2023-12-28T01:35:35.630Z: heater off
+2023-12-28T01:35:45.630Z: heater off
+2023-12-28T01:35:55.630Z: heater off
+2023-12-28T01:36:05.630Z: current temp is 70
+2023-12-28T01:38:05.636Z: current temp is 71
+2023-12-28T01:38:05.638Z: heater off
+2023-12-28T01:38:15.637Z: heater off
+2023-12-28T01:38:25.638Z: heater off
+2023-12-28T01:38:35.638Z: heater off
+2023-12-28T01:38:45.638Z: heater off
+2023-12-28T01:38:55.638Z: heater off
+2023-12-28T01:39:05.639Z: heater off
+2023-12-28T01:39:15.639Z: heater off
+2023-12-28T01:39:25.638Z: heater off
+2023-12-28T01:39:35.638Z: heater off
+2023-12-28T01:39:45.640Z: heater off
+2023-12-28T01:39:55.640Z: heater off
+2023-12-28T01:40:05.640Z: heater off
+2023-12-28T01:40:15.641Z: heater off
+2023-12-28T01:40:25.642Z: heater off
+2023-12-28T01:40:35.643Z: heater off
+2023-12-28T01:40:45.644Z: heater off
+2023-12-28T01:40:55.646Z: heater off
+2023-12-28T01:41:05.648Z: heater off
+2023-12-28T01:41:15.646Z: heater off
+2023-12-28T01:41:25.646Z: heater off
+2023-12-28T01:41:35.646Z: heater off
+2023-12-28T01:41:45.645Z: current temp is 70
+2023-12-28T01:41:55.646Z: current temp is 71
+2023-12-28T01:41:55.648Z: heater off
+2023-12-28T01:42:05.646Z: heater off
+2023-12-28T01:42:15.648Z: heater off
+2023-12-28T01:42:25.648Z: heater off
+2023-12-28T01:42:35.648Z: heater off
+2023-12-28T01:42:45.649Z: heater off
+2023-12-28T01:42:55.650Z: heater off
+2023-12-28T01:43:05.651Z: heater off
+2023-12-28T01:43:15.652Z: heater off
+2023-12-28T01:43:25.652Z: heater off
+2023-12-28T01:43:35.652Z: current temp is 70
+2023-12-28T01:44:25.655Z: current temp is 71
+2023-12-28T01:44:25.661Z: heater off
+2023-12-28T01:44:35.655Z: current temp is 70
+2023-12-28T01:44:45.656Z: current temp is 71
+2023-12-28T01:44:45.658Z: heater off
+2023-12-28T01:44:55.657Z: heater off
+2023-12-28T01:45:05.657Z: heater off
+2023-12-28T01:45:15.657Z: heater off
+2023-12-28T01:45:25.657Z: heater off
+2023-12-28T01:45:35.657Z: current temp is 70
+2023-12-28T01:45:45.657Z: current temp is 71
+2023-12-28T01:45:45.659Z: heater off
+2023-12-28T01:45:55.657Z: current temp is 70
+2023-12-28T02:02:05.705Z: current temp is 69
+2023-12-28T02:02:15.705Z: current temp is 70
+2023-12-28T02:04:45.713Z: current temp is 69
+2023-12-28T02:05:05.715Z: current temp is 70
+2023-12-28T02:09:45.729Z: current temp is 69
+2023-12-28T02:10:35.731Z: current temp is 70
+2023-12-28T02:14:35.739Z: current temp is 69
+2023-12-28T02:15:05.741Z: current temp is 70
+2023-12-28T02:15:15.741Z: current temp is 69
+2023-12-28T02:15:35.742Z: current temp is 70
+2023-12-28T02:18:05.751Z: current temp is 69
+2023-12-28T02:18:15.752Z: current temp is 70
+2023-12-28T02:22:35.765Z: current temp is 69
+2023-12-28T02:24:35.769Z: current temp is 70
+2023-12-28T02:24:55.772Z: current temp is 69
+2023-12-28T02:26:45.778Z: current temp is 70
+2023-12-28T02:27:05.779Z: current temp is 69
+2023-12-28T02:41:35.819Z: current temp is 70
+2023-12-28T02:41:45.819Z: current temp is 69
+2023-12-28T02:42:05.821Z: current temp is 70
+2023-12-28T03:00:35.883Z: current temp is 69
+2023-12-28T03:21:05.950Z: current temp is 68
+2023-12-28T03:22:15.953Z: current temp is 69
+2023-12-28T03:25:55.966Z: current temp is 68
+2023-12-28T03:26:05.966Z: current temp is 69
+2023-12-28T03:26:15.966Z: current temp is 68
+2023-12-28T03:26:25.968Z: current temp is 69
+2023-12-28T03:26:55.968Z: current temp is 68
+2023-12-28T03:27:25.970Z: current temp is 69
+2023-12-28T03:33:05.985Z: current temp is 68
+2023-12-28T03:34:15.989Z: current temp is 69
+2023-12-28T03:41:36.007Z: current temp is 68
+2023-12-28T03:42:06.008Z: current temp is 69
+2023-12-28T03:44:56.013Z: current temp is 68
+2023-12-28T03:49:16.018Z: current temp is 69
+2023-12-28T03:49:26.018Z: current temp is 68
+2023-12-28T03:49:36.018Z: current temp is 69
+2023-12-28T03:49:46.018Z: current temp is 68
+2023-12-28T03:49:56.019Z: current temp is 69
+2023-12-28T03:50:16.020Z: current temp is 68
+2023-12-28T03:50:26.021Z: current temp is 69
+2023-12-28T03:50:46.022Z: current temp is 68
+2023-12-28T03:51:56.023Z: current temp is 69
+2023-12-28T03:52:26.023Z: current temp is 68
+2023-12-28T03:54:56.025Z: current temp is 69
+2023-12-28T03:55:56.026Z: current temp is 68
+2023-12-28T03:56:06.026Z: current temp is 69
+2023-12-28T03:56:16.026Z: current temp is 68
+2023-12-28T03:56:26.026Z: current temp is 69
+2023-12-28T03:56:46.026Z: current temp is 68
+2023-12-28T03:57:06.026Z: current temp is 69
+2023-12-28T03:57:16.026Z: current temp is 68
+2023-12-28T03:58:26.028Z: current temp is 69
+2023-12-28T03:59:56.030Z: current temp is 68
+2023-12-28T04:00:26.031Z: current temp is 69
+2023-12-28T04:00:46.032Z: current temp is 68
+2023-12-28T04:01:06.032Z: current temp is 69
+2023-12-28T04:01:26.032Z: current temp is 68
+2023-12-28T04:01:56.035Z: current temp is 69
+2023-12-28T04:02:06.035Z: current temp is 68
+2023-12-28T04:03:16.037Z: current temp is 69
+2023-12-28T04:03:56.038Z: current temp is 68
+2023-12-28T04:04:26.038Z: current temp is 69
+2023-12-28T04:04:46.038Z: current temp is 68
+2023-12-28T04:05:16.038Z: current temp is 69
+2023-12-28T04:05:46.039Z: current temp is 68
+2023-12-28T04:05:56.039Z: current temp is 69
+2023-12-28T04:09:26.046Z: current temp is 68
+2023-12-28T04:09:36.046Z: current temp is 69
+2023-12-28T04:10:06.046Z: current temp is 68
+2023-12-28T04:10:16.046Z: current temp is 69
+2023-12-28T04:14:06.052Z: current temp is 68
+2023-12-28T04:15:16.052Z: current temp is 69
+2023-12-28T04:17:16.053Z: current temp is 68
+2023-12-28T04:17:36.053Z: current temp is 69
+2023-12-28T04:18:06.053Z: current temp is 68
+2023-12-28T04:20:06.055Z: current temp is 69
+2023-12-28T04:26:06.060Z: current temp is 68
+2023-12-28T04:27:16.061Z: current temp is 69
+2023-12-28T04:29:56.061Z: current temp is 68
+2023-12-28T04:31:06.064Z: current temp is 69

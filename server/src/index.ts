@@ -29,11 +29,15 @@ const { PORT = 3000 } = process.env;
 const LOOP_MS = 10000;
 
 
+let lastTemp = 0;
 // check heater status changes every x seconds
 setInterval(() => {
   // esp32 board id for living room is "abe342a8"
   const curTemp = clientMapState?.abe342a8?.tempF + clientMapState?.abe342a8?.calibrate;
-  writeLog(`current temp is ${curTemp}`, io);
+  if (curTemp !== lastTemp) {
+    writeLog(`current temp is ${curTemp}`, io);
+    lastTemp = curTemp;
+  }
 
   // if current temp is below min
   const shouldTurnOn = curTemp <= roomTempState.min;
