@@ -9,7 +9,11 @@ export default function PiTemp() {
 
   return (
     <Card
-      label={<h2>{`Pi Temp: ${piTemp.tempF}℉ (${percentage.toFixed(0)}%)`}</h2>}
+      label={
+        <h2>{`Pi Temp: ${piTemp.tempF ? piTemp.tempF + "℉" : "-"} (${
+          isNaN(percentage) ? "-" : percentage.toFixed(0) + "%"
+        })`}</h2>
+      }
       showContent={false}
       content={
         <textarea
