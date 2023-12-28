@@ -4,14 +4,18 @@ import { createServer } from "node:http";
 
 import { Server, Socket } from "socket.io";
 import { CHANNEL } from "../../constant/constant";
-import { Esp32ClientState, HeaterGpioState, RoomTempState } from "../../types/main";
+import {
+  Esp32ClientState,
+  HeaterGpioState,
+  RoomTempState,
+} from "../../types/main";
 import { clientMapState, setEsp32Client } from "./esp32/temperature";
 import {
   heaterGpio,
   heaterGpioState,
   setHeaterGpioOff,
   setHeaterGpioOn,
-  setHeaterGpioState
+  setHeaterGpioState,
 } from "./gpio/heater";
 import { getLogs, writeLog } from "./logs/logger";
 import { setPiTemp } from "./pi/temperature";
@@ -28,12 +32,12 @@ const io = new Server(server);
 const { PORT = 3000 } = process.env;
 const LOOP_MS = 10000;
 
-
 let lastTemp = 0;
 // check heater status changes every x seconds
 setInterval(() => {
   // esp32 board id for living room is "abe342a8"
-  const curTemp = clientMapState?.abe342a8?.tempF + clientMapState?.abe342a8?.calibrate;
+  const curTemp =
+    clientMapState?.abe342a8?.tempF + clientMapState?.abe342a8?.calibrate;
   if (curTemp !== lastTemp) {
     writeLog(`current temp is ${curTemp}`, io);
     lastTemp = curTemp;
@@ -48,8 +52,7 @@ setInterval(() => {
   } else if (shouldTurnOff) {
     setHeaterGpioOff(io);
   }
-
-}, LOOP_MS)
+}, LOOP_MS);
 
 // user disconnect
 const onDisconnect = () => {
@@ -75,7 +78,7 @@ const onConnect = (socket: Socket) => {
     setRoomTempState(newState, undefined, socket)
   );
 
-  socket.emit(CHANNEL.LOG_STREAM, getLogs());
+  socket.emit(CHANNEL.LOG_STREAM, getLogs(5).reverse());
 
   socket.on("disconnect", onDisconnect);
 };
@@ -90,7 +93,7 @@ app.post("/api/temperature", (req, res) => {
 
 server.listen(PORT, () => {
   // setHeaterGpioOff(io);
-  setInterval(() => setPiTemp(io), LOOP_MS)
+  setInterval(() => setPiTemp(io), LOOP_MS);
   console.log(`Server running at http://${ipAddress}:${PORT}.`);
 });
 

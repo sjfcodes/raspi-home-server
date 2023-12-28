@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
 import { CHANNEL } from "../../../constant/constant";
-import { PiTemp } from "../../../types/main";
 import { socket } from "../utils/socket";
 
 export default function useLogStream() {
-    const [logs, setLogs] = useState({} as PiTemp)
+  const [logs, setLogs] = useState([] as string[]);
 
-    useEffect(() => {
-        socket.on(CHANNEL.LOG_STREAM, (newState: PiTemp) => {
-            console.log('in :', newState)
-            setLogs(newState);
-        });
-    }, [])
+  useEffect(() => {
+    socket.on(CHANNEL.LOG_STREAM, (newLogs: string[]) => {
+      console.log("in :", newLogs);
+      setLogs((curr) => [...newLogs, ...curr]);
+    });
+  }, []);
 
-    return { logs }
+  return { logs };
 }
