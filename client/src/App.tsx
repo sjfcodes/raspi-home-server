@@ -1,17 +1,17 @@
-import './App.css';
-import SocketStatus from './SocketStatus';
-import Esp32TempClients from './components/Esp32TempClients';
-import GpioHeaterState from './components/GpioHeaterState';
-import LogStream from './components/LogStream';
-import OverrideButtons from './components/OverrideButtons';
-import PiTemp from './components/PiTemp';
-import RoomTemp from './components/RoomTemp';
-import raspberryPiLogo from '/raspberry_pi.svg';
+import "./App.css";
+import SocketStatus from "./SocketStatus";
+import Esp32TempClients from "./components/Esp32TempClients";
+import HeaterState from "./components/HeaterState";
+import LogStream from "./components/LogStream";
+import OverrideButtons from "./components/OverrideButtons";
+import PiTemp from "./components/PiTemp";
+import RoomTemp from "./components/RoomTemp";
+import raspberryPiLogo from "/raspberry_pi.svg";
 
 function App() {
   return (
     <>
-      <div style={{ display: 'flex', alignItems: 'center' }} >
+      <div style={{ display: "flex", alignItems: "center" }}>
         <a href="https://react.dev" target="_blank">
           <img src={raspberryPiLogo} className="logo" alt="Raspbery Pi logo" />
         </a>
@@ -23,13 +23,13 @@ function App() {
       <div>
         <Esp32TempClients />
         <RoomTemp />
-        <GpioHeaterState />
+        <HeaterState />
         <OverrideButtons />
-        <LogStream />
         <PiTemp />
+        <LogStream />
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
