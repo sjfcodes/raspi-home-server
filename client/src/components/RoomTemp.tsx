@@ -1,5 +1,6 @@
 import useRoomTemp from "../hooks/useRoomTemp";
 import Card from "./Card";
+import JsonCode from "./JsonCode";
 
 export default function RoomTemp() {
   const { roomTemp, setRoomTempMax, setRoomTempMin } = useRoomTemp();
@@ -10,7 +11,11 @@ export default function RoomTemp() {
   const setTempMax: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setRoomTempMax(Number(e.target.value));
   };
-  const inputStyle = { width: "3.5rem", marginInline: ".5rem", fontSize: '2rem' };
+  const inputStyle = {
+    width: "3.5rem",
+    marginInline: ".5rem",
+    fontSize: "2rem",
+  };
 
   return (
     <Card
@@ -35,13 +40,7 @@ export default function RoomTemp() {
         </div>
       }
       showContent={false}
-      content={
-        <textarea
-          rows={5}
-          value={JSON.stringify(roomTemp, null, 4)}
-          onChange={() => null}
-        />
-      }
+      content={<JsonCode code={JSON.stringify(roomTemp, null, 4)} />}
     />
   );
 }

@@ -1,5 +1,6 @@
 import usePiTemp from "../hooks/usePiTemp";
 import Card from "./Card";
+import JsonCode from "./JsonCode";
 
 export default function PiTemp() {
   const { piTemp } = usePiTemp();
@@ -16,13 +17,8 @@ export default function PiTemp() {
         })`}</h2>
       }
       showContent={false}
-      content={
-        <textarea
-          rows={value.split("\n").length}
-          value={value}
-          onChange={() => null}
-        />
-      }
+      content={<JsonCode code={value} />}
+
     />
   );
 }

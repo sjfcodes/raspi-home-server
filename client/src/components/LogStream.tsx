@@ -1,5 +1,6 @@
 import useLogStream from "../hooks/useLogStream";
 import Card from "./Card";
+import JsonCode from "./JsonCode";
 
 export default function LogStream() {
   const { logs } = useLogStream();
@@ -9,7 +10,7 @@ export default function LogStream() {
     <Card
       label={<h2>Logs:</h2>}
       showContent={true}
-      content={<textarea rows={value.split('\n').length} value={value} onChange={() => null} />}
+      content={<JsonCode code={value} />}
     />
   );
 }

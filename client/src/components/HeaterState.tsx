@@ -1,5 +1,6 @@
 import useHeaterGpioState from "../hooks/useHeaterGpioState";
 import Card from "./Card";
+import JsonCode from "./JsonCode";
 import Slider from "./Slider/Slider";
 
 export default function HeaterState() {
@@ -14,13 +15,7 @@ export default function HeaterState() {
         </div>
       }
       showContent={false}
-      content={
-        <textarea
-          value={value}
-          rows={value.split("\n").length}
-          onChange={() => null}
-        />
-      }
+      content={<JsonCode code={value} />}
     />
   );
 }

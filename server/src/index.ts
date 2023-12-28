@@ -78,7 +78,7 @@ const onConnect = (socket: Socket) => {
     setRoomTempState(newState, undefined, socket)
   );
 
-  socket.emit(CHANNEL.LOG_STREAM, getLogs(5).reverse());
+  socket.emit(CHANNEL.LOG_STREAM, getLogs(100).reverse());
 
   socket.on("disconnect", onDisconnect);
 };

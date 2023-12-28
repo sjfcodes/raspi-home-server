@@ -1,5 +1,6 @@
 import useEsp32TempClientMap from "../hooks/useEsp32TempClientMap";
 import Card from "./Card";
+import JsonCode from "./JsonCode";
 
 export default function Esp32TempClients() {
   const { esp32TempClientMap } = useEsp32TempClientMap();
@@ -14,13 +15,7 @@ export default function Esp32TempClients() {
     <Card
       label={<h2>{`House temp:  ${isNaN(curTemp) ? "-" : curTemp + "℉"}`}</h2>}
       showContent={false}
-      content={
-        <textarea
-          value={value}
-          rows={value.split("\n").length}
-          onChange={() => null}
-        />
-      }
+      content={<JsonCode code={value} />}
     />
   );
   // const temps = Object.values(esp32TempClientMap).map(client => `${client.tempF}℉`).join(', ')
