@@ -14,9 +14,9 @@ export enum HEATER_OVERRIDE {
 }
 
 export enum THERMOSTAT {
-  _0 = "9efc8ad4",
-  _1 = "abe342a8",
-  _2 = "9ffc8ad4",
+  "9efc8ad4" = "Living Room",
+  "abe342a8" = "Master Bed",
+  "9ffc8ad4" = "Aux",
 }
 
 export const HEATER_GPIO_DEFAULT_STATE: HeaterGpioState = {

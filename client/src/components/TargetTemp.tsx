@@ -1,15 +1,15 @@
-import useRoomTemp from "../hooks/useRoomTemp";
+import useTargetTemp from "../hooks/useTargetTemp";
 import Card from "./Card";
 import JsonCode from "./JsonCode";
 
-export default function RoomTemp() {
-  const { roomTemp, setRoomTempMax, setRoomTempMin } = useRoomTemp();
+export default function TargetTemp() {
+  const { targetTemp, setTargetTempMax, setTargetTempMin } = useTargetTemp();
 
   const setTempMin: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    setRoomTempMin(Number(e.target.value));
+    setTargetTempMin(Number(e.target.value));
   };
   const setTempMax: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    setRoomTempMax(Number(e.target.value));
+    setTargetTempMax(Number(e.target.value));
   };
   const inputStyle = {
     width: "3.5rem",
@@ -25,7 +25,7 @@ export default function RoomTemp() {
           <input
             type="number"
             style={inputStyle}
-            value={roomTemp.min || 0}
+            value={targetTemp.min || 0}
             onChange={setTempMin}
             onClick={(e) => e.stopPropagation()}
           />
@@ -33,14 +33,14 @@ export default function RoomTemp() {
           <input
             type="number"
             style={inputStyle}
-            value={roomTemp.max || 0}
+            value={targetTemp.max || 0}
             onChange={setTempMax}
             onClick={(e) => e.stopPropagation()}
           />
         </div>
       }
       showContent={false}
-      content={<JsonCode code={JSON.stringify(roomTemp, null, 4)} />}
+      content={<JsonCode code={JSON.stringify(targetTemp, null, 4)} />}
     />
   );
 }

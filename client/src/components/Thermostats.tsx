@@ -4,7 +4,11 @@ import Thermostat from "./Thermostat";
 export default function Thermostats() {
   const { thermostatMap } = useThermostats();
 
-  return Object.values(thermostatMap).map((thermostat) => (
+  const sorted = Object.values(thermostatMap).sort((a, b) =>
+    a.chipName < b.chipName ? 1 : -1
+  );
+
+  return sorted.map((thermostat) => (
     <Thermostat key={thermostat.chipId} thermostat={thermostat} />
   ));
 }

@@ -16,7 +16,7 @@ export default function Thermostat({
   return (
     <Card
       label={
-        <h2>{`Thermostat ${thermostat.chipId}:  ${
+        <h2>{`${thermostat.chipName}:  ${
           isNaN(curTemp) ? "-" : curTemp + "℉"
         }`}</h2>
       }

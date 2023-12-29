@@ -4,7 +4,7 @@ import HeaterState from "./components/HeaterState";
 import LogStream from "./components/LogStream";
 import OverrideButtons from "./components/OverrideButtons";
 import PiTemp from "./components/PiTemp";
-import RoomTemp from "./components/RoomTemp";
+import TargetTemp from "./components/TargetTemp";
 import Thermostats from "./components/Thermostats";
 import raspberryPiLogo from "/raspberry_pi.svg";
 
@@ -22,8 +22,8 @@ function App() {
       <hr />
       <div>
         <HeaterState />
+        <TargetTemp />
         <Thermostats />
-        <RoomTemp />
         <OverrideButtons />
         <PiTemp />
         <LogStream />

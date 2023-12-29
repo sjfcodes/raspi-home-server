@@ -1,5 +1,5 @@
 import { Server, Socket } from "socket.io";
-import { CHANNEL } from "../../../constant/constant";
+import { CHANNEL, THERMOSTAT } from "../../../constant/constant";
 import { Thermostat, ThermostatMap } from "../../../types/main";
 import { getSortedObject } from "../utils/general";
 import { emitStateUpdate } from "../websocket/emit";
@@ -33,13 +33,13 @@ export const setEsp32Client = (
   const tempAverage = Math.trunc(
     history.reduce((acc, curr) => acc + curr, 0) / history.length
   );
-  
 
   clientMapState = getSortedObject({
     ...clientMapState,
     [client.chipId]: {
       chipId: client.chipId,
-      chipName: client.chipName,
+      // @ts-ignore
+      chipName: THERMOSTAT[client.chipId] || client.chipName,
       tempF: tempAverage,
       calibrate: client.calibrate || 0,
       updatedAt: new Date().toLocaleTimeString(),

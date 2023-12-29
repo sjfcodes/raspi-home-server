@@ -3,7 +3,7 @@ import express from "express";
 import { createServer } from "node:http";
 
 import { Server, Socket } from "socket.io";
-import { CHANNEL, THERMOSTAT } from "../../constant/constant";
+import { CHANNEL } from "../../constant/constant";
 import { HeaterGpioState, RoomTempState, Thermostat } from "../../types/main";
 import { clientMapState, setEsp32Client } from "./esp32/temperature";
 import {
@@ -27,12 +27,13 @@ const io = new Server(server);
 
 const { PORT = 3000 } = process.env;
 const LOOP_MS = 10000;
+let primaryThermostat = "9efc8ad4"; // THERMOSTAT.LIVING_ROOM_0
 
 // check heater status changes every x seconds
 setInterval(() => {
   const curTemp =
-    clientMapState?.[THERMOSTAT._0]?.tempF +
-    clientMapState?.[THERMOSTAT._0]?.calibrate;
+    clientMapState?.[primaryThermostat]?.tempF +
+    clientMapState?.[primaryThermostat]?.calibrate;
   writeLog(`current temp is ${curTemp}`, io);
 
   // if current temp is below min
