@@ -26,7 +26,7 @@ const server = createServer(app);
 const io = new Server(server);
 
 const { PORT = 3000 } = process.env;
-const LOOP_MS = 10000;
+const LOOP_MS = 1000;
 let primaryThermostat = "9efc8ad4"; // THERMOSTAT.LIVING_ROOM_0
 
 // check heater status changes every x seconds
