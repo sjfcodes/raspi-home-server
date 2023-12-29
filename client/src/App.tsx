@@ -1,11 +1,11 @@
 import "./App.css";
 import SocketStatus from "./SocketStatus";
-import Esp32TempClients from "./components/Esp32TempClients";
 import HeaterState from "./components/HeaterState";
 import LogStream from "./components/LogStream";
 import OverrideButtons from "./components/OverrideButtons";
 import PiTemp from "./components/PiTemp";
 import RoomTemp from "./components/RoomTemp";
+import Thermostats from "./components/Thermostats";
 import raspberryPiLogo from "/raspberry_pi.svg";
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
       <hr />
       <div>
         <HeaterState />
-        <Esp32TempClients />
+        <Thermostats />
         <RoomTemp />
         <OverrideButtons />
         <PiTemp />

@@ -10,8 +10,11 @@ export const getLogs = (count = 5) => {
   return lines.slice(-count);
 };
 
+let lastLine = "";
 export const writeLog = (line: string, io?: Server, socket?: Socket) => {
+  if (line === lastLine) return;
   const message = `${new Date().toISOString()}: ${line}`;
   appendFileSync(logFile, "\n" + message, { encoding: "utf-8" });
   emitStateUpdate(CHANNEL.LOG_STREAM, [message], io, socket);
+  lastLine = line;
 };

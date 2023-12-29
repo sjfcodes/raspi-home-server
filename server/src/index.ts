@@ -4,11 +4,7 @@ import { createServer } from "node:http";
 
 import { Server, Socket } from "socket.io";
 import { CHANNEL, THERMOSTAT } from "../../constant/constant";
-import {
-  Esp32ClientState,
-  HeaterGpioState,
-  RoomTempState,
-} from "../../types/main";
+import { HeaterGpioState, RoomTempState, Thermostat } from "../../types/main";
 import { clientMapState, setEsp32Client } from "./esp32/temperature";
 import {
   heaterGpio,
@@ -32,16 +28,12 @@ const io = new Server(server);
 const { PORT = 3000 } = process.env;
 const LOOP_MS = 10000;
 
-let lastTemp = 0;
 // check heater status changes every x seconds
 setInterval(() => {
   const curTemp =
-    clientMapState?.[THERMOSTAT.PRIMARY]?.tempF +
-    clientMapState?.[THERMOSTAT.PRIMARY]?.calibrate;
-  if (curTemp !== lastTemp) {
-    writeLog(`current temp is ${curTemp}`, io);
-    lastTemp = curTemp;
-  }
+    clientMapState?.[THERMOSTAT._0]?.tempF +
+    clientMapState?.[THERMOSTAT._0]?.calibrate;
+  writeLog(`current temp is ${curTemp}`, io);
 
   // if current temp is below min
   const shouldTurnOn = curTemp <= roomTempState.min;
@@ -68,13 +60,13 @@ const onConnect = (socket: Socket) => {
     setHeaterGpioState(newState, undefined, socket)
   );
 
-  socket.emit(CHANNEL.ESP32_TEMP_CLIENT_MAP, clientMapState);
-  socket.on(CHANNEL.ESP32_TEMP_CLIENT_MAP, (newState: Esp32ClientState) =>
+  socket.emit(CHANNEL.THERMOSTAT_MAP, clientMapState);
+  socket.on(CHANNEL.THERMOSTAT_MAP, (newState: Thermostat) =>
     setEsp32Client(newState, undefined, socket)
   );
 
-  socket.emit(CHANNEL.ROOM_TEMP, roomTempState);
-  socket.on(CHANNEL.ROOM_TEMP, (newState: RoomTempState) =>
+  socket.emit(CHANNEL.TARGET_TEMP, roomTempState);
+  socket.on(CHANNEL.TARGET_TEMP, (newState: RoomTempState) =>
     setRoomTempState(newState, undefined, socket)
   );
 

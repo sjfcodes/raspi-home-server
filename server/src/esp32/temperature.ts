@@ -1,12 +1,13 @@
 import { Server, Socket } from "socket.io";
 import { CHANNEL } from "../../../constant/constant";
-import { Esp32ClientMap, Esp32ClientState } from "../../../types/main";
+import { Thermostat, ThermostatMap } from "../../../types/main";
+import { getSortedObject } from "../utils/general";
 import { emitStateUpdate } from "../websocket/emit";
 
-export const clientMapState: Esp32ClientMap = {};
+export let clientMapState: ThermostatMap = {};
 
 export const setEsp32Client = (
-  client: Esp32ClientState,
+  client: Thermostat,
   io?: Server,
   socket?: Socket
 ) => {
@@ -32,15 +33,28 @@ export const setEsp32Client = (
   const tempAverage = Math.trunc(
     history.reduce((acc, curr) => acc + curr, 0) / history.length
   );
+  
 
-  clientMapState[client.chipId as string] = {
-    chipId: client.chipId,
-    chipName: client.chipName,
-    tempF: tempAverage,
-    calibrate: client.calibrate || 0,
-    updatedAt: new Date().toLocaleTimeString(),
-    tempFHistory: history,
-  };
+  clientMapState = getSortedObject({
+    ...clientMapState,
+    [client.chipId]: {
+      chipId: client.chipId,
+      chipName: client.chipName,
+      tempF: tempAverage,
+      calibrate: client.calibrate || 0,
+      updatedAt: new Date().toLocaleTimeString(),
+      tempFHistory: history,
+    },
+  });
 
-  emitStateUpdate(CHANNEL.ESP32_TEMP_CLIENT_MAP, clientMapState, io, socket);
+  // clientMapState[client.chipId as string] = {
+  //   chipId: client.chipId,
+  //   chipName: client.chipName,
+  //   tempF: tempAverage,
+  //   calibrate: client.calibrate || 0,
+  //   updatedAt: new Date().toLocaleTimeString(),
+  //   tempFHistory: history,
+  // };
+
+  emitStateUpdate(CHANNEL.THERMOSTAT_MAP, clientMapState, io, socket);
 };
