@@ -1,3 +1,4 @@
+import { THERMOSTAT } from "../../../constant/constant";
 import useEsp32TempClientMap from "../hooks/useEsp32TempClientMap";
 import Card from "./Card";
 import JsonCode from "./JsonCode";
@@ -5,10 +6,9 @@ import JsonCode from "./JsonCode";
 export default function Esp32TempClients() {
   const { esp32TempClientMap } = useEsp32TempClientMap();
 
-  // esp32 board id for living room is "abe342a8"
   const curTemp =
-    esp32TempClientMap?.abe342a8?.tempF +
-    esp32TempClientMap?.abe342a8?.calibrate;
+    esp32TempClientMap?.[THERMOSTAT.PRIMARY]?.tempF +
+    esp32TempClientMap?.[THERMOSTAT.PRIMARY]?.calibrate;
 
   const value = JSON.stringify(esp32TempClientMap, null, 4);
   return (

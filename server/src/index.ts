@@ -3,7 +3,7 @@ import express from "express";
 import { createServer } from "node:http";
 
 import { Server, Socket } from "socket.io";
-import { CHANNEL } from "../../constant/constant";
+import { CHANNEL, THERMOSTAT } from "../../constant/constant";
 import {
   Esp32ClientState,
   HeaterGpioState,
@@ -35,9 +35,9 @@ const LOOP_MS = 10000;
 let lastTemp = 0;
 // check heater status changes every x seconds
 setInterval(() => {
-  // esp32 board id for living room is "abe342a8"
   const curTemp =
-    clientMapState?.abe342a8?.tempF + clientMapState?.abe342a8?.calibrate;
+    clientMapState?.[THERMOSTAT.PRIMARY]?.tempF +
+    clientMapState?.[THERMOSTAT.PRIMARY]?.calibrate;
   if (curTemp !== lastTemp) {
     writeLog(`current temp is ${curTemp}`, io);
     lastTemp = curTemp;
