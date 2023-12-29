@@ -22,21 +22,22 @@ export const setEsp32Client = (
 
   let history = clientMapState[client.chipId as string]?.tempFHistory || [];
   if (client?.tempF) {
-    if (!history.length) history.push(client?.tempF);
+    const formatted = Math.trunc(client?.tempF);
+    if (!history.length) history.push(formatted);
     else {
-      history = [client.tempF, ...history.slice(0, 59)];
+      history = [formatted, ...history.slice(0, 59)];
     }
   }
 
-  const tempAverage = (
+  const tempAverage = Math.trunc(
     history.reduce((acc, curr) => acc + curr, 0) / history.length
-  ).toFixed(0);
+  );
 
   clientMapState[client.chipId as string] = {
     chipId: client.chipId,
     chipName: client.chipName,
-    tempF: Number(tempAverage),
-    calibrate: client.calibrate || -5,
+    tempF: tempAverage,
+    calibrate: client.calibrate || 0,
     updatedAt: new Date().toLocaleTimeString(),
     tempFHistory: history,
   };

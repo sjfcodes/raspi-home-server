@@ -13,7 +13,7 @@ export default function PiTemp() {
     <Card
       label={
         <h2>{`Pi Temp: ${piTemp.tempF ? piTemp.tempF + "℉" : "-"} (${
-          isNaN(percentage) ? "-" : percentage.toFixed(0) + "%"
+          isNaN(percentage) ? "-" : Math.trunc(percentage) + "%"
         })`}</h2>
       }
       showContent={false}

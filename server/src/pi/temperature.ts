@@ -15,9 +15,9 @@ export const setPiTemp = (io: Server) => {
     if (isNaN(temp)) {
         data.message = 'temp must be number';
     } else {
-        const tempC = Number((temp / 1000).toFixed(0));
+        const tempC = Math.trunc((temp / 1000));
         data.tempC = tempC
-        data.tempF = Number(((tempC * 9 / 5) + 32).toFixed(0));
+        data.tempF = Math.trunc((tempC * 9 / 5) + 32);
         data.message = 'ok';
     }
 
