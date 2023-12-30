@@ -37,8 +37,8 @@ setInterval(() => {
   writeLog(`current temp is ${curTemp}`, io);
 
   // if current temp is below min
-  const shouldTurnOn = curTemp <= roomTempState.min;
-  const shouldTurnOff = curTemp > roomTempState.max;
+  const shouldTurnOn = !heaterGpioState.isOn && curTemp <= roomTempState.min;
+  const shouldTurnOff = heaterGpioState.isOn && curTemp > roomTempState.max;
 
   if (shouldTurnOn) {
     setHeaterGpioOn(io);
