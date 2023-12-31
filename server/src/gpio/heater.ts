@@ -1,5 +1,6 @@
 import { DigitalOutput } from "raspi-gpio";
 import { Server, Socket } from "socket.io";
+import { WebSocketServer } from "ws";
 import {
   CHANNEL,
   HEATER_GPIO_DEFAULT_STATE,
@@ -7,10 +8,42 @@ import {
 } from "../../../constant/constant";
 import { HeaterGpioState, HeaterManualOverride } from "../../../types/main";
 import { writeLog } from "../logs/logger";
-import { emitStateUpdate } from "../websocket/emit";
+import { emitStateUpdate as _emitStateUpdate } from "../websocket/emit";
 
 export const heaterGpio = new DigitalOutput("GPIO4");
 export let heaterGpioState = HEATER_GPIO_DEFAULT_STATE;
+
+const wssHeaterGpioState = new WebSocketServer({
+  path: "/heaterGpioState",
+  port: 3001,
+});
+wssHeaterGpioState.on("connection", (ws) => {
+  console.log("New client connected!");
+  ws.send(JSON.stringify(heaterGpioState));
+  ws.on("close", () => console.log("Client has disconnected!"));
+  ws.on("message", (data) => {
+    wssHeaterGpioState.clients.forEach((client) => {
+      console.log(`distributing message: ${data}`);
+      client.send(JSON.stringify(heaterGpioState));
+    });
+  });
+  ws.onerror = function () {
+    console.log("websocket error");
+  };
+});
+
+const emitStateUpdate = (
+  channel: string,
+  state: any,
+  io?: Server,
+  socket?: Socket,
+  includeHost = false
+) => {
+  wssHeaterGpioState.clients.forEach((client) => {
+    client.send(JSON.stringify(heaterGpioState));
+  });
+  _emitStateUpdate(channel, state, io, socket, includeHost);
+};
 
 export const setHeaterGpioOff = (io?: Server, socket?: Socket) => {
   if (heaterGpioState.manualOverride?.status === HEATER_OVERRIDE.ON) {
@@ -102,3 +135,5 @@ export const setHeaterGpioState = (
     emitStateUpdate(CHANNEL.HEATER_GPIO_0, heaterGpioState, io, socket);
   }
 };
+
+

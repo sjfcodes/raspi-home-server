@@ -21,40 +21,17 @@ export const setEsp32Client = (
     return;
   }
 
-  let history = clientMapState[client.chipId as string]?.tempFHistory || [];
-  if (client?.tempF) {
-    const formatted = Math.trunc(client?.tempF);
-    if (!history.length) history.push(formatted);
-    else {
-      history = [formatted, ...history.slice(0, 59)];
-    }
-  }
-
-  const tempAverage = Math.trunc(
-    history.reduce((acc, curr) => acc + curr, 0) / history.length
-  );
-
   clientMapState = getSortedObject({
     ...clientMapState,
     [client.chipId]: {
       chipId: client.chipId,
       // @ts-ignore
       chipName: THERMOSTAT[client.chipId] || client.chipName,
-      tempF: tempAverage,
+      tempF: Math.trunc(client?.tempF),
       calibrate: client.calibrate || 0,
       updatedAt: new Date().toLocaleTimeString(),
-      tempFHistory: history,
     },
   });
-
-  // clientMapState[client.chipId as string] = {
-  //   chipId: client.chipId,
-  //   chipName: client.chipName,
-  //   tempF: tempAverage,
-  //   calibrate: client.calibrate || 0,
-  //   updatedAt: new Date().toLocaleTimeString(),
-  //   tempFHistory: history,
-  // };
 
   emitStateUpdate(CHANNEL.THERMOSTAT_MAP, clientMapState, io, socket);
 };

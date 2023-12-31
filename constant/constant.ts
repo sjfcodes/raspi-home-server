@@ -26,6 +26,6 @@ export const HEATER_GPIO_DEFAULT_STATE: HeaterGpioState = {
 
 export const ROOM_TEMP_DEFAULT_STATE: RoomTempState = {
   type: "F",
-  min: 65,
+  min: 67,
   max: 70,
 };
