@@ -21,5 +21,5 @@ export const emitStateUpdate = (
     io.emit(channel, state);
   }
 
-  console.log("EMIT: ", channel, JSON.stringify(state));
+  // console.log("EMIT: ", channel, JSON.stringify(state));
 };

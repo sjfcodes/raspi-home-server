@@ -14,7 +14,11 @@ export const setRoomTempState = (
     console.error(new Error("newState must be defined"));
     return;
   }
+  
+  // only set new state if valid
+  if (newState.max > newState.min) {
+    roomTempState = newState;
+  }
 
-  roomTempState = newState;
   emitStateUpdate(CHANNEL.TARGET_TEMP, roomTempState, io, socket);
 };

@@ -49,26 +49,26 @@ setInterval(() => {
 
 // user disconnect
 const onDisconnect = () => {
-  console.log("socket.on.disconnect");
+  // console.log("socket.on.disconnect");
 };
 
 // user connect
 const onConnect = (socket: Socket) => {
-  console.log("io.on.connection");
+  // console.log("io.on.connection");
 
   socket.emit(CHANNEL.HEATER_GPIO_0, heaterGpioState);
   socket.on(CHANNEL.HEATER_GPIO_0, (newState: HeaterGpioState) =>
-    setHeaterGpioState(newState, undefined, socket)
+    setHeaterGpioState(newState, io /*, socket*/)
   );
 
   socket.emit(CHANNEL.THERMOSTAT_MAP, clientMapState);
   socket.on(CHANNEL.THERMOSTAT_MAP, (newState: Thermostat) =>
-    setEsp32Client(newState, undefined, socket)
+    setEsp32Client(newState, io /*, socket*/)
   );
 
   socket.emit(CHANNEL.TARGET_TEMP, roomTempState);
   socket.on(CHANNEL.TARGET_TEMP, (newState: RoomTempState) =>
-    setRoomTempState(newState, undefined, socket)
+    setRoomTempState(newState, io /*, socket*/)
   );
 
   socket.emit(CHANNEL.LOG_STREAM, getLogs(100).reverse());
@@ -79,7 +79,7 @@ const onConnect = (socket: Socket) => {
 io.on("connection", onConnect);
 
 app.post("/api/temperature", (req, res) => {
-  console.log("POST: ", req.body);
+  // console.log("POST: ", req.body);
   if (req.body) setEsp32Client(req.body, io);
   res.status(200).send({ ...req.body, serverName: "raspi-home-server" });
 });
@@ -87,7 +87,7 @@ app.post("/api/temperature", (req, res) => {
 server.listen(PORT, () => {
   // setHeaterGpioOff(io);
   setInterval(() => setPiTemp(io), LOOP_MS);
-  console.log(`Server running at http://${ipAddress}:${PORT}.`);
+  console.log(`Running server at http://${ipAddress}:${PORT}.`);
 });
 
 ["SIGINT", "SIGTERM", "SIGQUIT"].forEach((signal) =>
