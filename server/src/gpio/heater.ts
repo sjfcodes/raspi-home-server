@@ -6,13 +6,10 @@ import {
   HEATER_GPIO_DEFAULT_STATE,
   HEATER_OVERRIDE,
 } from "../../../constant/constant";
-import {
-  HeaterGpioState,
-  HeaterManualOverride,
-  RoomTempState,
-} from "../../../types/main";
+import { HeaterGpioState, HeaterManualOverride } from "../../../types/main";
 import { clientMapState } from "../esp32/temperature";
 import { writeLog } from "../logs/logger";
+import { roomTempState } from "../room/temperature";
 
 export const heaterGpio = new DigitalOutput("GPIO4");
 export let heaterGpioState = HEATER_GPIO_DEFAULT_STATE;
@@ -23,9 +20,9 @@ const options = {
 
 const wssHeaterGpio = new WebSocketServer(options);
 wssHeaterGpio.on("connection", (ws) => {
-  console.log("New client connected!");
+  console.log("wssHeaterGpio client connected");
   ws.send(JSON.stringify(heaterGpioState));
-  ws.on("close", () => console.log("Client has disconnected!"));
+  ws.on("close", () => console.log("wssHeaterGpio client disconnected"));
   ws.on("message", (data) => {
     const input = JSON.parse(data.toString());
     heaterGpioState.cabHumidity = input.cabHumidity;
@@ -42,7 +39,6 @@ wssHeaterGpio.on("connection", (ws) => {
   };
 });
 
-// [TODO]: delete this middleware function once browwser client migrate away from socket.io
 const emitStateUpdate = () => {
   wssHeaterGpio.clients.forEach((client) => {
     client.send(JSON.stringify(heaterGpioState));
@@ -50,11 +46,7 @@ const emitStateUpdate = () => {
 };
 
 // check heater status changes every x seconds
-export const checkHeaterStatus = (
-  io: Server,
-  roomTempState: RoomTempState,
-  forceOn = false
-) => {
+export const checkHeaterStatus = (io: Server, forceOn = false) => {
   let primaryThermostat = "9efc8ad4"; // THERMOSTAT.LIVING_ROOM_0
   const curTemp =
     clientMapState?.[primaryThermostat]?.tempF +

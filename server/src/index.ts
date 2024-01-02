@@ -4,15 +4,9 @@ import { createServer } from "node:http";
 
 import { Server, Socket } from "socket.io";
 import { CHANNEL } from "../../constant/constant";
-import { HeaterGpioState, RoomTempState, Thermostat } from "../../types/main";
+import { RoomTempState, Thermostat } from "../../types/main";
 import { clientMapState, setEsp32Client } from "./esp32/temperature";
-import {
-  checkHeaterStatus,
-  heaterGpio,
-  heaterGpioState,
-  setHeaterGpioOff,
-  setHeaterGpioState,
-} from "./gpio/heater";
+import { checkHeaterStatus, heaterGpio, setHeaterGpioOff } from "./gpio/heater";
 import { getLogs } from "./logs/logger";
 import { setPiTemp } from "./pi/temperature";
 import { roomTempState, setRoomTempState } from "./room/temperature";
@@ -31,11 +25,6 @@ const LOOP_MS = 1000;
 // on socket client connection
 const onConnect = (socket: Socket) => {
   console.log("Socket client connected.");
-
-  socket.emit(CHANNEL.HEATER_GPIO_0, heaterGpioState);
-  socket.on(CHANNEL.HEATER_GPIO_0, (newState: HeaterGpioState) =>
-    setHeaterGpioState(newState, io)
-  );
 
   socket.emit(CHANNEL.THERMOSTAT_MAP, clientMapState);
   socket.on(CHANNEL.THERMOSTAT_MAP, (newState: Thermostat) =>
@@ -60,7 +49,7 @@ app.post("/api/temperature", (req, res) => {
 });
 
 server.listen(PORT, () => {
-  setInterval(() => checkHeaterStatus(io, roomTempState), LOOP_MS);
+  setInterval(() => checkHeaterStatus(io), LOOP_MS);
   setInterval(() => setPiTemp(io), LOOP_MS);
   console.log(`Running server at http://${ipAddress}:${PORT}.`);
 });
