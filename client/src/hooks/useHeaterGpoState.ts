@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
 import {
   CHANNEL,
-  HEATER_GPIO_DEFAULT_STATE,
+  HEATER_GPO_DEFAULT_STATE,
   HEATER_OVERRIDE,
   RASP_PI,
 } from "../../../constant/constant";
-import { HeaterGpioState, HeaterManualOverride } from "../../../types/main";
+import { HeaterCabState, HeaterManualOverride } from "../../../types/main";
 import { socket } from "../utils/socket";
 
-export default function useHeaterGpioState() {
-  const [heaterGpio, setHeaterGpio] = useState(HEATER_GPIO_DEFAULT_STATE);
+export default function useHeaterGpoState() {
+  const [heaterGpo, setHeaterGpio] = useState(HEATER_GPO_DEFAULT_STATE);
   const [ws, setWs] = useState(null as WebSocket | null);
 
   useEffect(() => {
     // connect to ws server
     const ws = new WebSocket(
-      `ws://${RASP_PI.ip}:${RASP_PI.wsPort}${CHANNEL.HEATER_GPIO_0}`
+      `ws://${RASP_PI.ip}:${RASP_PI.wsPort}${CHANNEL.HEATER_CAB_0}`
     );
 
     // add event listener reacting when message is received
@@ -35,9 +35,9 @@ export default function useHeaterGpioState() {
   const togglePin = (forceOn = false) => {
     setHeaterGpio((curr) => {
       if (ws) {
-        const newState: HeaterGpioState = {
+        const newState: HeaterCabState = {
           ...curr,
-          isOn: forceOn || !curr?.isOn,
+          heaterPinVal: forceOn || !curr?.heaterPinVal,
         };
 
         console.log("out:", newState);
@@ -58,12 +58,12 @@ export default function useHeaterGpioState() {
     }
 
     setHeaterGpio((curr) => {
-      const newState: HeaterGpioState = { ...curr, manualOverride };
+      const newState: HeaterCabState = { ...curr, manualOverride };
       console.log("out:", newState);
-      socket.emit(CHANNEL.HEATER_GPIO_0, newState);
+      socket.emit(CHANNEL.HEATER_CAB_0, newState);
       return newState;
     });
   };
 
-  return { heaterGpio, togglePin, setManualOverride };
+  return { heaterGpo, togglePin, setManualOverride };
 }

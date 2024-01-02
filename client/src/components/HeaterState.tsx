@@ -1,17 +1,20 @@
-import useHeaterGpioState from "../hooks/useHeaterGpioState";
+import useHeaterGpoState from "../hooks/useHeaterGpoState";
 import Card from "./Card";
 import JsonCode from "./JsonCode";
 import Slider from "./Slider/Slider";
 
 export default function HeaterState() {
-  const { heaterGpio, togglePin } = useHeaterGpioState();
-  const value = JSON.stringify(heaterGpio, null, 4);
+  const { heaterGpo, togglePin } = useHeaterGpoState();
+  const value = JSON.stringify(heaterGpo, null, 4);
   return (
     <Card
       label={
         <div style={{ display: "flex" }}>
           <h2 style={{ marginRight: "1rem" }}>Heater: </h2>
-          <Slider checked={heaterGpio.isOn} onChange={() => togglePin()} />
+          <Slider
+            checked={heaterGpo.heaterPinVal}
+            onChange={() => togglePin()}
+          />
         </div>
       }
       showContent={false}

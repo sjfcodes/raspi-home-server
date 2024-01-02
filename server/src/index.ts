@@ -6,7 +6,7 @@ import { Server, Socket } from "socket.io";
 import { CHANNEL } from "../../constant/constant";
 import { RoomTempState, Thermostat } from "../../types/main";
 import { clientMapState, setEsp32Client } from "./esp32/temperature";
-import { checkHeaterStatus, heaterGpio, setHeaterGpioOff } from "./gpio/heater";
+import { checkHeaterStatus } from "./gpio/heater";
 import { getLogs } from "./logs/logger";
 import { setPiTemp } from "./pi/temperature";
 import { roomTempState, setRoomTempState } from "./room/temperature";
@@ -54,10 +54,10 @@ server.listen(PORT, () => {
   console.log(`Running server at http://${ipAddress}:${PORT}.`);
 });
 
-["SIGINT", "SIGTERM", "SIGQUIT"].forEach((signal) =>
-  process.on(signal, () => {
-    setHeaterGpioOff(io);
-    heaterGpio.destroy();
-    process.exit();
-  })
-);
+// ["SIGINT", "SIGTERM", "SIGQUIT"].forEach((signal) =>
+//   process.on(signal, () => {
+//     setHeaterGpoOff(io);
+//     heaterGpo.destroy();
+//     process.exit();
+//   })
+// );

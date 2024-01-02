@@ -9,8 +9,8 @@ export type HeaterManualOverride = {
   expireAt: string;
 };
 
-export type HeaterGpioState = {
-  isOn: boolean;
+export type HeaterCabState = {
+  heaterPinVal: boolean;
   manualOverride: HeaterManualOverride | null;
   cabHumidity: number;
   cabTempF: number;

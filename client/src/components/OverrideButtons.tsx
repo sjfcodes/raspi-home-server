@@ -1,15 +1,15 @@
 import { HEATER_OVERRIDE } from "../../../constant/constant";
-import useHeaterGpioState from "../hooks/useHeaterGpioState";
+import useHeaterGpoState from "../hooks/useHeaterGpoState";
 import Card from "./Card";
 
 const restTimes = [0.1, 15, 30, 60];
 
 export default function OverrideButtons() {
-  const { heaterGpio, setManualOverride } = useHeaterGpioState();
+  const { heaterGpo, setManualOverride } = useHeaterGpoState();
 
-  const controlButtons = heaterGpio.manualOverride ? (
+  const controlButtons = heaterGpo.manualOverride ? (
     <button
-      className={`background-${heaterGpio?.isOn ? "on" : "off"}`}
+      className={`background-${heaterGpo?.heaterPinVal ? "on" : "off"}`}
       onClick={() => setManualOverride(HEATER_OVERRIDE.OFF, null)}
     >
       cancel timeout
@@ -34,9 +34,9 @@ export default function OverrideButtons() {
       label={
         <h2>
           Timeout:{" "}
-          {heaterGpio?.manualOverride?.expireAt
+          {heaterGpo?.manualOverride?.expireAt
             ? ` until ${new Date(
-                heaterGpio.manualOverride.expireAt
+                heaterGpo.manualOverride.expireAt
               ).toLocaleTimeString(undefined, { timeStyle: "short" })}`
             : ""}
         </h2>
