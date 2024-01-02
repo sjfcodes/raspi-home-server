@@ -1,7 +1,12 @@
 import { HeaterGpioState, RoomTempState } from "../types/main";
 
+export const RASP_PI = {
+  ip: "192.168.68.142",
+  wsPort: 3001,
+};
+
 export enum CHANNEL {
-  HEATER_GPIO_0 = "gpio-heater-0",
+  HEATER_GPIO_0 = "/heater-cab-0",
   THERMOSTAT_MAP = "thermostat-map-0",
   PI_TEMP = "pi-temp-0",
   TARGET_TEMP = "target-temp-0",
@@ -22,6 +27,8 @@ export enum THERMOSTAT {
 export const HEATER_GPIO_DEFAULT_STATE: HeaterGpioState = {
   isOn: false,
   manualOverride: null,
+  cabHumidity: 0,
+  cabTempF: 0,
 };
 
 export const ROOM_TEMP_DEFAULT_STATE: RoomTempState = {

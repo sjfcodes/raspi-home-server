@@ -12,6 +12,8 @@ export type HeaterManualOverride = {
 export type HeaterGpioState = {
   isOn: boolean;
   manualOverride: HeaterManualOverride | null;
+  cabHumidity: number;
+  cabTempF: number;
 };
 
 export type Thermostat = {
