@@ -49,14 +49,14 @@ app.post("/api/temperature", (req, res) => {
 });
 
 server.listen(PORT, () => {
-  setInterval(() => checkHeaterStatus(io), LOOP_MS);
+  setInterval(checkHeaterStatus, LOOP_MS);
   setInterval(() => setPiTemp(io), LOOP_MS);
   console.log(`Running server at http://${ipAddress}:${PORT}.`);
 });
 
 // ["SIGINT", "SIGTERM", "SIGQUIT"].forEach((signal) =>
 //   process.on(signal, () => {
-//     setHeaterGpoOff(io);
+//     setHeaterGpoOff();
 //     heaterGpo.destroy();
 //     process.exit();
 //   })

@@ -1,5 +1,4 @@
 import { DigitalOutput } from "raspi-gpio";
-import { Server, Socket } from "socket.io";
 import { WebSocketServer } from "ws";
 import {
   CHANNEL,
@@ -51,12 +50,12 @@ const emitStateUpdate = () => {
 };
 
 // check heater status changes every x seconds
-export const checkHeaterStatus = (io: Server, forceOn = false) => {
+export const checkHeaterStatus = (forceOn = false) => {
   let primaryThermostat = "9efc8ad4"; // THERMOSTAT.LIVING_ROOM_0
   const curTemp =
     clientMapState?.[primaryThermostat]?.tempF +
     clientMapState?.[primaryThermostat]?.calibrate;
-  writeLog(`current temp is ${curTemp}`, io);
+  writeLog(`current temp is ${curTemp}`);
 
   // if heater off & current temp below below min
   const shouldTurnOn =
@@ -66,78 +65,72 @@ export const checkHeaterStatus = (io: Server, forceOn = false) => {
     heaterGpoState.heaterPinVal === 1 && curTemp > roomTempState.max;
 
   if (forceOn || shouldTurnOn) {
-    setHeaterGpioOn(io);
+    setHeaterGpioOn();
   } else if (shouldTurnOff) {
-    setHeaterGpoOff(io);
+    setHeaterGpoOff();
   }
 };
 
-export const setHeaterGpoOff = (io?: Server, socket?: Socket) => {
+export const setHeaterGpoOff = (emit = true) => {
   if (heaterGpoState.manualOverride?.status === HEATER_OVERRIDE.ON) {
-    setHeaterGpioOn(io, socket);
+    setHeaterGpioOn();
     return;
   }
 
   heaterGpo.write(0);
   heaterGpoState.heaterPinVal = 0;
-  emitStateUpdate();
-  writeLog("heater off", io, socket);
+  if (emit) emitStateUpdate();
+  writeLog("heater off");
 };
 
-export const setHeaterGpioOn = (io?: Server, socket?: Socket) => {
+export const setHeaterGpioOn = (emit = true) => {
   if (heaterGpoState.manualOverride?.status === HEATER_OVERRIDE.OFF) {
-    setHeaterGpoOff(io, socket);
+    setHeaterGpoOff();
     return;
   }
 
   heaterGpo.write(1);
   heaterGpoState.heaterPinVal = 1;
-  emitStateUpdate();
-  writeLog("heater on", io, socket);
+  if (emit) emitStateUpdate();
+  writeLog("heater on");
 };
 
-let timeout: NodeJS.Timeout;
-export const setHeaterManualOverride = (
-  override: HeaterManualOverride | null,
-  io?: Server,
-  socket?: Socket
-) => {
-  if (override?.expireAt) {
-    const ms = new Date(override?.expireAt).getTime();
-    const remaining = ms - Date.now();
-    // if new override has expired, do not set
-    if (remaining < 0) {
-      return;
-    }
+// let timeout: NodeJS.Timeout;
+// export const setHeaterManualOverride = (
+//   override: HeaterManualOverride | null
+// ) => {
+//   if (override?.expireAt) {
+//     const ms = new Date(override?.expireAt).getTime();
+//     const remaining = ms - Date.now();
+//     // if new override has expired, do not set
+//     if (remaining < 0) {
+//       return;
+//     }
 
-    if (override.status === HEATER_OVERRIDE.OFF) {
-      setHeaterGpoOff(io, socket);
-    } else if (override.status === HEATER_OVERRIDE.ON) {
-      setHeaterGpioOn(io, socket);
-    }
+//     if (override.status === HEATER_OVERRIDE.OFF) {
+//       setHeaterGpoOff(false);
+//     } else if (override.status === HEATER_OVERRIDE.ON) {
+//       setHeaterGpioOn(false);
+//     }
 
-    // if override has not expired
-    // clear previous override
-    clearTimeout(timeout);
-    // set new override
-    timeout = setTimeout(() => {
-      // when override expires, clear override & emit update
-      heaterGpoState.manualOverride = null;
-      emitStateUpdate();
-    }, remaining);
-  }
+//     // if override has not expired
+//     // clear previous override
+//     clearTimeout(timeout);
+//     // set new override
+//     timeout = setTimeout(() => {
+//       // when override expires, clear override & emit update
+//       heaterGpoState.manualOverride = null;
+//       emitStateUpdate();
+//     }, remaining);
+//   }
 
-  // apply to global state
-  heaterGpoState.manualOverride = override;
-  emitStateUpdate();
-};
+//   // apply to global state
+//   heaterGpoState.manualOverride = override;
+//   emitStateUpdate();
+// };
 
 // user updates pin state
-export const setHeaterGpioState = (
-  newState: HeaterCabState,
-  io?: Server,
-  socket?: Socket
-) => {
+export const setHeaterGpioState = (newState: HeaterCabState) => {
   if (newState === undefined) {
     console.error(new Error("newState must be defined"));
     return;
@@ -148,16 +141,16 @@ export const setHeaterGpioState = (
     heaterGpoState.heaterPinVal !== newState.heaterPinVal
   ) {
     if (newState.heaterPinVal) {
-      setHeaterGpioOn(io, socket);
+      setHeaterGpioOn();
     } else {
-      setHeaterGpoOff(io, socket);
+      setHeaterGpoOff();
     }
   }
 
   heaterGpoState = newState;
 
   if (newState.manualOverride) {
-    setHeaterManualOverride(newState.manualOverride, io, socket);
+    // setHeaterManualOverride(newState.manualOverride);
   } else {
     emitStateUpdate();
   }

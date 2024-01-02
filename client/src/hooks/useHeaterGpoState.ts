@@ -6,7 +6,6 @@ import {
   RASP_PI,
 } from "../../../constant/constant";
 import { HeaterCabState, HeaterManualOverride } from "../../../types/main";
-import { socket } from "../utils/socket";
 
 export default function useHeaterGpoState() {
   const [heaterGpo, setHeaterGpio] = useState(HEATER_GPO_DEFAULT_STATE);
@@ -32,12 +31,16 @@ export default function useHeaterGpoState() {
     setWs(ws);
   }, []);
 
-  const togglePin = (forceOn = false) => {
+  const togglePin = (forceOn: 1 | 0 = 0) => {
     setHeaterGpio((curr) => {
       if (ws) {
+        let heaterPinValue: 1 | 0 | null = null;
+        if (curr?.heaterPinVal === 1) heaterPinValue = 0;
+        else if (curr?.heaterPinVal === 0) heaterPinValue = 1;
+
         const newState: HeaterCabState = {
           ...curr,
-          heaterPinVal: forceOn || !curr?.heaterPinVal,
+          heaterPinVal: forceOn || heaterPinValue,
         };
 
         console.log("out:", newState);
@@ -58,10 +61,13 @@ export default function useHeaterGpoState() {
     }
 
     setHeaterGpio((curr) => {
-      const newState: HeaterCabState = { ...curr, manualOverride };
-      console.log("out:", newState);
-      socket.emit(CHANNEL.HEATER_CAB_0, newState);
-      return newState;
+      if (ws) {
+        const newState: HeaterCabState = { ...curr, manualOverride };
+        console.log("out:", newState);
+        ws.send(JSON.stringify(newState));
+        return newState;
+      }
+      return curr;
     });
   };
 

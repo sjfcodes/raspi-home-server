@@ -7,9 +7,9 @@ export const emitStateUpdate = (
   socket?: Socket,
   includeHost = false
 ) => {
-  if (!io && !socket) {
-    throw new Error('"io" or "socket" must be defined');
-  }
+  // if (!io && !socket) {
+  //   throw new Error('"io" or "socket" must be defined');
+  // }
 
   if (socket) {
     if (includeHost) {
