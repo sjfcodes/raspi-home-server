@@ -21,7 +21,12 @@ const options = {
 const wssHeaterGpo = new WebSocketServer(options);
 wssHeaterGpo.on("connection", (ws) => {
   console.log("wssHeaterGpo client connected");
-  ws.send(JSON.stringify(heaterGpoState));
+  /**
+   * [NOTE]: Don't send server state to client on connect
+   * instead, wait until esp32 sends new state which will
+   * then broadcast to all connected clients.
+   */
+  // ws.send(JSON.stringify(heaterGpoState));
   ws.on("close", () => console.log("wssHeaterGpo client disconnected"));
   ws.on("message", (data) => {
     const input = JSON.parse(data.toString());
@@ -55,10 +60,10 @@ export const checkHeaterStatus = (io: Server, forceOn = false) => {
 
   // if heater off & current temp below below min
   const shouldTurnOn =
-    !heaterGpoState.heaterPinVal && curTemp < roomTempState.min;
+    heaterGpoState.heaterPinVal === 0 && curTemp < roomTempState.min;
   // if heater on & current temp above max
   const shouldTurnOff =
-    heaterGpoState.heaterPinVal && curTemp > roomTempState.max;
+    heaterGpoState.heaterPinVal === 1 && curTemp > roomTempState.max;
 
   if (forceOn || shouldTurnOn) {
     setHeaterGpioOn(io);
@@ -74,7 +79,7 @@ export const setHeaterGpoOff = (io?: Server, socket?: Socket) => {
   }
 
   heaterGpo.write(0);
-  heaterGpoState.heaterPinVal = false;
+  heaterGpoState.heaterPinVal = 0;
   emitStateUpdate();
   writeLog("heater off", io, socket);
 };
@@ -86,7 +91,7 @@ export const setHeaterGpioOn = (io?: Server, socket?: Socket) => {
   }
 
   heaterGpo.write(1);
-  heaterGpoState.heaterPinVal = true;
+  heaterGpoState.heaterPinVal = 1;
   emitStateUpdate();
   writeLog("heater on", io, socket);
 };
@@ -139,7 +144,7 @@ export const setHeaterGpioState = (
   }
 
   if (
-    typeof newState.heaterPinVal === "boolean" &&
+    typeof newState.heaterPinVal === "number" &&
     heaterGpoState.heaterPinVal !== newState.heaterPinVal
   ) {
     if (newState.heaterPinVal) {

@@ -10,7 +10,7 @@ export type HeaterManualOverride = {
 };
 
 export type HeaterCabState = {
-  heaterPinVal: boolean;
+  heaterPinVal: 1 | 0 | null;
   manualOverride: HeaterManualOverride | null;
   cabHumidity: number;
   cabTempF: number;

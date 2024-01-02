@@ -11,10 +11,14 @@ export default function HeaterState() {
       label={
         <div style={{ display: "flex" }}>
           <h2 style={{ marginRight: "1rem" }}>Heater: </h2>
-          <Slider
-            checked={heaterGpo.heaterPinVal}
-            onChange={() => togglePin()}
-          />
+          {heaterGpo.heaterPinVal === null ? (
+            "-"
+          ) : (
+            <Slider
+              checked={!!heaterGpo.heaterPinVal}
+              onChange={() => togglePin()}
+            />
+          )}
         </div>
       }
       showContent={false}

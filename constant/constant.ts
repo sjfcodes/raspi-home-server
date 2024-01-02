@@ -25,7 +25,7 @@ export enum THERMOSTAT {
 }
 
 export const HEATER_GPO_DEFAULT_STATE: HeaterCabState = {
-  heaterPinVal: false,
+  heaterPinVal: null,
   manualOverride: null,
   cabHumidity: 0,
   cabTempF: 0,
