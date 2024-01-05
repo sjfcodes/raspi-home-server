@@ -7,7 +7,7 @@
 
 .logo {
   height: 3em;
-  padding: .5em .5em 0 .5em;
+  padding: 0.5em 0.5em 0 0.5em;
   will-change: filter;
   transition: filter 300ms;
 }
@@ -34,14 +34,15 @@
   }
 }
 
-h1, h2 {
+h1,
+h2 {
   margin: 0;
 }
 
-.text-on {
+.text-green {
   color: green;
 }
-.text-off {
+.text-red {
   color: red;
 }
 .background-on {
