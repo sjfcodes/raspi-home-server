@@ -5,6 +5,7 @@ import { socket } from "../utils/socket";
 
 export default function useTargetTemp() {
   const [targetTemp, setRoomTemp] = useState({} as RoomTempState);
+  const gap = 1;
 
   useEffect(() => {
     socket.on(CHANNEL.TARGET_TEMP, (newState: RoomTempState) => {
@@ -31,5 +32,24 @@ export default function useTargetTemp() {
     });
   };
 
-  return { targetTemp, setTargetTempMin, setTargetTempMax };
+  const setTargetMinMaxWithRange = (target: number) => {
+    setRoomTemp((curr) => {
+      const newState: RoomTempState = {
+        ...curr,
+        min: target - gap,
+        max: target,
+      };
+      console.log("out:", newState);
+      socket.emit(CHANNEL.TARGET_TEMP, newState);
+      return newState;
+    });
+  };
+
+  return {
+    gap,
+    targetTemp,
+    setTargetMinMaxWithRange,
+    setTargetTempMin,
+    setTargetTempMax,
+  };
 }

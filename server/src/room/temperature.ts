@@ -14,9 +14,9 @@ export const setRoomTempState = (
     console.error(new Error("newState must be defined"));
     return;
   }
-  
+
   // only set new state if valid
-  if (newState.max > newState.min) {
+  if (newState.min <= newState.max) {
     roomTempState = newState;
   }
 

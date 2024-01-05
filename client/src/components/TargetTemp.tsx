@@ -3,21 +3,11 @@ import Card from "./Card";
 import JsonCode from "./JsonCode";
 
 export default function TargetTemp() {
-  const { targetTemp, setTargetTempMax, setTargetTempMin } = useTargetTemp();
+  const { targetTemp, setTargetMinMaxWithRange } = useTargetTemp();
 
-  const setTempMin: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    const num = Number(e.target.value);
-    if (!isNaN(num)) setTargetTempMin(Number(e.target.value));
-  };
-
-  const setTempMax: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    const num = Number(e.target.value);
-    if (!isNaN(num)) setTargetTempMax(Number(e.target.value));
-  };
-
-  const inputStyle = {
-    width: "3.5rem",
-    marginInline: ".5rem",
+  const buttonStyle = {
+    width: "2.5rem",
+    padding: 0,
     fontSize: "2rem",
   };
 
@@ -26,21 +16,33 @@ export default function TargetTemp() {
       label={
         <div style={{ display: "flex", alignItems: "center" }}>
           <h2>Target temp: </h2>
-          <input
-            type="text"
-            style={inputStyle}
-            defaultValue={targetTemp.min}
-            onClick={(e) => e.stopPropagation()}
-            onBlur={setTempMin}
-          />
-          -
-          <input
-            type="text"
-            style={inputStyle}
-            defaultValue={targetTemp.max}
-            onClick={(e) => e.stopPropagation()}
-            onBlur={setTempMax}
-          />
+          {typeof targetTemp.min === "number" ? (
+            <>
+              <button
+                style={buttonStyle}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setTargetMinMaxWithRange(targetTemp.max - 1);
+                }}
+              >
+                -
+              </button>
+              <div style={{ marginInline: "1rem", fontSize: "2rem" }}>
+                {targetTemp.max}
+              </div>
+              <button
+                style={buttonStyle}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setTargetMinMaxWithRange(targetTemp.max + 1);
+                }}
+              >
+                +
+              </button>
+            </>
+          ) : (
+            "-"
+          )}
         </div>
       }
       showContent={false}
