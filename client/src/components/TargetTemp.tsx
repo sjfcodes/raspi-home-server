@@ -28,7 +28,7 @@ export default function TargetTemp() {
                 -
               </button>
               <div style={{ marginInline: "1rem", fontSize: "2rem" }}>
-                {targetTemp.max}
+              {targetTemp.max}℉
               </div>
               <button
                 style={buttonStyle}

@@ -21,9 +21,9 @@ function App() {
       </div>
       <hr />
       <div>
-        <HeaterState />
-        <TargetTemp />
         <Thermostats />
+        <TargetTemp />
+        <HeaterState />
         {/* <OverrideButtons /> */}
         <PiTemp />
         <LogStream />
