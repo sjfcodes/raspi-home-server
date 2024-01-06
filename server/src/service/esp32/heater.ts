@@ -1,14 +1,14 @@
 import { DigitalOutput } from "raspi-gpio";
 import { WebSocketServer } from "ws";
 import {
-    CHANNEL,
-    HEATER_GPO_DEFAULT_STATE,
-    HEATER_OVERRIDE,
+  CHANNEL,
+  HEATER_GPO_DEFAULT_STATE,
+  HEATER_OVERRIDE,
 } from "../../../../constant/constant";
 import { HeaterCabState } from "../../../../types/main";
-import { clientMapState } from "../esp32/temperature";
 import { writeLog } from "../logs/logger";
 import { roomTempState } from "../room/temperature";
+import { clientMapState } from "./temperature";
 
 export const heaterGpo = new DigitalOutput("GPIO4");
 export let heaterGpoState = HEATER_GPO_DEFAULT_STATE;

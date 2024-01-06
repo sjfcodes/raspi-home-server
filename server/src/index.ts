@@ -1,5 +1,5 @@
+import { checkHeaterStatus } from "./service/esp32/heater";
 import { setEsp32Client } from "./service/esp32/temperature";
-import { checkHeaterStatus } from "./service/gpio/heater";
 import { setPiTemp } from "./service/pi/temperature";
 import { app, server } from "./service/server";
 import { ipAddress } from "./utils/ipAddress";
