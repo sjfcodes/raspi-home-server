@@ -1,4 +1,7 @@
 {
+  "name": "My PWA",
+  "start_url": "/",
+  "display": "standalone",
   "icons": [
     {
       "src": "windows11/SmallTile.scale-100.png",
