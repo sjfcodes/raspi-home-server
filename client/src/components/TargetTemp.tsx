@@ -3,7 +3,7 @@ import Card from "./Card";
 import JsonCode from "./JsonCode";
 
 export default function TargetTemp() {
-  const { targetTemp, setTargetMinMaxWithRange } = useTargetTemp();
+  const { gap, targetTemp, setTargetMinMaxWithRange } = useTargetTemp();
 
   const buttonStyle = {
     width: "2.5rem",
@@ -18,23 +18,24 @@ export default function TargetTemp() {
           <h2>Target temp: </h2>
           {typeof targetTemp.min === "number" ? (
             <>
-              <button
-                style={buttonStyle}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setTargetMinMaxWithRange(targetTemp.max - 1);
-                }}
-              >
-                -
-              </button>
-              <div style={{ marginInline: "1rem", fontSize: "2rem" }}>
-              {targetTemp.max}℉
+              <div style={{ marginInline: "1rem" }}>
+                <h2>({targetTemp.min} - {targetTemp.max})℉</h2>
               </div>
               <button
                 style={buttonStyle}
                 onClick={(e) => {
                   e.stopPropagation();
-                  setTargetMinMaxWithRange(targetTemp.max + 1);
+                  setTargetMinMaxWithRange(targetTemp.max - gap);
+                }}
+              >
+                -
+              </button>
+              <div style={{width: '1rem'}} />
+              <button
+                style={buttonStyle}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setTargetMinMaxWithRange(targetTemp.max + gap);
                 }}
               >
                 +
