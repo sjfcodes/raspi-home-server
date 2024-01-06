@@ -5,7 +5,7 @@ import LogStream from "./components/LogStream";
 // import OverrideButtons from "./components/OverrideButtons";
 import reactLogo from './assets/react.svg';
 import espressifLogo from "./assets/espressif.svg";
-import raspberryPiLogo from "./assets/raspberry_pi.svg";
+import raspberryPiLogo from "./assets/raspberry-pi.svg";
 import PiTemp from "./components/PiTemp";
 import TargetTemp from "./components/TargetTemp";
 import Thermostats from "./components/Thermostats";
