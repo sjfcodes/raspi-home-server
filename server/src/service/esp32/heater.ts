@@ -36,7 +36,6 @@ wssHeaterGpo.on("connection", (ws) => {
       heaterGpo.write(input.heaterPinVal ? 1 : 0);
       heaterGpoState.heaterPinVal = input.heaterPinVal;
     }
-    console.log("newState", heaterGpoState);
     emitStateUpdate();
   });
   ws.onerror = function () {
@@ -45,9 +44,9 @@ wssHeaterGpo.on("connection", (ws) => {
 });
 
 const emitStateUpdate = () => {
-  wssHeaterGpo.clients.forEach((client) => {
-    client.send(JSON.stringify(heaterGpoState));
-  });
+  const stringified = JSON.stringify(heaterGpoState);
+  wssHeaterGpo.clients.forEach((client) => client.send(stringified));
+  console.log("newState", stringified);
 };
 
 // check heater status changes every x seconds
