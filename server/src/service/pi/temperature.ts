@@ -1,10 +1,9 @@
 import { readFileSync } from "node:fs";
-import { Server } from "socket.io";
-import { CHANNEL } from "../../../constant/constant";
-import { PiTemp } from "../../../types/main";
+import { CHANNEL } from "../../../../constant/constant";
+import { PiTemp } from "../../../../types/main";
 import { emitStateUpdate } from "../websocket/emit";
 
-export const setPiTemp = (io: Server) => {
+export const setPiTemp = () => {
   const temp = Number(
     readFileSync("/sys/class/thermal/thermal_zone0/temp", { encoding: "utf8" })
   );
@@ -23,5 +22,5 @@ export const setPiTemp = (io: Server) => {
     data.message = "ok";
   }
 
-  emitStateUpdate(CHANNEL.PI_TEMP, data, io);
+  emitStateUpdate(CHANNEL.PI_TEMP, data);
 };

@@ -10,10 +10,11 @@ export type HeaterManualOverride = {
 };
 
 export type HeaterCabState = {
-  heaterPinVal: 1 | 0 | null;
-  manualOverride: HeaterManualOverride | null;
   cabHumidity: number;
   cabTempF: number;
+  chipId: string;
+  heaterPinVal: 1 | 0 | null;
+  manualOverride: HeaterManualOverride | null;
 };
 
 export type Thermostat = {

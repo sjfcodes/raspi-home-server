@@ -1,23 +1,19 @@
-import { Server, Socket } from "socket.io";
+import { Socket } from "socket.io";
+import { io } from "./socketIo";
 
 export const emitStateUpdate = (
   channel: string,
   state: any,
-  io?: Server,
   socket?: Socket,
   includeHost = false
 ) => {
-  // if (!io && !socket) {
-  //   throw new Error('"io" or "socket" must be defined');
-  // }
-
   if (socket) {
     if (includeHost) {
       socket.emit(channel, state);
     } else {
       socket.broadcast.emit(channel, state);
     }
-  } else if (io) {
+  } else {
     io.emit(channel, state);
   }
 

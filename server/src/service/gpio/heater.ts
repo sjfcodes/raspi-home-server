@@ -1,11 +1,11 @@
 import { DigitalOutput } from "raspi-gpio";
 import { WebSocketServer } from "ws";
 import {
-  CHANNEL,
-  HEATER_GPO_DEFAULT_STATE,
-  HEATER_OVERRIDE,
-} from "../../../constant/constant";
-import { HeaterCabState, HeaterManualOverride } from "../../../types/main";
+    CHANNEL,
+    HEATER_GPO_DEFAULT_STATE,
+    HEATER_OVERRIDE,
+} from "../../../../constant/constant";
+import { HeaterCabState } from "../../../../types/main";
 import { clientMapState } from "../esp32/temperature";
 import { writeLog } from "../logs/logger";
 import { roomTempState } from "../room/temperature";
@@ -31,6 +31,7 @@ wssHeaterGpo.on("connection", (ws) => {
     const input = JSON.parse(data.toString());
     heaterGpoState.cabHumidity = input.cabHumidity;
     heaterGpoState.cabTempF = input.cabTempF;
+    heaterGpoState.chipId = input.chipId;
     if (input.heaterPinVal !== undefined) {
       heaterGpo.write(input.heaterPinVal ? 1 : 0);
       heaterGpoState.heaterPinVal = input.heaterPinVal;
