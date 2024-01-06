@@ -5,7 +5,7 @@ import { socket } from "../utils/socket";
 
 export default function useTargetTemp() {
   const [targetTemp, setRoomTemp] = useState({} as RoomTempState);
-  const gap = 1;
+  const gap = 2;
 
   useEffect(() => {
     socket.on(CHANNEL.TARGET_TEMP, (newState: RoomTempState) => {
