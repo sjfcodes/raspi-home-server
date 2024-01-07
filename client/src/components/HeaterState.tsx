@@ -2,9 +2,7 @@ import useHeaterGpoState from "../hooks/useHeaterGpoState";
 import Card from "./Card";
 import JsonCode from "./JsonCode";
 
-const chipId = "d0fc8ad4";
-
-export default function HeaterState() {
+export default function HeaterState({ chipId }: { chipId: string }) {
   const { heaterGpo } = useHeaterGpoState(chipId);
 
   return (

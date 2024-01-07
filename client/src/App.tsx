@@ -1,3 +1,4 @@
+import { HEATER_CAB } from "../../constant/constant";
 import "./App.css";
 import SocketStatus from "./SocketStatus";
 import HeaterState from "./components/HeaterState";
@@ -20,7 +21,7 @@ function App() {
         <br />
         <Thermostats />
         <TargetTemp />
-        <HeaterState />
+        <HeaterState chipId={HEATER_CAB.HOME} />
         {/* <OverrideButtons /> */}
         <PiTemp />
         <LogStream />

@@ -24,6 +24,10 @@ export enum THERMOSTAT {
   "9ffc8ad4" = "Aux",
 }
 
+export enum HEATER_CAB {
+  HOME = "d0fc8ad4",
+}
+
 export const HEATER_GPO_DEFAULT_STATE: HeaterCabState = {
   cabHumidity: 0,
   cabTempF: 0,
