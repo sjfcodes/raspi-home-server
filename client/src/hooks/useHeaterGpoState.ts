@@ -7,7 +7,7 @@ import {
 } from "../../../constant/constant";
 import { HeaterCabState, HeaterManualOverride } from "../../../types/main";
 
-export default function useHeaterGpoState() {
+export default function useHeaterGpoState(chipId: string) {
   const [heaterGpo, setHeaterGpio] = useState(HEATER_GPO_DEFAULT_STATE);
   const [ws, setWs] = useState(null as WebSocket | null);
 
@@ -19,9 +19,11 @@ export default function useHeaterGpoState() {
 
     // add event listener reacting when message is received
     ws.onmessage = ({ data }: MessageEvent) => {
-      const newState = JSON.parse(data);
-      console.log("in :", newState);
-      setHeaterGpio(newState);
+      const newState: HeaterCabState = JSON.parse(data);
+      if (newState.chipId === chipId) {
+        console.log("in :", newState);
+        setHeaterGpio(newState);
+      }
     };
 
     ws.onerror = (event: Event) => {
