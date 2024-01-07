@@ -16,6 +16,18 @@ export default function SocketStatus() {
     });
   }, []);
 
+  useEffect(() => {
+    let timeout: number;
+    if (!online) {
+      timeout = setTimeout(() => {
+        location.reload();
+      }, 3000);
+    }
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [online]);
+
   return (
     <span className={online ? "text-green" : "text-red"}>
       {online ? "online" : "offline"}
