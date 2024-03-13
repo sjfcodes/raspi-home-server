@@ -19,8 +19,10 @@ function App() {
       <br />
       <div>
         <TargetTemp />
-        <Thermostat thermostat={thermostatMap[PRIMARY_THERMOSTAT]} />
-        <HeaterState chipId={HEATER_CAB.HOME} />
+        <div style={{ display: "flex", alignItems: "center", gap: '1rem' }}>
+          <Thermostat thermostat={thermostatMap[PRIMARY_THERMOSTAT]} />
+          <HeaterState chipId={HEATER_CAB.HOME} style={{ fontSize: "2rem" }} />
+        </div>
         <LogStream />
 
         <div

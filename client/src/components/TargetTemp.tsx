@@ -20,12 +20,12 @@ export default function TargetTemp() {
       label={
         <div style={{ width: "100%" }}>
           <div style={{ display: "flex", alignItems: "center" }}>
-            <h2>Target temp: </h2>
+            <span style={{fontSize: '1.5rem'}} >Target temp: </span>
             {isTempAvailable ? (
               <div style={{ marginInline: "1rem" }}>
-                <h2>
+                <span style={{fontSize: '1.5rem'}} >
                   {targetTemp.min}-{targetTemp.max}℉
-                </h2>
+                </span>
               </div>
             ) : (
               "-"
@@ -36,7 +36,7 @@ export default function TargetTemp() {
               display: "flex",
               width: "100%",
               justifyContent: "center",
-              marginBlock: "3rem",
+              marginBlock: "1rem",
               gap: '3rem'
             }}
           >
