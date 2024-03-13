@@ -3,47 +3,62 @@ import Card from "./Card";
 import JsonCode from "./JsonCode";
 
 export default function TargetTemp() {
-  const { gap, targetTemp, setTargetMinMaxWithRange } = useTargetTemp();
+  const { targetTemp, setTargetMinMaxWithRange } = useTargetTemp();
 
   const buttonStyle = {
-    width: "2.5rem",
+    width: "5.5rem",
+    height: "5.5rem",
     padding: 0,
-    fontSize: "2rem",
+    fontSize: "3rem",
+    border: "1px solid orange",
   };
+
+  const isTempAvailable = typeof targetTemp.min === "number";
 
   return (
     <Card
       label={
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <h2>Target temp: </h2>
-          {typeof targetTemp.min === "number" ? (
-            <>
+        <div style={{ width: "100%" }}>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <h2>Target temp: </h2>
+            {isTempAvailable ? (
               <div style={{ marginInline: "1rem" }}>
-                <h2>({targetTemp.min} - {targetTemp.max})℉</h2>
+                <h2>
+                  {targetTemp.min}-{targetTemp.max}℉
+                </h2>
               </div>
-              <button
-                style={buttonStyle}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setTargetMinMaxWithRange(targetTemp.max - gap);
-                }}
-              >
-                -
-              </button>
-              <div style={{width: '1rem'}} />
-              <button
-                style={buttonStyle}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setTargetMinMaxWithRange(targetTemp.max + gap);
-                }}
-              >
-                +
-              </button>
-            </>
-          ) : (
-            "-"
-          )}
+            ) : (
+              "-"
+            )}
+          </div>
+          <div
+            style={{
+              display: "flex",
+              width: "100%",
+              justifyContent: "center",
+              marginBlock: "3rem",
+              gap: '3rem'
+            }}
+          >
+            <button
+              style={buttonStyle}
+              onClick={(e) => {
+                e.stopPropagation();
+                setTargetMinMaxWithRange(targetTemp.max - 1);
+              }}
+            >
+              -
+            </button>
+            <button
+              style={buttonStyle}
+              onClick={(e) => {
+                e.stopPropagation();
+                setTargetMinMaxWithRange(targetTemp.max + 1);
+              }}
+            >
+              +
+            </button>
+          </div>
         </div>
       }
       showContent={false}

@@ -2,8 +2,10 @@ import { DigitalOutput } from "raspi-gpio";
 import { WebSocketServer } from "ws";
 import {
   CHANNEL,
+  HEATER_CAB,
   HEATER_GPO_DEFAULT_STATE,
   HEATER_OVERRIDE,
+  PRIMARY_THERMOSTAT,
 } from "../../../../constant/constant";
 import { HeaterCabState } from "../../../../types/main";
 import { writeLog } from "../logs/logger";
@@ -28,15 +30,18 @@ wssHeaterGpo.on("connection", (ws) => {
   // ws.send(JSON.stringify(heaterGpoState));
   ws.on("close", () => console.log("wssHeaterGpo client disconnected"));
   ws.on("message", (data) => {
-    const input = JSON.parse(data.toString());
-    heaterGpoState.cabHumidity = input.cabHumidity;
-    heaterGpoState.cabTempF = input.cabTempF;
-    heaterGpoState.chipId = input.chipId;
-    if (input.heaterPinVal !== undefined) {
-      heaterGpo.write(input.heaterPinVal ? 1 : 0);
-      heaterGpoState.heaterPinVal = input.heaterPinVal;
+    const input: HeaterCabState = JSON.parse(data.toString());
+    console.log('input', input)
+    if (input.chipId === HEATER_CAB.HOME) {
+      heaterGpoState.cabHumidity = input.cabHumidity;
+      heaterGpoState.cabTempF = input.cabTempF;
+      heaterGpoState.chipId = input.chipId;
+      if (input.heaterPinVal !== undefined) {
+        heaterGpo.write(input.heaterPinVal ? 1 : 0);
+        heaterGpoState.heaterPinVal = input.heaterPinVal;
+      }
+      emitStateUpdate();
     }
-    emitStateUpdate();
   });
   ws.onerror = function () {
     console.log("websocket error");
@@ -51,10 +56,9 @@ const emitStateUpdate = () => {
 
 // check heater status changes every x seconds
 export const checkHeaterStatus = (forceOn = false) => {
-  let primaryThermostat = "9efc8ad4"; // THERMOSTAT.LIVING_ROOM_0
   const curTemp =
-    clientMapState?.[primaryThermostat]?.tempF +
-    clientMapState?.[primaryThermostat]?.calibrate;
+    clientMapState?.[PRIMARY_THERMOSTAT]?.tempF +
+    clientMapState?.[PRIMARY_THERMOSTAT]?.calibrate;
   writeLog(`current temp is ${curTemp}`);
 
   // if heater off & current temp below below min

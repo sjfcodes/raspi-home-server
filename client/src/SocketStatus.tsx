@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 import { socket } from "./utils/socket";
 
-export default function SocketStatus() {
+export default function SocketStatus({ style = {} }: { style?: CSSProperties }) {
   const [online, setOnline] = useState(false);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function SocketStatus() {
   }, [online]);
 
   return (
-    <span className={online ? "text-green" : "text-red"}>
+    <span className={online ? "text-green" : "text-red"} style={style}>
       {online ? "online" : "offline"}
     </span>
   );

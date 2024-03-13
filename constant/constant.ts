@@ -18,9 +18,11 @@ export enum HEATER_OVERRIDE {
   ON = "ON",
 }
 
+export const PRIMARY_THERMOSTAT = "9efc8ad4";
+
 export enum THERMOSTAT {
   "9efc8ad4" = "Living Room",
-  "abe342a8" = "Master Bed",
+  "abe342a8" = "Office",
   "9ffc8ad4" = "Aux",
 }
 
@@ -34,6 +36,7 @@ export const HEATER_GPO_DEFAULT_STATE: HeaterCabState = {
   chipId: "",
   heaterPinVal: null,
   manualOverride: null,
+  updatedAt: "",
 };
 
 export const ROOM_TEMP_DEFAULT_STATE: RoomTempState = {

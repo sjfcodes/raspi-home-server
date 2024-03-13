@@ -15,6 +15,7 @@ export type HeaterCabState = {
   chipId: string;
   heaterPinVal: 1 | 0 | null;
   manualOverride: HeaterManualOverride | null;
+  updatedAt: string;
 };
 
 export type Thermostat = {

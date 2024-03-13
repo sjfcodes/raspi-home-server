@@ -7,6 +7,8 @@ export default function Thermostat({
 }: {
   thermostat: _Thermostat;
 }) {
+  if(!thermostat) return null;
+
   const curTemp = thermostat?.tempF + thermostat?.calibrate;
   // let label = "";
   // Object.entries(THERMOSTAT).forEach(([key, val]) => {
