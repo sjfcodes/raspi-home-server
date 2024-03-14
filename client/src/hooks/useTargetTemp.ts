@@ -17,6 +17,7 @@ export default function useTargetTemp() {
   const setTargetTempMin = (min: number) => {
     setRoomTemp((curr) => {
       const newState: RoomTempState = { ...curr, min };
+      if (min > curr.max) newState.max++
       console.log("out:", newState);
       socket.emit(CHANNEL.TARGET_TEMP, newState);
       return newState;
@@ -26,6 +27,7 @@ export default function useTargetTemp() {
   const setTargetTempMax = (max: number) => {
     setRoomTemp((curr) => {
       const newState: RoomTempState = { ...curr, max };
+      if (max < curr.min) newState.min--;
       console.log("out:", newState);
       socket.emit(CHANNEL.TARGET_TEMP, newState);
       return newState;

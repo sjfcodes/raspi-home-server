@@ -25,7 +25,6 @@ export default function LogStream({ style = {} }: { style?: CSSProperties }) {
             const temp = Number(message.replace("current temp is ", ""));
             if (!isNaN(temp)) {
               const date = new Date(dateStr);
-              console.log(date);
               acc.data.push({ date, temp });
             }
           }

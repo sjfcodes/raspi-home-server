@@ -7,7 +7,7 @@ export default function Thermostat({
 }: {
   thermostat: _Thermostat;
 }) {
-  if(!thermostat) return null;
+  if (!thermostat) return null;
 
   const curTemp = thermostat?.tempF + thermostat?.calibrate;
   // let label = "";
@@ -18,9 +18,9 @@ export default function Thermostat({
   return (
     <Card
       label={
-        <h2>{`${thermostat.chipName}:  ${
+        <span style={{ fontSize: "1.5rem" }}>{`${thermostat.chipName}:  ${
           isNaN(curTemp) ? "-" : curTemp + "℉"
-        }`}</h2>
+        }`}</span>
       }
       showContent={false}
       content={<JsonCode code={JSON.stringify(thermostat, null, 4)} />}

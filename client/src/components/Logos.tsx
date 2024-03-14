@@ -15,9 +15,6 @@ export default function Logos() {
         justifyContent: "space-between",
       }}
     >
-      <a href="/">
-        <SocketStatus style={{ paddingLeft: "1rem", fontSize: "1.25rem" }} />
-      </a>
       <div>
         <a href="https://bitcoin.org/en/bitcoin-core/" target="_blank">
           <img src={bitcoinLogo} className="logo" alt="Bitcoin logo" />
@@ -41,6 +38,9 @@ export default function Logos() {
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
       </div>
+      <a href="/">
+        <SocketStatus style={{ paddingLeft: "1rem", fontSize: "1.25rem" }} />
+      </a>
     </div>
   );
 }

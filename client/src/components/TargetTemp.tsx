@@ -1,17 +1,15 @@
+import { CSSProperties } from "react";
+import { HEATER_CAB } from "../../../constant/constant";
 import useTargetTemp from "../hooks/useTargetTemp";
 import Card from "./Card";
+import HeaterState from "./HeaterState";
 import JsonCode from "./JsonCode";
 
-export default function TargetTemp() {
-  const { targetTemp, setTargetMinMaxWithRange } = useTargetTemp();
+const cold = "#6bbcd1";
+const hot = "#e23201";
 
-  const buttonStyle = {
-    width: "5.5rem",
-    height: "5.5rem",
-    padding: 0,
-    fontSize: "3rem",
-    border: "1px solid orange",
-  };
+export default function TargetTemp() {
+  const { targetTemp, setTargetTempMax, setTargetTempMin } = useTargetTemp();
 
   const isTempAvailable = typeof targetTemp.min === "number";
 
@@ -19,45 +17,31 @@ export default function TargetTemp() {
     <Card
       label={
         <div style={{ width: "100%" }}>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <span style={{fontSize: '1.5rem'}} >Target temp: </span>
-            {isTempAvailable ? (
-              <div style={{ marginInline: "1rem" }}>
-                <span style={{fontSize: '1.5rem'}} >
-                  {targetTemp.min}-{targetTemp.max}℉
-                </span>
-              </div>
-            ) : (
-              "-"
-            )}
-          </div>
           <div
             style={{
               display: "flex",
               width: "100%",
               justifyContent: "center",
               marginBlock: "1rem",
-              gap: '3rem'
+              gap: "1rem",
             }}
           >
-            <button
-              style={buttonStyle}
-              onClick={(e) => {
-                e.stopPropagation();
-                setTargetMinMaxWithRange(targetTemp.max - 1);
-              }}
-            >
-              -
-            </button>
-            <button
-              style={buttonStyle}
-              onClick={(e) => {
-                e.stopPropagation();
-                setTargetMinMaxWithRange(targetTemp.max + 1);
-              }}
-            >
-              +
-            </button>
+            <TempControl
+              color={cold}
+              isTempAvailable={isTempAvailable}
+              temp={targetTemp.min}
+              setTemp={setTargetTempMin}
+            />
+            <HeaterState
+              chipId={HEATER_CAB.HOME}
+              style={{ fontSize: "2rem", width: "5rem", textAlign: "center" }}
+            />
+            <TempControl
+              color={hot}
+              isTempAvailable={isTempAvailable}
+              temp={targetTemp.max}
+              setTemp={setTargetTempMax}
+            />
           </div>
         </div>
       }
@@ -66,3 +50,60 @@ export default function TargetTemp() {
     />
   );
 }
+
+const TempControl = ({
+  color,
+  isTempAvailable,
+  temp,
+  setTemp,
+}: {
+  color: string;
+  isTempAvailable: boolean;
+  temp: number;
+  setTemp: (max: number) => void;
+}) => {
+  const numberStyle: CSSProperties = {
+    width: "100%",
+    textAlign: "center",
+    fontSize: "2rem",
+  };
+
+  const buttonStyle = {
+    width: "5.5rem",
+    height: "2.25rem",
+    padding: 0,
+    fontSize: "2rem",
+    border: "none",
+    color: "#1a1a1a",
+    display: "block",
+  };
+
+  return (
+    <div>
+      <div style={{ ...numberStyle, color }}>
+        {isTempAvailable ? temp : "-"}
+      </div>
+      <div style={{}}>
+        <button
+          style={{ ...buttonStyle, backgroundColor: hot }}
+          onClick={(e) => {
+            e.stopPropagation();
+            setTemp(temp + 1);
+          }}
+        >
+          +
+        </button>
+        <br />
+        <button
+          style={{ ...buttonStyle, backgroundColor: cold }}
+          onClick={(e) => {
+            e.stopPropagation();
+            setTemp(temp - 1);
+          }}
+        >
+          -
+        </button>
+      </div>
+    </div>
+  );
+};

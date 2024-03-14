@@ -20,21 +20,4 @@ export default function HeaterState({
   );
 
   return status;
-
-  // return (
-  //   <Card
-  //     label={
-  //       <div style={{ display: "flex" }}>
-  //         <h2 style={{ marginRight: "1rem" }}>
-  //           Heater:{" "}
-  //           {heaterGpo.heaterPinVal === null ? (
-  //             "-"
-  //           ) : status}
-  //         </h2>
-  //       </div>
-  //     }
-  //     showContent={false}
-  //     content={<JsonCode code={JSON.stringify(heaterGpo, null, 4)} />}
-  //   />
-  // );
 }

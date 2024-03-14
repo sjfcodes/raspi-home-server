@@ -32,14 +32,14 @@ export default function OverrideButtons() {
   return (
     <Card
       label={
-        <h2>
+        <span style={{ fontSize: "1.5rem" }}>
           Timeout:{" "}
           {heaterGpo?.manualOverride?.expireAt
             ? ` until ${new Date(
                 heaterGpo.manualOverride.expireAt
               ).toLocaleTimeString(undefined, { timeStyle: "short" })}`
             : ""}
-        </h2>
+        </span>
       }
       showContent={true}
       content={

@@ -12,13 +12,12 @@ export default function PiTemp() {
   return (
     <Card
       label={
-        <h2>{`Pi Temp: ${piTemp.tempF ? piTemp.tempF + "℉" : "-"} (${
-          isNaN(percentage) ? "-" : Math.trunc(percentage) + "%"
-        })`}</h2>
+        <div style={{ width: "100%", fontSize: "1.5rem" }}>{`Pi Temp: ${
+          piTemp.tempF ? piTemp.tempF + "℉" : "-"
+        } (${isNaN(percentage) ? "-" : Math.trunc(percentage) + "%"})`}</div>
       }
       showContent={false}
       content={<JsonCode code={value} />}
-
     />
   );
 }
