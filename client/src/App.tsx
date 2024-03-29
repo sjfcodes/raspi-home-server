@@ -30,28 +30,35 @@ const Footer = () => {
   );
 };
 
+const maxWidth = "400px";
+
 function App() {
   const { thermostatMap } = useThermostats();
   return (
     <div
       style={{
         width: "100%",
-        maxWidth: "400px",
+        maxWidth,
         height: "calc(100vh - 100px)",
         margin: "0 auto",
-        overflow: "scroll",
+        overflowY: "scroll",
+        overflowX: "hidden",
       }}
     >
       <Logos />
       <br />
-      <Thermostat thermostat={thermostatMap[PRIMARY_THERMOSTAT]} />
+      <div style={{ maxWidth, overflow: "scroll" }}>
+        <Thermostat thermostat={thermostatMap[PRIMARY_THERMOSTAT]} />
+      </div>
       <LogStream />
       <TargetTemp />
       <br />
       <br />
       <br />
       <br />
-      <Thermostats hideIds={[PRIMARY_THERMOSTAT]} />
+      <div style={{ maxWidth, overflow: "scroll" }}>
+        <Thermostats hideIds={[PRIMARY_THERMOSTAT]} />
+      </div>
       {/* <OverrideButtons /> */}
       {/* <PiTemp /> */}
       <Footer />
