@@ -26,9 +26,8 @@ const buttonStyle = {
 
 export default function TargetTemp() {
   const { roomTemp, setTargetMaxWithTrailingMin } = useRoomTemp();
-  console.log("roomTemp", roomTemp);
   const { heaterGpo } = useHeaterGpoState(HEATER_CAB.HOME);
-  const isTempAvailable = typeof roomTemp.min === "number";
+  const isTempAvailable = typeof roomTemp?.min === "number";
   const [showData, setShowData] = useState(false);
   const displayTemp = isTempAvailable ? roomTemp.max : "-";
 
@@ -38,6 +37,7 @@ export default function TargetTemp() {
         style={{ ...buttonStyle, backgroundColor: hot }}
         onClick={(e) => {
           e.stopPropagation();
+          if (typeof roomTemp?.max !== "number") return;
           setTargetMaxWithTrailingMin(roomTemp.max + 1);
         }}
       >
@@ -76,6 +76,7 @@ export default function TargetTemp() {
         style={{ ...buttonStyle, backgroundColor: cold }}
         onClick={(e) => {
           e.stopPropagation();
+          if (typeof roomTemp?.max !== "number") return;
           setTargetMaxWithTrailingMin(roomTemp.max - 1);
         }}
       >
