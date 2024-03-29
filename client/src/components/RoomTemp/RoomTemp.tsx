@@ -10,16 +10,8 @@
 import useThermostats from "../../hooks/useThermostats";
 import Card from "../Card";
 import JsonCode from "../JsonCode";
+import LogStream from "../LogStream";
 import TargetTemp from "./TargetTemp";
-
-//   return (
-//     <div style={{ width: "100%", overflow: "scroll" }}>
-//         <TargetTemp />
-//       <Thermostat thermostat={thermostatMap[thermostatId]}>
-//       </Thermostat>
-//     </div>
-//   );
-// }
 
 export default function RoomTemp({ thermostatId }: { thermostatId: string }) {
   const { thermostatMap } = useThermostats();
