@@ -1,109 +1,79 @@
-import { CSSProperties } from "react";
+import { CSSProperties, useState } from "react";
 import { HEATER_CAB } from "../../../constant/constant";
+import useHeaterGpoState from "../hooks/useHeaterGpoState";
 import useTargetTemp from "../hooks/useTargetTemp";
-import Card from "./Card";
-import HeaterState from "./HeaterState";
 import JsonCode from "./JsonCode";
 
 const cold = "#6bbcd1";
 const hot = "#e23201";
 
-export default function TargetTemp() {
-  const { targetTemp, setTargetTempMax, setTargetTempMin } = useTargetTemp();
+const numberStyle: CSSProperties = {
+  width: "100%",
+  textAlign: "center",
+  fontSize: "2rem",
+};
 
+const buttonStyle = {
+  width: "100%",
+  height: "2.5rem",
+  padding: 0,
+  margin: "0 auto",
+  fontSize: "2rem",
+  border: "none",
+  color: "#1a1a1a",
+  display: "block",
+};
+
+export default function TargetTemp() {
+  const { targetTemp, setTargetMaxWithTrailingMin } = useTargetTemp();
+  const { heaterGpo } = useHeaterGpoState(HEATER_CAB.HOME);
   const isTempAvailable = typeof targetTemp.min === "number";
+  const [showData, setShowData] = useState(false);
+  const displayTemp = isTempAvailable ? targetTemp.max : "-";
+  const toggleContent = () => setShowData((curr) => !curr);
 
   return (
-    <Card
-      label={
-        <div style={{ width: "100%" }}>
+    <div style={{ width: "100%", marginBlock: "2rem" }}>
+      <button
+        style={{ ...buttonStyle, backgroundColor: hot }}
+        onClick={(e) => {
+          e.stopPropagation();
+          setTargetMaxWithTrailingMin(targetTemp.max + 1);
+        }}
+      >
+        +
+      </button>
+      <div
+        style={{
+          ...numberStyle,
+          color: heaterGpo.heaterPinVal ? "green" : "red",
+        }}
+        onClick={toggleContent}
+      >
+        {showData ? (
           <div
             style={{
-              display: "flex",
-              width: "100%",
-              justifyContent: "center",
-              marginBlock: "1rem",
-              gap: "1rem",
+              textAlign: "left",
+              fontSize: "1rem",
+              width: "50%",
+              margin: "0 auto",
             }}
           >
-            <TempControl
-              color={cold}
-              isTempAvailable={isTempAvailable}
-              temp={targetTemp.min}
-              setTemp={setTargetTempMin}
-            />
-            <HeaterState
-              chipId={HEATER_CAB.HOME}
-              style={{ fontSize: "2rem", width: "5rem", textAlign: "center" }}
-            />
-            <TempControl
-              color={hot}
-              isTempAvailable={isTempAvailable}
-              temp={targetTemp.max}
-              setTemp={setTargetTempMax}
-            />
+            <JsonCode code={JSON.stringify(targetTemp, null, 4)} />
           </div>
-        </div>
-      }
-      showContent={false}
-      content={<JsonCode code={JSON.stringify(targetTemp, null, 4)} />}
-    />
-  );
-}
-
-const TempControl = ({
-  color,
-  isTempAvailable,
-  temp,
-  setTemp,
-}: {
-  color: string;
-  isTempAvailable: boolean;
-  temp: number;
-  setTemp: (max: number) => void;
-}) => {
-  const numberStyle: CSSProperties = {
-    width: "100%",
-    textAlign: "center",
-    fontSize: "2rem",
-  };
-
-  const buttonStyle = {
-    width: "5.5rem",
-    height: "2.25rem",
-    padding: 0,
-    fontSize: "2rem",
-    border: "none",
-    color: "#1a1a1a",
-    display: "block",
-  };
-
-  return (
-    <div>
-      <div style={{ ...numberStyle, color }}>
-        {isTempAvailable ? temp : "-"}
+        ) : (
+          displayTemp
+        )}
       </div>
-      <div style={{}}>
-        <button
-          style={{ ...buttonStyle, backgroundColor: hot }}
-          onClick={(e) => {
-            e.stopPropagation();
-            setTemp(temp + 1);
-          }}
-        >
-          +
-        </button>
-        <br />
-        <button
-          style={{ ...buttonStyle, backgroundColor: cold }}
-          onClick={(e) => {
-            e.stopPropagation();
-            setTemp(temp - 1);
-          }}
-        >
-          -
-        </button>
-      </div>
+      <button
+        style={{ ...buttonStyle, backgroundColor: cold }}
+        onClick={(e) => {
+          e.stopPropagation();
+          setTargetMaxWithTrailingMin(targetTemp.max - 1);
+        }}
+      >
+        -
+      </button>
     </div>
   );
-};
+}

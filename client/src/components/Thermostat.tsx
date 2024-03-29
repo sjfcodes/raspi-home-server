@@ -15,15 +15,20 @@ export default function Thermostat({
   //   if (thermostat.chipId === val) label = key;
   // });
 
+  const copy = structuredClone(thermostat);
+
+  // @ts-ignore
+  copy.tempFHistory = JSON.stringify(copy.tempFHistory);
+
   return (
     <Card
       label={
-        <span style={{ fontSize: "1.5rem" }}>{`${thermostat.chipName}:  ${
+        <span style={{ fontSize: "1.5rem" }}>{`${copy.chipName}:  ${
           isNaN(curTemp) ? "-" : curTemp + "℉"
         }`}</span>
       }
       showContent={false}
-      content={<JsonCode code={JSON.stringify(thermostat, null, 4)} />}
+      content={<JsonCode code={JSON.stringify(copy, null, 4)} />}
     />
   );
 }

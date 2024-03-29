@@ -22,7 +22,7 @@ const onConnect = (socket: Socket) => {
     setRoomTempState(newState)
   );
 
-  socket.emit(CHANNEL.LOG_STREAM, getLogs(100).reverse());
+  socket.emit(CHANNEL.LOG_STREAM, getLogs(10000).reverse());
 
   socket.on("disconnect", () => console.log("Socket client disconnected."));
 };

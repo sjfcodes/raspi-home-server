@@ -14,24 +14,23 @@ import { clientMapState } from "./temperature";
 
 export const heaterGpo = new DigitalOutput("GPIO4");
 export let heaterGpoState = HEATER_GPO_DEFAULT_STATE;
-const options = {
+
+const wssHeaterGpo = new WebSocketServer({
   path: CHANNEL.HEATER_CAB_0,
   port: 3001,
-};
+});
 
-const wssHeaterGpo = new WebSocketServer(options);
 wssHeaterGpo.on("connection", (ws) => {
   console.log("wssHeaterGpo client connected");
   /**
-   * [NOTE]: Don't send server state to client on connect
-   * instead, wait until esp32 sends new state which will
-   * then broadcast to all connected clients.
+   * [NOTE]: Don't send server state to client on connect.
+   * Instead, wait for esp32 state update to broadcast to connected clients.
    */
   // ws.send(JSON.stringify(heaterGpoState));
   ws.on("close", () => console.log("wssHeaterGpo client disconnected"));
   ws.on("message", (data) => {
     const input: HeaterCabState = JSON.parse(data.toString());
-    console.log('input', input)
+    // console.log('input', input)
     if (input.chipId === HEATER_CAB.HOME) {
       heaterGpoState.cabHumidity = input.cabHumidity;
       heaterGpoState.cabTempF = input.cabTempF;

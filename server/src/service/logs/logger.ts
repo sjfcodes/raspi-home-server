@@ -7,7 +7,7 @@ const logFile = "/home/sjfox/code/raspi-home-server/logs/logs.txt";
 
 export const getLogs = (count = 5) => {
   const lines = readFileSync(logFile, { encoding: "utf-8" }).split("\n");
-  return lines.slice(-count);
+  return lines.slice(-count).filter((log) => !!log);
 };
 
 let lastLine = "";

@@ -9,7 +9,7 @@ export default function Card({
   style = {},
 }: {
   label: string | JSX.Element;
-  content: JSX.Element;
+  content: JSX.Element | null;
   preview?: JSX.Element;
   toggle?: boolean;
   showContent?: boolean;

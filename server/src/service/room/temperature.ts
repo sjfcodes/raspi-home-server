@@ -15,7 +15,7 @@ export const setRoomTempState = (newState: RoomTempState, socket?: Socket) => {
   }
 
   // only set new state if valid
-  if (newState.min <= newState.max) {
+  if (newState.max >= newState.min) {
     roomTempState = newState;
   }
 

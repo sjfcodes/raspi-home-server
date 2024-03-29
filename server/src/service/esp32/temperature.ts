@@ -33,9 +33,9 @@ export const setEsp32Client = (client: Thermostat, socket?: Socket) => {
       // @ts-ignore
       chipName: THERMOSTAT[client.chipId] || client.chipName,
       tempF: Math.trunc(tempAverage),
-      tempFHistory,
       calibrate: client.calibrate || 0,
       updatedAt: new Date().toLocaleTimeString(),
+      tempFHistory,
     },
   });
 
