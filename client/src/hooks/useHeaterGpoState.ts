@@ -6,6 +6,7 @@ import {
   RASP_PI,
 } from "../../../constant/constant";
 import { HeaterCabState, HeaterManualOverride } from "../../../types/main";
+import { socketLogger } from "../utils/socket";
 
 export default function useHeaterGpoState(chipId: string) {
   const [heaterGpo, setHeaterGpio] = useState(HEATER_GPO_DEFAULT_STATE);
@@ -21,8 +22,8 @@ export default function useHeaterGpoState(chipId: string) {
     ws.onmessage = ({ data }: MessageEvent) => {
       const newState: HeaterCabState = JSON.parse(data);
       if (newState.chipId === chipId) {
-        console.log("in :", newState);
         setHeaterGpio(newState);
+        socketLogger(CHANNEL.HEATER_CAB_0, "in", newState);
       }
     };
 
