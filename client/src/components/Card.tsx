@@ -1,10 +1,11 @@
 import { CSSProperties, useState } from "react";
+import Block from "./Block";
 
 export default function Card({
   label,
   content,
   preview,
-  toggle = true,
+  toggle = false,
   showContent: _init = true,
   style = {},
 }: {
@@ -17,19 +18,46 @@ export default function Card({
 }) {
   const [showContent, setShowContent] = useState(_init);
 
-  const toggleContent = () => {
+  const toggleContent: React.MouseEventHandler<HTMLDivElement> = (e) => {
+    e.stopPropagation();
     if (toggle) setShowContent((curr) => !curr);
   };
 
   return (
-    <div className="card" style={style}>
+    <div
+      className="card"
+      style={{
+        ...style,
+        width: "calc(100% - 2rem)",
+        margin: "0 auto",
+        minHeight: "5rem",
+        border: "1px solid orange",
+        borderRadius: "1rem",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "start",
+        padding: "1rem",
+        boxSizing: "border-box",
+      }}
+      onClick={toggleContent}
+    >
       <div
-        onClick={toggleContent}
-        style={{ display: "flex", alignItems: "center", gap: "1rem" }}
+        style={{
+          minWidth: "100%",
+          overflow: "scroll",
+        }}
       >
-        {label} {!showContent ? preview : null}
+        <div style={{ width: "100%", textAlign: "center", fontSize: "1.5rem" }}>
+          {label} {preview}
+        </div>
+
+        {showContent ? (
+          <>
+            <Block />
+            {content}
+          </>
+        ) : null}
       </div>
-      {showContent ? content : null}
     </div>
   );
 }

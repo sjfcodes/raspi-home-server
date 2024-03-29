@@ -5,6 +5,14 @@
   font-family: monospace;
 }
 
+*::-webkit-scrollbar {
+  display: none;
+}
+
+div {
+  box-sizing: border-box;
+}
+
 .logo {
   height: 3em;
   padding: 0.5em 0.5em 0 0.5em;

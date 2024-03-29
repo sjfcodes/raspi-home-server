@@ -3,18 +3,15 @@ import Card from "./Card";
 import JsonCode from "./JsonCode";
 
 export default function Thermostat({
+  children,
   thermostat,
 }: {
+  children?: React.ReactNode;
   thermostat: _Thermostat;
 }) {
   if (!thermostat) return null;
 
   const curTemp = thermostat?.tempF + thermostat?.calibrate;
-  // let label = "";
-  // Object.entries(THERMOSTAT).forEach(([key, val]) => {
-  //   if (thermostat.chipId === val) label = key;
-  // });
-
   const copy = structuredClone(thermostat);
 
   // @ts-ignore
@@ -22,13 +19,13 @@ export default function Thermostat({
 
   return (
     <Card
-      label={
-        <span style={{ fontSize: "1.5rem" }}>{`${copy.chipName}:  ${
-          isNaN(curTemp) ? "-" : curTemp + "℉"
-        }`}</span>
+      label={`${copy.chipName}:  ${isNaN(curTemp) ? "-" : curTemp + "℉"}`}
+      content={
+        <div style={{ width: "100%", overflow: "scroll" }}>
+          {children}
+          <JsonCode code={JSON.stringify(copy, null, 4)} />
+        </div>
       }
-      showContent={false}
-      content={<JsonCode code={JSON.stringify(copy, null, 4)} />}
     />
   );
 }

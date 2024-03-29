@@ -1,8 +1,8 @@
 import { CSSProperties, useState } from "react";
-import { HEATER_CAB } from "../../../constant/constant";
-import useHeaterGpoState from "../hooks/useHeaterGpoState";
-import useTargetTemp from "../hooks/useTargetTemp";
-import JsonCode from "./JsonCode";
+import { HEATER_CAB } from "../../../../constant/constant";
+import useHeaterGpoState from "../../hooks/useHeaterGpoState";
+import useRoomTemp from "../../hooks/useRoomTemp";
+import JsonCode from "../JsonCode";
 
 const cold = "#6bbcd1";
 const hot = "#e23201";
@@ -25,20 +25,20 @@ const buttonStyle = {
 };
 
 export default function TargetTemp() {
-  const { targetTemp, setTargetMaxWithTrailingMin } = useTargetTemp();
+  const { roomTemp, setTargetMaxWithTrailingMin } = useRoomTemp();
+  console.log("roomTemp", roomTemp);
   const { heaterGpo } = useHeaterGpoState(HEATER_CAB.HOME);
-  const isTempAvailable = typeof targetTemp.min === "number";
+  const isTempAvailable = typeof roomTemp.min === "number";
   const [showData, setShowData] = useState(false);
-  const displayTemp = isTempAvailable ? targetTemp.max : "-";
-  const toggleContent = () => setShowData((curr) => !curr);
+  const displayTemp = isTempAvailable ? roomTemp.max : "-";
 
   return (
-    <div style={{ width: "100%", marginBlock: "2rem" }}>
+    <div style={{ width: "100%" }}>
       <button
         style={{ ...buttonStyle, backgroundColor: hot }}
         onClick={(e) => {
           e.stopPropagation();
-          setTargetMaxWithTrailingMin(targetTemp.max + 1);
+          setTargetMaxWithTrailingMin(roomTemp.max + 1);
         }}
       >
         +
@@ -47,19 +47,26 @@ export default function TargetTemp() {
         style={{
           ...numberStyle,
           color: heaterGpo.heaterPinVal ? "green" : "red",
+          height: "5rem",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
-        onClick={toggleContent}
+        onClick={(e) => {
+          e.stopPropagation();
+          setShowData((curr) => !curr);
+        }}
       >
         {showData ? (
           <div
             style={{
-              textAlign: "left",
+              textAlign: "center",
               fontSize: "1rem",
-              width: "50%",
+              width: "100%",
               margin: "0 auto",
             }}
           >
-            <JsonCode code={JSON.stringify(targetTemp, null, 4)} />
+            <JsonCode code={JSON.stringify(roomTemp)} />
           </div>
         ) : (
           displayTemp
@@ -69,7 +76,7 @@ export default function TargetTemp() {
         style={{ ...buttonStyle, backgroundColor: cold }}
         onClick={(e) => {
           e.stopPropagation();
-          setTargetMaxWithTrailingMin(targetTemp.max - 1);
+          setTargetMaxWithTrailingMin(roomTemp.max - 1);
         }}
       >
         -

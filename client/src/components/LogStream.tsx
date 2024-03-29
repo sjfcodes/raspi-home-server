@@ -1,6 +1,8 @@
-import { CSSProperties, useMemo } from "react";
+import { useMemo } from "react";
 import { AxisOptions, Chart } from "react-charts";
+import { THERMOSTAT } from "../../../constant/constant";
 import useLogStream from "../hooks/useLogStream";
+import Card from "./Card";
 
 type Temps = {
   date: Date;
@@ -12,7 +14,7 @@ type Series = {
   data: Temps[];
 };
 
-export default function LogStream({ style = {} }: { style?: CSSProperties }) {
+export default function LogStream() {
   const { logs } = useLogStream();
 
   const format = useMemo(
@@ -31,7 +33,7 @@ export default function LogStream({ style = {} }: { style?: CSSProperties }) {
 
           return acc;
         },
-        { label: "logs", data: [] as Temps[] }
+        { label: "logs", data: [] as Temps[] } as Series
       ),
     [logs[0]]
   );
@@ -55,20 +57,26 @@ export default function LogStream({ style = {} }: { style?: CSSProperties }) {
   if (!format.data.length) return null;
 
   return (
-    <div
-      style={{
-        border: "1px solid orange",
-        backgroundColor: "white",
-        height: "300px",
-      }}
-    >
-      <Chart
-        options={{
-          data: [format],
-          primaryAxis,
-          secondaryAxes,
-        }}
-      />
-    </div>
+    <Card
+      label={`${THERMOSTAT["9efc8ad4"]} History`}
+      content={
+        <div
+          style={{
+            border: "1px solid orange",
+            backgroundColor: "white",
+            height: "300px",
+            borderRadius: "1rem",
+          }}
+        >
+          <Chart
+            options={{
+              data: [format],
+              primaryAxis,
+              secondaryAxes,
+            }}
+          />
+        </div>
+      }
+    />
   );
 }

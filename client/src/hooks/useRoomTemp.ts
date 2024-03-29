@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { CHANNEL } from "../../../constant/constant";
+import { CHANNEL, ROOM_TEMP_DEFAULT_STATE } from "../../../constant/constant";
 import { RoomTempState } from "../../../types/main";
 import { socket } from "../utils/socket";
 
-export default function useTargetTemp() {
-  const [targetTemp, setRoomTemp] = useState({} as RoomTempState);
+export default function useRoomTemp() {
+  const [roomTemp, setRoomTemp] = useState(
+    ROOM_TEMP_DEFAULT_STATE as RoomTempState
+  );
 
   useEffect(() => {
     socket.on(CHANNEL.TARGET_TEMP, (newState: RoomTempState) => {
@@ -16,7 +18,7 @@ export default function useTargetTemp() {
   const setTargetTempMin = (min: number) => {
     setRoomTemp((curr) => {
       const newState: RoomTempState = { ...curr, min };
-      if (min > curr.max) newState.max++
+      if (min > curr.max) newState.max++;
       console.log("out:", newState);
       socket.emit(CHANNEL.TARGET_TEMP, newState);
       return newState;
@@ -47,7 +49,7 @@ export default function useTargetTemp() {
   };
 
   return {
-    targetTemp,
+    roomTemp,
     setTargetMaxWithTrailingMin,
     setTargetTempMin,
     setTargetTempMax,

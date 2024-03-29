@@ -11,12 +11,9 @@ export default function PiTemp() {
   const value = JSON.stringify(piTemp, null, 4);
   return (
     <Card
-      label={
-        <div style={{ width: "100%", fontSize: "1.5rem" }}>{`Pi Temp: ${
-          piTemp.tempF ? piTemp.tempF + "℉" : "-"
-        } (${isNaN(percentage) ? "-" : Math.trunc(percentage) + "%"})`}</div>
-      }
-      showContent={false}
+      label={`Pi Temp: ${piTemp.tempF ? piTemp.tempF + "℉" : "-"} (${
+        isNaN(percentage) ? "-" : Math.trunc(percentage) + "%"
+      })`}
       content={<JsonCode code={value} />}
     />
   );

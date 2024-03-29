@@ -14,6 +14,13 @@ export const setRoomTempState = (newState: RoomTempState, socket?: Socket) => {
     return;
   }
 
+  if (!newState.max || !newState.min) {
+    console.error(
+      new Error("unexpected room temp state: " + JSON.stringify(newState))
+    );
+    return;
+  }
+
   // only set new state if valid
   if (newState.max >= newState.min) {
     roomTempState = newState;
