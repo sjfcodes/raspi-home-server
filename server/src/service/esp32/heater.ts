@@ -20,8 +20,12 @@ const wssHeaterGpo = new WebSocketServer({
   port: 3001,
 });
 
+const log = (message: string, data: any = '') => {
+  console.log(`[${CHANNEL.HEATER_CAB_0}]:`, message, data);
+};
+
 wssHeaterGpo.on("connection", (ws) => {
-  console.log("wssHeaterGpo client connected");
+  log("wss client connection");
   /**
    * [NOTE]: Don't send server state to client on connect.
    * Instead, wait for esp32 state update to broadcast to connected clients.
@@ -42,15 +46,15 @@ wssHeaterGpo.on("connection", (ws) => {
       emitStateUpdate();
     }
   });
-  ws.onerror = function () {
-    console.log("websocket error");
+  ws.onerror = function (error) {
+    console.error(error);
   };
 });
 
 const emitStateUpdate = () => {
   const stringified = JSON.stringify(heaterGpoState);
   wssHeaterGpo.clients.forEach((client) => client.send(stringified));
-  console.log("newState", stringified);
+  log("EMIT:", stringified);
 };
 
 // check heater status changes every x seconds

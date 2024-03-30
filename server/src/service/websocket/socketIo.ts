@@ -9,7 +9,7 @@ export const io = new Server(server);
 
 // on socket client connection
 const onConnect = (socket: Socket) => {
-  console.log("socket.io client connected");
+  console.log(`[${socket.id}]:`, "socket.io client connected");
 
   socket.emit(CHANNEL.THERMOSTAT_MAP, clientMapState);
   socket.on(CHANNEL.THERMOSTAT_MAP, setEsp32Client);
