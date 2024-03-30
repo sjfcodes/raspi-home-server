@@ -2,11 +2,11 @@ import { PRIMARY_THERMOSTAT } from "../../constant/constant";
 import "./App.css";
 import Block from "./components/Block";
 import LogStream from "./components/LogStream";
-import RoomTemp from "./components/RoomTemp/RoomTemp";
-// import OverrideButtons from "./components/OverrideButtons";
 import Logos from "./components/Logos";
 import PiTemp from "./components/PiTemp";
 import QrCode from "./components/QrCode";
+import RoomTemp from "./components/RoomTemp/RoomTemp";
+import TargetTemp from "./components/RoomTemp/TargetTemp";
 import Thermostats from "./components/Thermostats";
 import { APP_MAX_WIDTH } from "./utils/constants";
 
@@ -27,13 +27,14 @@ function App() {
       <Logos />
       <Block />
 
-      <LogStream />
+      <TargetTemp />
       <Block />
 
       <RoomTemp thermostatId={PRIMARY_THERMOSTAT} />
       <Block />
 
-      {/* <OverrideButtons /> */}
+      <LogStream />
+      <Block />
 
       <PiTemp />
       <Block />

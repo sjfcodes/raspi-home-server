@@ -53,7 +53,6 @@ export default function Card({
 
         {showContent ? (
           <>
-            <Block />
             {content}
           </>
         ) : null}

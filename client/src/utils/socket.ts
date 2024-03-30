@@ -6,7 +6,7 @@ const logEnabled = {
   [CHANNEL.HEATER_CAB_0]: false,
   [CHANNEL.THERMOSTAT_MAP]: false,
   [CHANNEL.PI_TEMP]: false,
-  [CHANNEL.TARGET_TEMP]: true,
+  [CHANNEL.TARGET_TEMP]: false,
   [CHANNEL.LOG_STREAM]: false,
 };
 

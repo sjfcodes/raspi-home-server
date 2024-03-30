@@ -26,6 +26,7 @@ const buttonStyle = {
 
 export default function TargetTemp() {
   const { roomTemp, setTargetMaxWithTrailingMin } = useRoomTemp();
+
   const { heaterGpo } = useHeaterGpoState(HEATER_CAB.HOME);
   const isTempAvailable = typeof roomTemp?.min === "number";
   const [showData, setShowData] = useState(false);

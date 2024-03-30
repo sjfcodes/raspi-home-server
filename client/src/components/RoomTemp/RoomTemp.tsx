@@ -10,8 +10,6 @@
 import useThermostats from "../../hooks/useThermostats";
 import Card from "../Card";
 import JsonCode from "../JsonCode";
-import LogStream from "../LogStream";
-import TargetTemp from "./TargetTemp";
 
 export default function RoomTemp({ thermostatId }: { thermostatId: string }) {
   const { thermostatMap } = useThermostats();
@@ -36,7 +34,6 @@ export default function RoomTemp({ thermostatId }: { thermostatId: string }) {
       label={label}
       content={
         <>
-          <TargetTemp />
           <div style={{ width: "100%", overflowX: "scroll" }}>
             <JsonCode code={JSON.stringify(copy, null, 4)} />
           </div>
