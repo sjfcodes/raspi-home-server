@@ -9,6 +9,7 @@ import CurrentTemp from "./components/LivingRoom/CurrentTemp";
 import TargetTemp from "./components/LivingRoom/TargetTemp";
 import Thermostats from "./components/Thermostats";
 import { APP_MAX_WIDTH } from "./utils/constants";
+import HeaterState from "./components/LivingRoom/HeaterState";
 
 function App() {
   return (
@@ -27,7 +28,9 @@ function App() {
       <Logos />
       <Block />
 
-      <TargetTemp />
+      <HeaterState />
+
+      {/* <TargetTemp />
       <Block />
 
       <CurrentTemp thermostatId={PRIMARY_THERMOSTAT} />
@@ -44,7 +47,7 @@ function App() {
       </div>
       <Block />
       <QrCode value={location.href} />
-      <Block />
+      <Block /> */}
     </div>
   );
 }

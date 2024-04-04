@@ -1,23 +1,7 @@
-import { CSSProperties } from "react";
-import useHeaterGpoState from "../../hooks/useHeaterGpoState";
+import useHeaterSse from "../../hooks/useHeaterSse";
 
-export default function HeaterState({
-  chipId,
-  style = {},
-}: {
-  chipId: string;
-  style?: CSSProperties;
-}) {
-  const { heaterGpo } = useHeaterGpoState(chipId);
+export default function HeaterState() {
+  const [state] = useHeaterSse();
 
-  const status = (
-    <span
-      className={`${!!heaterGpo.heaterPinVal ? "text-green" : ""}`}
-      style={style}
-    >
-      {!!heaterGpo.heaterPinVal ? "on" : "off"}
-    </span>
-  );
-
-  return status;
+  return <pre>{JSON.stringify(state, null, 4)}</pre>;
 }
