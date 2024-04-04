@@ -41,6 +41,6 @@ export const HEATER_GPO_DEFAULT_STATE: HeaterCabState = {
 
 export const ROOM_TEMP_DEFAULT_STATE: RoomTempState = {
   type: "F",
-  max: 69,
-  min: 68,
+  max: 66,
+  min: 66,
 };
