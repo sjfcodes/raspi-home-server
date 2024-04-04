@@ -11,6 +11,7 @@ import { HeaterCabState } from "../../../../types/main";
 import { writeLog } from "../logs/logger";
 import { roomTempState } from "../room/temperature";
 import { clientMapState } from "./temperature";
+import { app } from "../server";
 
 export const heaterGpo = new DigitalOutput("GPIO4");
 export let heaterGpoState = HEATER_GPO_DEFAULT_STATE;
@@ -20,7 +21,7 @@ const wssHeaterGpo = new WebSocketServer({
   port: 3001,
 });
 
-const log = (message: string, data: any = '') => {
+const log = (message: string, data: any = "") => {
   console.log(`[${CHANNEL.HEATER_CAB_0}]:`, message, data);
 };
 
@@ -39,6 +40,8 @@ wssHeaterGpo.on("connection", (ws) => {
       heaterGpoState.cabHumidity = input.cabHumidity;
       heaterGpoState.cabTempF = input.cabTempF;
       heaterGpoState.chipId = input.chipId;
+      heaterGpoState.updatedAt = new Date().toLocaleTimeString();
+      
       if (input.heaterPinVal !== undefined) {
         heaterGpo.write(input.heaterPinVal ? 1 : 0);
         heaterGpoState.heaterPinVal = input.heaterPinVal;
@@ -53,7 +56,8 @@ wssHeaterGpo.on("connection", (ws) => {
 
 const emitStateUpdate = () => {
   const stringified = JSON.stringify(heaterGpoState);
-  wssHeaterGpo.clients.forEach((client) => client.send(stringified));
+  // wssHeaterGpo.clients.forEach((client) => client.send(stringified));
+  writeHeaterClients(heaterGpoState)
   log("EMIT:", stringified);
 };
 
@@ -162,3 +166,31 @@ export const setHeaterGpioState = (newState: HeaterCabState) => {
     emitStateUpdate();
   }
 };
+
+let heaterClients: { id: number; res: any }[] = [];
+app.get("/api/home", (req, res) => {
+  const sseHeaders = {
+    "Content-Type": "text/event-stream",
+    Connection: "keep-alive",
+    "Cache-Control": "no-cache",
+  };
+  res.writeHead(200, sseHeaders);
+  res.write(`data: ${JSON.stringify(heaterGpoState)}\n\n`);
+
+  const clientId = Date.now();
+  const newClient = { id: clientId, res };
+  heaterClients.push(newClient);
+  console.log(`[${clientId}] connection open`);
+
+  req.on("close", () => {
+    console.log(`[${clientId}] connection close`);
+    heaterClients = heaterClients.filter((client) => client.id !== clientId);
+  });
+});
+
+export const writeHeaterClients = (newState: HeaterCabState) => {
+  for(const client of heaterClients) {
+    client.res.write(`data: ${JSON.stringify(newState)}\n\n`);
+  }
+
+}
