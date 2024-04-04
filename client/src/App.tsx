@@ -5,8 +5,8 @@ import LogStream from "./components/LogStream";
 import Logos from "./components/Logos";
 import PiTemp from "./components/PiTemp";
 import QrCode from "./components/QrCode";
-import RoomTemp from "./components/RoomTemp/RoomTemp";
-import TargetTemp from "./components/RoomTemp/TargetTemp";
+import CurrentTemp from "./components/LivingRoom/CurrentTemp";
+import TargetTemp from "./components/LivingRoom/TargetTemp";
 import Thermostats from "./components/Thermostats";
 import { APP_MAX_WIDTH } from "./utils/constants";
 
@@ -30,7 +30,7 @@ function App() {
       <TargetTemp />
       <Block />
 
-      <RoomTemp thermostatId={PRIMARY_THERMOSTAT} />
+      <CurrentTemp thermostatId={PRIMARY_THERMOSTAT} />
       <Block />
 
       <LogStream />

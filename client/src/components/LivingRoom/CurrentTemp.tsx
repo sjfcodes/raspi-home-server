@@ -1,17 +1,8 @@
-// export default function RoomTemp({
-//   roomName,
-//   thermostatId,
-// }: {
-//   thermostatId: string;
-//   roomName: string;
-// }) {
-//   const { thermostatMap } = useThermostats();
-
 import useThermostats from "../../hooks/useThermostats";
 import Card from "../Card";
 import JsonCode from "../JsonCode";
 
-export default function RoomTemp({ thermostatId }: { thermostatId: string }) {
+export default function CurrentTemp({ thermostatId }: { thermostatId: string }) {
   const { thermostatMap } = useThermostats();
 
   const thermostat = thermostatMap[thermostatId];
@@ -24,9 +15,9 @@ export default function RoomTemp({ thermostatId }: { thermostatId: string }) {
   copy.tempFHistory = JSON.stringify(copy.tempFHistory);
 
   const label = (
-    <div style={{ fontSize: "1.5rem", width: "100%", textAlign: "center" }}>{`${
-      copy.chipName
-    }:  ${isNaN(curTemp) ? "-" : curTemp + "℉"}`}</div>
+    <div style={{ fontSize: "1.5rem", width: "100%", textAlign: "center" }}>
+      {`${copy.chipName}:  ${isNaN(curTemp) ? "-" : curTemp + "℉"}`}
+    </div>
   );
 
   return (

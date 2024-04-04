@@ -1,5 +1,5 @@
 import { CSSProperties } from "react";
-import useHeaterGpoState from "../hooks/useHeaterGpoState";
+import useHeaterGpoState from "../../hooks/useHeaterGpoState";
 
 export default function HeaterState({
   chipId,
