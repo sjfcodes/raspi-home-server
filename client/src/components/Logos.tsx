@@ -1,4 +1,3 @@
-import SocketStatus from "../SocketStatus";
 import bitcoinLogo from "../assets/bitcoin.svg";
 import espressifLogo from "../assets/espressif.svg";
 import nodeLogo from "../assets/node-js.svg";
@@ -38,9 +37,6 @@ export default function Logos() {
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
       </div>
-      <a href="/">
-        <SocketStatus style={{ paddingLeft: "1rem", fontSize: "1.25rem" }} />
-      </a>
     </div>
   );
 }

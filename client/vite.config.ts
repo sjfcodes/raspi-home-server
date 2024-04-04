@@ -1,7 +1,7 @@
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
-const PORT = 3000;
+const PORT = 3000; // must match RASP_PI.serverPort in shared consts
 
 // https://vitejs.dev/config/
 export default defineConfig({
