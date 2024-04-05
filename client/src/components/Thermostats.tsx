@@ -1,4 +1,5 @@
 import useThermostatSse from "../hooks/useThermostatSse";
+import Block from "./Block";
 import Thermostat from "./Thermostat";
 
 export default function Thermostats({ hideIds = [] }: { hideIds?: string[] }) {
@@ -9,6 +10,9 @@ export default function Thermostats({ hideIds = [] }: { hideIds?: string[] }) {
     .sort((a, b) => (a.chipName > b.chipName ? 1 : -1));
 
   return sorted.map((thermostat) => (
-    <Thermostat key={thermostat.chipId} thermostat={thermostat} />
+    <div key={thermostat.chipId} >
+      <Thermostat key={thermostat.chipId} thermostat={thermostat} />
+      <Block />
+    </div>
   ));
 }

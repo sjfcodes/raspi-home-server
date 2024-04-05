@@ -29,25 +29,23 @@ function App() {
       <Block />
 
       <HeaterState />
+      <Block />
 
       {/* <TargetTemp />
-      <Block />
+      <Block /> */}
 
-      <CurrentTemp thermostatId={PRIMARY_THERMOSTAT} />
-      <Block />
-
-      <LogStream />
-      <Block />
-
-      <PiTemp />
+      {/* <LogStream />
       <Block /> */}
 
       <div style={{ maxWidth: APP_MAX_WIDTH, overflow: "scroll" }}>
-        <Thermostats hideIds={[PRIMARY_THERMOSTAT]} />
+        <Thermostats />
       </div>
-      {/* <Block />
+
+      <PiTemp />
+      <Block />
+
       <QrCode value={location.href} />
-      <Block /> */}
+      <Block />
     </div>
   );
 }

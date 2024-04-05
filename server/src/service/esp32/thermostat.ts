@@ -1,10 +1,5 @@
-import { v4 as uuidV4 } from "uuid";
-import { Socket } from "socket.io";
-import {
-    CHANNEL,
-    SSE_HEADERS,
-    THERMOSTAT,
-} from "../../../../constant/constant";
+import { v4 } from "uuid";
+import { SSE_HEADERS, THERMOSTAT } from "../../../../constant/constant";
 import { Thermostat, ThermostatMap } from "../../../../types/main";
 import { getSortedObject, log } from "../../utils/general";
 import { emitStateUpdate } from "../websocket/emit";
@@ -61,15 +56,6 @@ function unsubscribe(clientId: string) {
     log(clientId.toString(), "unsubscribe");
     sseClients = sseClients.filter((client) => client.id !== clientId);
 }
-
-app.get(path, (req, res) => {
-    const clientId = uuidV4();
-    res.writeHead(200, SSE_HEADERS);
-    res.write(`data: ${JSON.stringify(state)}\n\n`);
-    subscribe({ id: clientId, res });
-    req.on("close", () => unsubscribe(clientId));
-});
-
 // publish SSE to browsers
 const publish = (newState: any) => {
     log(path, "publish");
@@ -77,6 +63,19 @@ const publish = (newState: any) => {
         client.res.write(`data: ${JSON.stringify(newState)}\n\n`);
     }
 };
+
+app.get(path, (req, res) => {
+    const clientId = v4();
+    res.writeHead(200, SSE_HEADERS);
+    res.write(`data: ${JSON.stringify(state)}\n\n`);
+    subscribe({ id: clientId, res });
+    req.on("close", () => unsubscribe(clientId));
+});
+
+app.post("/api/temperature", (req, res) => {
+    if (req.body) setThermostatClient(req.body);
+    res.status(200).send({ ...req.body, serverName: "raspi-home-server" });
+});
 
 // [NOTE] must export & call this function in index.ts BEFORE app.listen()
 export function initAllThermostats() {
