@@ -50,7 +50,7 @@ const emitStateUpdate = () => {
     const stringified = JSON.stringify(state);
     wss.clients.forEach((client) => client.send(stringified));
     stream.publish(state);
-    log(CHANNEL.HEATER_CAB_0, "publish");
+    log(CHANNEL.HEATER_CAB_0, "publish", stringified);
 };
 
 export function turnHeaterOff() {

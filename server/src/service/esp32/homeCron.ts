@@ -5,7 +5,7 @@ import { roomTempState } from "../room/temperature";
 import { heaterState, turnHeaterOff, turnHeaterOn } from "./heater";
 import { clientMapState } from "./thermostat";
 
-const checkHeaterStatus = (forceOn = true) => {
+const checkHeaterStatus = (forceOn = false) => {
     const curTemp =
         clientMapState?.[PRIMARY_THERMOSTAT]?.tempF +
         clientMapState?.[PRIMARY_THERMOSTAT]?.calibrate;
@@ -18,6 +18,7 @@ const checkHeaterStatus = (forceOn = true) => {
     const shouldTurnOff =
         heaterState.heaterPinVal === 1 && curTemp > roomTempState.max;
 
+    log("homeCron", "status", { forceOn, shouldTurnOn, shouldTurnOff });
     if (forceOn || shouldTurnOn) {
         turnHeaterOn();
     } else if (shouldTurnOff) {

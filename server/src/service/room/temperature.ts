@@ -26,6 +26,7 @@ export const setRoomTempState = (newState: RoomTempState) => {
         state = newState;
     }
     stream.publish(state);
+    log(path, "status", state);
 };
 
 // [NOTE] must export & call this function in index.ts BEFORE server.listen()

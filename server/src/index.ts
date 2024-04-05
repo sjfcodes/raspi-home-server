@@ -16,4 +16,6 @@ initHomeCron();
 initPiState();
 initHomeTargetTemp();
 
-server.listen(PORT, () => log("server", `listen (http://${ipAddress}:${PORT})`));
+server.listen(PORT, () =>
+    log("server", "listen", `http://${ipAddress}:${PORT}`)
+);
