@@ -1,15 +1,13 @@
+import { v4 as uuidV4 } from 'uuid';
 import { WebSocketServer } from "ws";
 import {
     CHANNEL,
     HEATER_CAB,
     HEATER_GPO_DEFAULT_STATE,
-    PRIMARY_THERMOSTAT,
     SSE_HEADERS,
 } from "../../../../constant/constant";
 import { HeaterCabState } from "../../../../types/main";
 import { writeLog } from "../logs/logger";
-import { roomTempState } from "../room/temperature";
-import { clientMapState } from "./thermostat";
 import { app } from "../server";
 import { log } from "../../utils/general";
 
@@ -51,21 +49,21 @@ const emitStateUpdate = () => {
     log(CHANNEL.HEATER_CAB_0, "EMIT");
 };
 
-type HeaterClient = { id: number; res: any };
-let heaterClients: HeaterClient[] = [];
+type SseClient = { id: string; res: any };
+let sseClients: SseClient[] = [];
 
-function subscribe(client: HeaterClient) {
-    heaterClients.push(client);
+function subscribe(client: SseClient) {
+    sseClients.push(client);
     log(client.id.toString(), "subscribed");
 }
 
-function unsubscribe(clientId: number) {
+function unsubscribe(clientId: string) {
     log(clientId.toString(), "unsubscribe");
-    heaterClients = heaterClients.filter((client) => client.id !== clientId);
+    sseClients = sseClients.filter((client) => client.id !== clientId);
 }
 
-app.get("/api/home", (req, res) => {
-    const clientId = Date.now();
+app.get("/api/home/heater", (req, res) => {
+    const clientId = uuidV4();
     res.writeHead(200, SSE_HEADERS);
     res.write(`data: ${JSON.stringify(state)}\n\n`);
     subscribe({ id: clientId, res });
@@ -74,14 +72,14 @@ app.get("/api/home", (req, res) => {
 
 // publish SSE to browsers
 const publish = (newState: HeaterCabState) => {
-    for (const client of heaterClients) {
+    for (const client of sseClients) {
         client.res.write(`data: ${JSON.stringify(newState)}\n\n`);
     }
 };
 
 // [NOTE] must export & call this function in index.ts BEFORE app.listen()
-export function initHeaterApp() {
-    log("heaterApp", "start");
+export function initHomeHeater() {
+    log("homeHeater", "start");
 }
 
 export const heaterState = state;

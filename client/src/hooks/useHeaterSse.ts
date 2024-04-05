@@ -6,7 +6,7 @@ export default function useHeaterSse() {
 
   useEffect(() => {
     const sse = new EventSource(
-      `http://${RASP_PI.ip}:${RASP_PI.serverPort}/api/home`
+      `http://${RASP_PI.ip}:${RASP_PI.serverPort}/api/home/heater`
     );
 
     sse.onmessage = (e) => {
