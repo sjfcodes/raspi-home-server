@@ -8,7 +8,7 @@ import {
 } from "../../../../constant/constant";
 import { HeaterCabState } from "../../../../types/main";
 import { writeLog } from "../logs/logger";
-import { app } from "../server";
+import { server } from "../server";
 import { log } from "../../utils/general";
 import SseDataStream from "../../lib/SseDataStream";
 
@@ -22,7 +22,7 @@ const wss = new WebSocketServer({
     port: 3001,
 });
 
-const stream = new SseDataStream(app, path, state);
+const stream = new SseDataStream(server, path, state);
 
 function handleMessageIn(data: string) {
     const input: HeaterCabState = JSON.parse(data.toString());

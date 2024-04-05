@@ -8,16 +8,16 @@ class SseDataStream {
     private state: any;
     private sseClients: SseClient[];
 
-    constructor(app: any, path: string, initalState: any) {
+    constructor(server: any, path: string, initalState: any) {
         this.path = path;
         this.state = initalState;
         this.sseClients = [];
-        this.initialize(app);
+        this.initialize(server);
     }
 
-    private initialize(app: any) {
-        // @ts-expect-error untyped express app
-        app.get(this.path, (req, res) => {
+    private initialize(server: any) {
+        // @ts-expect-error untyped express server
+        server.get(this.path, (req, res) => {
             const clientId = v4();
             res.writeHead(200, SSE_HEADERS);
             res.write(`data: ${JSON.stringify(this.state)}\n\n`);

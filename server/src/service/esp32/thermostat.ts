@@ -2,13 +2,13 @@ import { v4 } from "uuid";
 import { SSE_HEADERS, THERMOSTAT } from "../../../../constant/constant";
 import { Thermostat, ThermostatMap } from "../../../../types/main";
 import { getSortedObject, log } from "../../utils/general";
-import { app } from "../server";
+import { server } from "../server";
 import SseDataStream from "../../lib/SseDataStream";
 
 const path = "/api/home/thermostat";
 let state: ThermostatMap = {};
 
-const stream = new SseDataStream(app, path, state);
+const stream = new SseDataStream(server, path, state);
 
 function setThermostatClient(client: Thermostat) {
     if (client === undefined) {
@@ -46,12 +46,12 @@ function setThermostatClient(client: Thermostat) {
     stream.publish(state);
 }
 
-app.post("/api/temperature", (req, res) => {
+server.post("/api/temperature", (req, res) => {
     if (req.body) setThermostatClient(req.body);
     res.status(200).send({ ...req.body, serverName: "raspi-home-server" });
 });
 
-// [NOTE] must export & call this function in index.ts BEFORE app.listen()
+// [NOTE] must export & call this function in index.ts BEFORE server.listen()
 export function initAllThermostats() {
     log(path, "start");
 }

@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { PiTemp } from "../../../../types/main";
 import { log } from "../../utils/general";
-import { app } from "../server";
+import { server } from "../server";
 import SseDataStream from "../../lib/SseDataStream";
 
 const path = "/api/home/pi";
@@ -33,7 +33,7 @@ function getPiTemp() {
     return state;
 }
 
-const stream = new SseDataStream(app, path, getPiTemp());
+const stream = new SseDataStream(server, path, getPiTemp());
 
 export function initPiState() {
     setInterval(() => stream.publish(getPiTemp()), 1000);

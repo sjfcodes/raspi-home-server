@@ -1,30 +1,36 @@
-import { Socket } from "socket.io";
-import {
-  CHANNEL,
-  ROOM_TEMP_DEFAULT_STATE,
-} from "../../../../constant/constant";
+import { ROOM_TEMP_DEFAULT_STATE } from "../../../../constant/constant";
 import { RoomTempState } from "../../../../types/main";
-import { emitStateUpdate } from "../websocket/emit";
+import SseDataStream from "../../lib/SseDataStream";
+import { log } from "../../utils/general";
+import { server } from "../server";
 
-export let roomTempState = ROOM_TEMP_DEFAULT_STATE;
+let state = ROOM_TEMP_DEFAULT_STATE;
+const path = "/api/home/temperature/target";
+const stream = new SseDataStream(server, path, state);
 
-export const setRoomTempState = (newState: RoomTempState, socket?: Socket) => {
-  if (newState === undefined) {
-    console.error(new Error("newState must be defined"));
-    return;
-  }
+export const setRoomTempState = (newState: RoomTempState) => {
+    if (newState === undefined) {
+        console.error(new Error("newState must be defined"));
+        return;
+    }
 
-  if (!newState.max || !newState.min) {
-    console.error(
-      new Error("unexpected room temp state: " + JSON.stringify(newState))
-    );
-    return;
-  }
+    if (!newState.max || !newState.min) {
+        console.error(
+            new Error("unexpected room temp state: " + JSON.stringify(newState))
+        );
+        return;
+    }
 
-  // only set new state if valid
-  if (newState.max >= newState.min) {
-    roomTempState = newState;
-  }
-
-  emitStateUpdate(CHANNEL.TARGET_TEMP, roomTempState, socket);
+    // only set new state if valid
+    if (newState.max >= newState.min) {
+        state = newState;
+    }
+    stream.publish(state);
 };
+
+// [NOTE] must export & call this function in index.ts BEFORE server.listen()
+export function initHomeTargetTemp() {
+  log(path, "start");
+}
+
+export const roomTempState = state;
