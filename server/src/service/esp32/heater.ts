@@ -14,17 +14,16 @@ import SseDataStream from "../../lib/SseDataStream";
 
 const path = "/api/home/heater";
 
-// state singleton
-const state = HEATER_GPO_DEFAULT_STATE;
 // wss connection to heater
 const wss = new WebSocketServer({
     path: CHANNEL.HEATER_CAB_0,
     port: 3001,
 });
 
-const stream = new SseDataStream(server, path, state);
+const stream = new SseDataStream(server, path, HEATER_GPO_DEFAULT_STATE);
 
 function handleMessageIn(data: string) {
+    const state = stream.getState();
     const input: HeaterCabState = JSON.parse(data.toString());
     if (input.chipId === HEATER_CAB.HOME) {
         state.cabHumidity = input.cabHumidity;
@@ -47,6 +46,7 @@ wss.on("connection", (ws) => {
 });
 
 const emitStateUpdate = () => {
+    const state = stream.getState();
     const stringified = JSON.stringify(state);
     wss.clients.forEach((client) => client.send(stringified));
     stream.publish(state);
@@ -54,6 +54,7 @@ const emitStateUpdate = () => {
 };
 
 export function turnHeaterOff() {
+    const state = stream.getState();
     // if (state.manualOverride?.status === HEATER_OVERRIDE.ON) {
     //   turnHeaterOn();
     //   return;
@@ -66,6 +67,7 @@ export function turnHeaterOff() {
 }
 
 export function turnHeaterOn() {
+    const state = stream.getState();
     // if (state.manualOverride?.status === HEATER_OVERRIDE.OFF) {
     //   turnHeaterOff();
     //   return;
