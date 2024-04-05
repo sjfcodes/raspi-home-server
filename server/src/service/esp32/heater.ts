@@ -51,40 +51,16 @@ const emitStateUpdate = () => {
     log(CHANNEL.HEATER_CAB_0, "EMIT");
 };
 
-const turnHeaterOff = () => {
-    // if (state.manualOverride?.status === HEATER_OVERRIDE.ON) {
-    //   turnHeaterOn();
-    //   return;
-    // }
-
-    if (state.heaterPinVal === 0) return;
-    state.heaterPinVal = 0;
-    emitStateUpdate();
-    writeLog("heater off");
-};
-
-const turnHeaterOn = () => {
-    // if (state.manualOverride?.status === HEATER_OVERRIDE.OFF) {
-    //   turnHeaterOff();
-    //   return;
-    // }
-
-    if (state.heaterPinVal === 1) return;
-    state.heaterPinVal = 1;
-    emitStateUpdate();
-    writeLog("heater on");
-};
-
 type HeaterClient = { id: number; res: any };
 let heaterClients: HeaterClient[] = [];
 
 function subscribe(client: HeaterClient) {
     heaterClients.push(client);
-    log(client.id.toString(), 'subscribed');
-  }
-  
-  function unsubscribe(clientId: number) {
-    log(clientId.toString(), 'unsubscribe');
+    log(client.id.toString(), "subscribed");
+}
+
+function unsubscribe(clientId: number) {
+    log(clientId.toString(), "unsubscribe");
     heaterClients = heaterClients.filter((client) => client.id !== clientId);
 }
 
@@ -103,26 +79,32 @@ const publish = (newState: HeaterCabState) => {
     }
 };
 
+// [NOTE] must export & call this function in index.ts BEFORE app.listen()
 export function initHeaterApp() {
-    const checkHeaterStatus = (forceOn = true) => {
-        const curTemp =
-            clientMapState?.[PRIMARY_THERMOSTAT]?.tempF +
-            clientMapState?.[PRIMARY_THERMOSTAT]?.calibrate;
-        writeLog(`current temp is ${curTemp}`);
+    log("heaterApp", "start");
+}
 
-        // if heater off & current temp below min
-        const shouldTurnOn =
-            state.heaterPinVal === 0 && curTemp < roomTempState.min;
-        // if heater on & current temp above max
-        const shouldTurnOff =
-            state.heaterPinVal === 1 && curTemp > roomTempState.max;
+export const heaterState = state;
+export function turnHeaterOff() {
+    // if (state.manualOverride?.status === HEATER_OVERRIDE.ON) {
+    //   turnHeaterOn();
+    //   return;
+    // }
 
-        if (forceOn || shouldTurnOn) {
-            turnHeaterOn();
-        } else if (shouldTurnOff) {
-            turnHeaterOff();
-        }
-    };
+    if (state.heaterPinVal === 0) return;
+    state.heaterPinVal = 0;
+    emitStateUpdate();
+    writeLog("heater off");
+}
 
-    setInterval(checkHeaterStatus, 1000);
+export function turnHeaterOn() {
+    // if (state.manualOverride?.status === HEATER_OVERRIDE.OFF) {
+    //   turnHeaterOff();
+    //   return;
+    // }
+
+    if (state.heaterPinVal === 1) return;
+    state.heaterPinVal = 1;
+    emitStateUpdate();
+    writeLog("heater on");
 }

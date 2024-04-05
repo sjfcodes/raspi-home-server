@@ -1,5 +1,6 @@
 import { RASP_PI } from "../../constant/constant";
 import { initHeaterApp } from "./service/esp32/heater";
+import { initHomeCron } from "./service/esp32/homeCron";
 import { setThermostatClient } from "./service/esp32/thermostat";
 import { setPiTemp } from "./service/pi/temperature";
 import { app } from "./service/server";
@@ -14,6 +15,7 @@ app.post("/api/temperature", (req, res) => {
 });
 
 initHeaterApp();
+initHomeCron();
 
 app.listen(PORT, () => {
     setInterval(setPiTemp, LOOP_MS);
