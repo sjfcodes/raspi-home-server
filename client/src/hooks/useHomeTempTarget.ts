@@ -9,11 +9,8 @@ export default function useHomeTempTarget() {
 
   useEffect(() => {
     const sse = new EventSource(path);
-
-    sse.onmessage = (e) => {
-      console.log("useHomeTempTarget", e.data);
-      setState(JSON.parse(e.data));
-    };
+    sse.onmessage = (e) => setState(JSON.parse(e.data));
+    sse.onerror = console.error;
   }, []);
 
   function dispatch(newState: RoomTempState) {
