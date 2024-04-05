@@ -1,6 +1,6 @@
 import { Server, Socket } from "socket.io";
 import { CHANNEL } from "../../../../constant/constant";
-import { clientMapState, setEsp32Client } from "../esp32/temperature";
+import { clientMapState, setThermostatClient } from "../esp32/thermostat";
 import { getLogs } from "../logs/logger";
 import { roomTempState, setRoomTempState } from "../room/temperature";
 import { server } from "../server";
@@ -12,7 +12,7 @@ const onConnect = (socket: Socket) => {
   console.log(`[${socket.id}]:`, "socket.io client connected");
 
   socket.emit(CHANNEL.THERMOSTAT_MAP, clientMapState);
-  socket.on(CHANNEL.THERMOSTAT_MAP, setEsp32Client);
+  socket.on(CHANNEL.THERMOSTAT_MAP, setThermostatClient);
 
   socket.emit(CHANNEL.TARGET_TEMP, roomTempState);
   socket.on(CHANNEL.TARGET_TEMP, setRoomTempState);

@@ -6,7 +6,7 @@ import { emitStateUpdate } from "../websocket/emit";
 
 export let clientMapState: ThermostatMap = {};
 
-export const setEsp32Client = (client: Thermostat, socket?: Socket) => {
+export const setThermostatClient = (client: Thermostat, socket?: Socket) => {
   if (client === undefined) {
     console.error(new Error("client must be defined"));
     return;
