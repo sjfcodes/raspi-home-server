@@ -1,5 +1,4 @@
 import { CSSProperties, useState } from "react";
-import Block from "./Block";
 
 export default function Card({
   label,

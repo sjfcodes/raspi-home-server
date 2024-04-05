@@ -23,6 +23,7 @@ function App() {
         paddingBottom: "1rem",
       }}
     >
+      <Block />
       <Logos />
       <Block />
 
