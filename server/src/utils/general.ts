@@ -10,5 +10,5 @@ export const getSortedObject = (object: Record<any, any>) => {
 };
 
 export function log(channel:string, message: string, data: any = "") {
-  console.log(`[${channel}]:`, message, data);
+  console.log(`[${channel.padEnd(15, ' ')}]:`, message, data);
 }
