@@ -4,7 +4,8 @@ import { log } from "../../utils/general";
 import { server } from "../server";
 import SseDataStream from "../../lib/SseDataStream";
 
-const path = "/api/home/pi";
+const path = "/api/home/pi/temperature";
+const stream = new SseDataStream(server, path, getPiTemp());
 
 function getPiTemp() {
     const state = {
@@ -33,9 +34,7 @@ function getPiTemp() {
     return state;
 }
 
-const stream = new SseDataStream(server, path, getPiTemp());
-
-export function initPiState() {
+export function initPiTemperature() {
     setInterval(() => stream.publish(getPiTemp()), 1000);
     log(path, "start");
 }

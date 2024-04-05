@@ -1,6 +1,6 @@
 import { PRIMARY_THERMOSTAT } from "../../../../constant/constant";
 import { log } from "../../utils/general";
-import { writeLog } from "../logs/logger";
+import { writeLog } from "../pi/logs";
 import { roomTemperatureStream } from "../room/temperature";
 import { homeHeaterStream, turnHeaterOff, turnHeaterOn } from "./heater";
 import { thermostatMapStream } from "./thermostat";

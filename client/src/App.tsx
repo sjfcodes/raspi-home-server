@@ -1,13 +1,13 @@
 import "./App.css";
 import Block from "./components/Block";
-import LogStream from "./components/LogStream";
+import PiLogs from "./components/PiLogs";
 import Logos from "./components/Logos";
 import PiTemp from "./components/PiTemp";
 import QrCode from "./components/QrCode";
 import HomeTargetTemp from "./components/Home/HomeTargetTemp";
 import Thermostats from "./components/Thermostats";
 import { APP_MAX_WIDTH } from "./utils/constants";
-import HomeHeaterState from "./components/Home/HomeHomeHeaterState";
+import HomeHeaterState from "./components/Home/HomeHeaterState";
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
         paddingBottom: "1rem",
       }}
     >
-      {/* <Logos /> */}
+      <Logos />
       <Block />
 
       <HomeHeaterState />
@@ -32,7 +32,7 @@ function App() {
       <HomeTargetTemp />
       <Block />
 
-      {/* <LogStream />
+      {/* <PiLogs />
       <Block /> */}
 
       <div style={{ maxWidth: APP_MAX_WIDTH, overflow: "scroll" }}>

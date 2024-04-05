@@ -7,7 +7,7 @@ import {
     SSE_HEADERS,
 } from "../../../../constant/constant";
 import { HeaterCabState } from "../../../../types/main";
-import { writeLog } from "../logs/logger";
+import { writeLog } from "../pi/logs";
 import { server } from "../server";
 import { log } from "../../utils/general";
 import SseDataStream from "../../lib/SseDataStream";

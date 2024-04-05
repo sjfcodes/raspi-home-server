@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { AxisOptions, Chart } from "react-charts";
-import useLogStream from "../hooks/useLogStream";
+import usePiLogs from "../hooks/usePiLogs";
 
 type Temps = {
   date: Date;
@@ -13,7 +13,7 @@ type Series = {
 };
 
 export default function LogStream() {
-  const { logs } = useLogStream();
+  const [logs] = usePiLogs();
 
   const format = useMemo(
     () =>
@@ -51,6 +51,8 @@ export default function LogStream() {
     ],
     []
   );
+
+  if (!logs.length) return null;
 
   if (!format.data.length) return null;
 
