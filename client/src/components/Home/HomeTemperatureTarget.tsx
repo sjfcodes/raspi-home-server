@@ -23,8 +23,8 @@ const buttonStyle = {
   display: "block",
 };
 
-export default function HomeTargetTemp() {
-  const { data: roomTemp, setTargetMaxWithTrailingMin } = useHomeTempTarget();
+export default function HomeTemperatureTarget() {
+  const { data: roomTemp, decrement, increment } = useHomeTempTarget();
   const [heaterGpo] = useHomeHeater();
   const [showData, setShowData] = useState(false);
 
@@ -40,7 +40,7 @@ export default function HomeTargetTemp() {
         onClick={(e) => {
           e.stopPropagation();
           if (typeof roomTemp?.max !== "number") return;
-          setTargetMaxWithTrailingMin(roomTemp.max + 1);
+          increment();
         }}
       >
         +
@@ -79,7 +79,7 @@ export default function HomeTargetTemp() {
         onClick={(e) => {
           e.stopPropagation();
           if (typeof roomTemp?.max !== "number") return;
-          setTargetMaxWithTrailingMin(roomTemp.max - 1);
+          decrement();
         }}
       >
         -

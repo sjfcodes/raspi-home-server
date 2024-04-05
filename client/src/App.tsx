@@ -4,7 +4,7 @@ import PiLogs from "./components/PiLogs";
 import Logos from "./components/Logos";
 import PiTemp from "./components/PiTemp";
 import QrCode from "./components/QrCode";
-import HomeTargetTemp from "./components/Home/HomeTargetTemp";
+import HomeTemperatureTarget from "./components/Home/HomeTemperatureTarget";
 import Thermostats from "./components/Thermostats";
 import { APP_MAX_WIDTH } from "./utils/constants";
 import HomeHeaterState from "./components/Home/HomeHeaterState";
@@ -29,7 +29,7 @@ function App() {
       <HomeHeaterState />
       <Block />
 
-      <HomeTargetTemp />
+      <HomeTemperatureTarget />
       <Block />
 
       {/* <PiLogs />

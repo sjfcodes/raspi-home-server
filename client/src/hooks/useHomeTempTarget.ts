@@ -11,9 +11,39 @@ export default function useHomeTempTarget() {
     const sse = new EventSource(path);
 
     sse.onmessage = (e) => {
+      console.log("useHomeTempTarget", e.data);
       setState(JSON.parse(e.data));
     };
   }, []);
+
+  function dispatch(newState: RoomTempState) {
+    fetch(path, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newState),
+    }).catch((error) => {
+      console.error(error);
+      // setState(JSON.parse(currState));
+    });
+  }
+
+  function decrement() {
+    dispatch({
+      ...state,
+      max: state.max - 1,
+      min: state.max - 1,
+    });
+  }
+  function increment() {
+    dispatch({
+      ...state,
+      max: state.max + 1,
+      min: state.max + 1,
+    });
+  }
 
   const setTargetMaxWithTrailingMin = (target: number, trailing = 0) => {
     // const currState = JSON.stringify(state);
@@ -23,14 +53,15 @@ export default function useHomeTempTarget() {
       min: target - trailing,
     };
 
-    setState(newState);
+    // setState(newState);
 
     fetch(path, {
       method: "POST",
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },      body: JSON.stringify(newState),
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newState),
     }).catch((error) => {
       console.error(error);
       // setState(JSON.parse(currState));
@@ -39,6 +70,8 @@ export default function useHomeTempTarget() {
 
   return {
     data: state,
+    decrement,
+    increment,
     setTargetMaxWithTrailingMin,
   };
 }
