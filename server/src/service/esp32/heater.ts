@@ -16,7 +16,7 @@ const path = "/api/home/heater";
 // state singleton
 const state = HEATER_GPO_DEFAULT_STATE;
 // wss connection to heater
-const wssHeater = new WebSocketServer({
+const wss = new WebSocketServer({
     path: CHANNEL.HEATER_CAB_0,
     port: 3001,
 });
@@ -36,7 +36,7 @@ function handleMessageIn(data: string) {
     }
 }
 
-wssHeater.on("connection", (ws) => {
+wss.on("connection", (ws) => {
     log(CHANNEL.HEATER_CAB_0, "wss conneced");
     ws.on("message", handleMessageIn);
     ws.on("close", () => log(CHANNEL.HEATER_CAB_0, "wss disconnected"));
@@ -45,9 +45,9 @@ wssHeater.on("connection", (ws) => {
 
 const emitStateUpdate = () => {
     const stringified = JSON.stringify(state);
-    wssHeater.clients.forEach((client) => client.send(stringified));
+    wss.clients.forEach((client) => client.send(stringified));
     publish(state);
-    log(CHANNEL.HEATER_CAB_0, "EMIT");
+    log(CHANNEL.HEATER_CAB_0, "publish");
 };
 
 type SseClient = { id: string; res: any };
@@ -79,12 +79,6 @@ const publish = (newState: HeaterCabState) => {
     }
 };
 
-// [NOTE] must export & call this function in index.ts BEFORE app.listen()
-export function initHomeHeater() {
-    log(path, "start");
-}
-
-export const heaterState = state;
 export function turnHeaterOff() {
     // if (state.manualOverride?.status === HEATER_OVERRIDE.ON) {
     //   turnHeaterOn();
@@ -107,4 +101,10 @@ export function turnHeaterOn() {
     state.heaterPinVal = 1;
     emitStateUpdate();
     writeLog("heater on");
+}
+
+export const heaterState = state;
+
+export function initHomeHeater() {
+    log(path, "start");
 }
