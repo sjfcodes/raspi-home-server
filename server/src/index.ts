@@ -1,7 +1,7 @@
 import { RASP_PI } from "../../constant/constant";
 import { initHomeHeater } from "./service/esp32/heater";
 import { initHomeCron } from "./service/esp32/homeCron";
-import { setThermostatClient } from "./service/esp32/thermostat";
+import { initAllThermostats, setThermostatClient } from "./service/esp32/thermostat";
 import { setPiTemp } from "./service/pi/temperature";
 import { app } from "./service/server";
 import { ipAddress } from "./utils/ipAddress";
@@ -14,6 +14,7 @@ app.post("/api/temperature", (req, res) => {
     res.status(200).send({ ...req.body, serverName: "raspi-home-server" });
 });
 
+initAllThermostats();
 initHomeHeater();
 initHomeCron();
 

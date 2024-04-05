@@ -1,4 +1,4 @@
-import { v4 as uuidV4 } from 'uuid';
+import { v4 as uuidV4 } from "uuid";
 import { WebSocketServer } from "ws";
 import {
     CHANNEL,
@@ -11,9 +11,10 @@ import { writeLog } from "../logs/logger";
 import { app } from "../server";
 import { log } from "../../utils/general";
 
+const path = "/api/home/heater";
+
 // state singleton
 const state = HEATER_GPO_DEFAULT_STATE;
-
 // wss connection to heater
 const wssHeater = new WebSocketServer({
     path: CHANNEL.HEATER_CAB_0,
@@ -62,7 +63,7 @@ function unsubscribe(clientId: string) {
     sseClients = sseClients.filter((client) => client.id !== clientId);
 }
 
-app.get("/api/home/heater", (req, res) => {
+app.get(path, (req, res) => {
     const clientId = uuidV4();
     res.writeHead(200, SSE_HEADERS);
     res.write(`data: ${JSON.stringify(state)}\n\n`);
@@ -72,6 +73,7 @@ app.get("/api/home/heater", (req, res) => {
 
 // publish SSE to browsers
 const publish = (newState: HeaterCabState) => {
+    log(path, "publish");
     for (const client of sseClients) {
         client.res.write(`data: ${JSON.stringify(newState)}\n\n`);
     }
@@ -79,7 +81,7 @@ const publish = (newState: HeaterCabState) => {
 
 // [NOTE] must export & call this function in index.ts BEFORE app.listen()
 export function initHomeHeater() {
-    log("homeHeater", "start");
+    log(path, "start");
 }
 
 export const heaterState = state;

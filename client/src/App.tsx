@@ -40,12 +40,12 @@ function App() {
       <Block />
 
       <PiTemp />
-      <Block />
+      <Block /> */}
 
       <div style={{ maxWidth: APP_MAX_WIDTH, overflow: "scroll" }}>
         <Thermostats hideIds={[PRIMARY_THERMOSTAT]} />
       </div>
-      <Block />
+      {/* <Block />
       <QrCode value={location.href} />
       <Block /> */}
     </div>

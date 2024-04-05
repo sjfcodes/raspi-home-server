@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { RASP_PI } from "../../../constant/constant";
+import { ThermostatMap } from "../../../types/main";
 
-export default function useHeaterSse() {
-  const [state, setState] = useState(null);
+export default function useThermostatSse() {
+  const [state, setState] = useState({} as ThermostatMap);
 
   useEffect(() => {
     const sse = new EventSource(
-      `http://${RASP_PI.ip}:${RASP_PI.serverPort}/api/home/heater`
+      `http://${RASP_PI.ip}:${RASP_PI.serverPort}/api/home/thermostat`
     );
 
     sse.onmessage = (e) => {
