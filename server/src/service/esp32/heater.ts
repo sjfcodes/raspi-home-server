@@ -10,6 +10,7 @@ import { HeaterCabState } from "../../../../types/main";
 import { writeLog } from "../logs/logger";
 import { app } from "../server";
 import { log } from "../../utils/general";
+import SseDataStream from "../../lib/SseDataStream";
 
 const path = "/api/home/heater";
 
@@ -20,6 +21,8 @@ const wss = new WebSocketServer({
     path: CHANNEL.HEATER_CAB_0,
     port: 3001,
 });
+
+const stream = new SseDataStream(app, path, state);
 
 function handleMessageIn(data: string) {
     const input: HeaterCabState = JSON.parse(data.toString());
@@ -46,37 +49,8 @@ wss.on("connection", (ws) => {
 const emitStateUpdate = () => {
     const stringified = JSON.stringify(state);
     wss.clients.forEach((client) => client.send(stringified));
-    publish(state);
+    stream.publish(state);
     log(CHANNEL.HEATER_CAB_0, "publish");
-};
-
-type SseClient = { id: string; res: any };
-let sseClients: SseClient[] = [];
-
-function subscribe(client: SseClient) {
-    sseClients.push(client);
-    log(client.id.toString(), "subscribed");
-}
-
-function unsubscribe(clientId: string) {
-    log(clientId.toString(), "unsubscribe");
-    sseClients = sseClients.filter((client) => client.id !== clientId);
-}
-
-app.get(path, (req, res) => {
-    const clientId = uuidV4();
-    res.writeHead(200, SSE_HEADERS);
-    res.write(`data: ${JSON.stringify(state)}\n\n`);
-    subscribe({ id: clientId, res });
-    req.on("close", () => unsubscribe(clientId));
-});
-
-// publish SSE to browsers
-const publish = (newState: HeaterCabState) => {
-    log(path, "publish");
-    for (const client of sseClients) {
-        client.res.write(`data: ${JSON.stringify(newState)}\n\n`);
-    }
 };
 
 export function turnHeaterOff() {

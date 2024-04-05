@@ -15,4 +15,4 @@ initHomeHeater();
 initHomeCron();
 initPiState();
 
-app.listen(PORT, () => log('server', `start (http://${ipAddress}:${PORT})`));
+app.listen(PORT, () => log('server', `listen (http://${ipAddress}:${PORT})`));

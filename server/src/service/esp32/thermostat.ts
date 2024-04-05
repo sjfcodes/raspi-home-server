@@ -2,13 +2,15 @@ import { v4 } from "uuid";
 import { SSE_HEADERS, THERMOSTAT } from "../../../../constant/constant";
 import { Thermostat, ThermostatMap } from "../../../../types/main";
 import { getSortedObject, log } from "../../utils/general";
-import { emitStateUpdate } from "../websocket/emit";
 import { app } from "../server";
+import SseDataStream from "../../lib/SseDataStream";
 
 const path = "/api/home/thermostat";
 let state: ThermostatMap = {};
 
-export const setThermostatClient = (client: Thermostat) => {
+const stream = new SseDataStream(app, path, state);
+
+function setThermostatClient(client: Thermostat) {
     if (client === undefined) {
         console.error(new Error("client must be defined"));
         return;
@@ -41,36 +43,8 @@ export const setThermostatClient = (client: Thermostat) => {
         },
     });
 
-    publish(state);
-};
-
-type SseClient = { id: string; res: any };
-let sseClients: SseClient[] = [];
-
-function subscribe(client: SseClient) {
-    sseClients.push(client);
-    log(client.id.toString(), "subscribed");
+    stream.publish(state);
 }
-
-function unsubscribe(clientId: string) {
-    log(clientId.toString(), "unsubscribe");
-    sseClients = sseClients.filter((client) => client.id !== clientId);
-}
-// publish SSE to browsers
-const publish = (newState: any) => {
-    log(path, "publish");
-    for (const client of sseClients) {
-        client.res.write(`data: ${JSON.stringify(newState)}\n\n`);
-    }
-};
-
-app.get(path, (req, res) => {
-    const clientId = v4();
-    res.writeHead(200, SSE_HEADERS);
-    res.write(`data: ${JSON.stringify(state)}\n\n`);
-    subscribe({ id: clientId, res });
-    req.on("close", () => unsubscribe(clientId));
-});
 
 app.post("/api/temperature", (req, res) => {
     if (req.body) setThermostatClient(req.body);
