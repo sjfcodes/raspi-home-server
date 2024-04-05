@@ -45,3 +45,9 @@ export const ROOM_TEMP_DEFAULT_STATE: RoomTempState = {
   max: 66,
   min: 66,
 };
+
+export const SSE_HEADERS = {
+  "Content-Type": "text/event-stream",
+  Connection: "keep-alive",
+  "Cache-Control": "no-cache",
+};

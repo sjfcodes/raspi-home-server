@@ -4,12 +4,14 @@ import {
     HEATER_CAB,
     HEATER_GPO_DEFAULT_STATE,
     PRIMARY_THERMOSTAT,
+    SSE_HEADERS,
 } from "../../../../constant/constant";
 import { HeaterCabState } from "../../../../types/main";
 import { writeLog } from "../logs/logger";
 import { roomTempState } from "../room/temperature";
-import { clientMapState } from "./temperature";
+import { clientMapState } from "./thermostat";
 import { app } from "../server";
+import { log } from "../../utils/general";
 
 // state singleton
 const state = HEATER_GPO_DEFAULT_STATE;
@@ -20,13 +22,8 @@ const wssHeater = new WebSocketServer({
     port: 3001,
 });
 
-function log(message: string, data: any = "") {
-    console.log(`[${CHANNEL.HEATER_CAB_0}]:`, message, data);
-}
-
 function handleMessageIn(data: string) {
     const input: HeaterCabState = JSON.parse(data.toString());
-    // console.log('input', input)
     if (input.chipId === HEATER_CAB.HOME) {
         state.cabHumidity = input.cabHumidity;
         state.cabTempF = input.cabTempF;
@@ -41,9 +38,9 @@ function handleMessageIn(data: string) {
 }
 
 wssHeater.on("connection", (ws) => {
-    log("wss heater conneced");
+    log(CHANNEL.HEATER_CAB_0, "wss conneced");
     ws.on("message", handleMessageIn);
-    ws.on("close", () => log("wss heater disconnected"));
+    ws.on("close", () => log(CHANNEL.HEATER_CAB_0, "wss disconnected"));
     ws.onerror = console.error;
 });
 
@@ -51,8 +48,7 @@ const emitStateUpdate = () => {
     const stringified = JSON.stringify(state);
     wssHeater.clients.forEach((client) => client.send(stringified));
     publish(state);
-    // log("EMIT:", stringified);
-    log("EMIT");
+    log(CHANNEL.HEATER_CAB_0, "EMIT");
 };
 
 const turnHeaterOff = () => {
@@ -84,28 +80,19 @@ let heaterClients: HeaterClient[] = [];
 
 function subscribe(client: HeaterClient) {
     heaterClients.push(client);
-    console.log(`[${client.id}] subscribed`);
-}
-
-function unsubscribe(clientId: number) {
-    console.log(`[${clientId}] connection close`);
+    log(client.id.toString(), 'subscribed');
+  }
+  
+  function unsubscribe(clientId: number) {
+    log(clientId.toString(), 'unsubscribe');
     heaterClients = heaterClients.filter((client) => client.id !== clientId);
 }
 
 app.get("/api/home", (req, res) => {
-    const sseHeaders = {
-        "Content-Type": "text/event-stream",
-        Connection: "keep-alive",
-        "Cache-Control": "no-cache",
-    };
     const clientId = Date.now();
-    // start connection
-    res.writeHead(200, sseHeaders);
-    // send state to client
+    res.writeHead(200, SSE_HEADERS);
     res.write(`data: ${JSON.stringify(state)}\n\n`);
-    // subscribe to updates
     subscribe({ id: clientId, res });
-    // unsubscribe from updates
     req.on("close", () => unsubscribe(clientId));
 });
 
@@ -117,14 +104,13 @@ const publish = (newState: HeaterCabState) => {
 };
 
 export function initHeaterApp() {
-    // check heater status changes every x seconds
     const checkHeaterStatus = (forceOn = true) => {
         const curTemp =
             clientMapState?.[PRIMARY_THERMOSTAT]?.tempF +
             clientMapState?.[PRIMARY_THERMOSTAT]?.calibrate;
         writeLog(`current temp is ${curTemp}`);
 
-        // if heater off & current temp below below min
+        // if heater off & current temp below min
         const shouldTurnOn =
             state.heaterPinVal === 0 && curTemp < roomTempState.min;
         // if heater on & current temp above max

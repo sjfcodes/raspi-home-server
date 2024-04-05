@@ -8,3 +8,7 @@ export const getSortedObject = (object: Record<any, any>) => {
 
   return copy;
 };
+
+export function log(channel:string, message: string, data: any = "") {
+  console.log(`[${channel}]:`, message, data);
+}
