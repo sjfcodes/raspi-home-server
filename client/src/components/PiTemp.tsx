@@ -1,9 +1,9 @@
-import usePiSse from "../hooks/usePiSse";
+import useRaspberryPi from "../hooks/useRaspberryPi";
 import Card from "./Card";
 import JsonCode from "./JsonCode";
 
 export default function PiTemp() {
-  const [piTemp] = usePiSse();
+  const [piTemp] = useRaspberryPi();
 
   // 85℃ (185℉) max rasbperry pi temp
   const percentage = (piTemp.tempF / 185) * 100;

@@ -1,9 +1,9 @@
-import useThermostatSse from "../hooks/useThermostatSse";
+import useThermostatMap from "../hooks/useThermostatMap";
 import Block from "./Block";
 import Thermostat from "./Thermostat";
 
 export default function Thermostats({ hideIds = [] }: { hideIds?: string[] }) {
-  const [thermostatMap] = useThermostatSse();
+  const [thermostatMap] = useThermostatMap();
 
   const sorted = Object.values(thermostatMap)
     .filter((tstat) => !hideIds.includes(tstat.chipId))

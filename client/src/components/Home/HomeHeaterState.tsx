@@ -1,9 +1,9 @@
-import useHeaterSse from "../../hooks/useHeaterSse";
+import useHomeHeater from "../../hooks/useHomeHeater";
 import Card from "../Card";
 import JsonCode from "../JsonCode";
 
-export default function HeaterState() {
-  const [state] = useHeaterSse();
+export default function HomeHeaterState() {
+  const [state] = useHomeHeater();
 
   return (
     <Card

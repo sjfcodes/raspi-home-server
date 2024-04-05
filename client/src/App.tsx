@@ -4,11 +4,10 @@ import LogStream from "./components/LogStream";
 import Logos from "./components/Logos";
 import PiTemp from "./components/PiTemp";
 import QrCode from "./components/QrCode";
-import CurrentTemp from "./components/LivingRoom/CurrentTemp";
-import TargetTemp from "./components/LivingRoom/TargetTemp";
+import HomeTargetTemp from "./components/Home/HomeTargetTemp";
 import Thermostats from "./components/Thermostats";
 import { APP_MAX_WIDTH } from "./utils/constants";
-import HeaterState from "./components/LivingRoom/HeaterState";
+import HomeHeaterState from "./components/Home/HomeHomeHeaterState";
 
 function App() {
   return (
@@ -24,14 +23,14 @@ function App() {
         paddingBottom: "1rem",
       }}
     >
-      <Logos />
+      {/* <Logos /> */}
       <Block />
 
-      <HeaterState />
+      <HomeHeaterState />
       <Block />
 
-      {/* <TargetTemp />
-      <Block /> */}
+      <HomeTargetTemp />
+      <Block />
 
       {/* <LogStream />
       <Block /> */}

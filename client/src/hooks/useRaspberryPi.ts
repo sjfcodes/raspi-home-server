@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { RASP_PI } from "../../../constant/constant";
+import { PiTemp } from "../../../types/main";
 
-export default function useHeaterSse() {
-  const [state, setState] = useState(null);
+export default function useRaspberryPi() {
+  const [state, setState] = useState({} as PiTemp);
 
   useEffect(() => {
     const sse = new EventSource(
-      `http://${RASP_PI.ip}:${RASP_PI.serverPort}/api/home/heater`
+      `http://${RASP_PI.ip}:${RASP_PI.serverPort}/api/home/pi`
     );
 
     sse.onmessage = (e) => {

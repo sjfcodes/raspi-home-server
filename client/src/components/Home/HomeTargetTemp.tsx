@@ -1,8 +1,7 @@
 import { CSSProperties, useState } from "react";
-import { HEATER_CAB } from "../../../../constant/constant";
-import useHeaterGpoState from "../../hooks/useHeaterGpoState";
-import useRoomTemp from "../../hooks/useRoomTemp";
+import useHomeTempTarget from "../../hooks/useHomeTempTarget";
 import JsonCode from "../JsonCode";
+import useHomeHeater from "../../hooks/useHomeHeater";
 
 const cold = "#6bbcd1";
 const hot = "#e23201";
@@ -24,12 +23,14 @@ const buttonStyle = {
   display: "block",
 };
 
-export default function TargetTemp() {
-  const { roomTemp, setTargetMaxWithTrailingMin } = useRoomTemp();
-
-  const { heaterGpo } = useHeaterGpoState(HEATER_CAB.HOME);
-  const isTempAvailable = typeof roomTemp?.min === "number";
+export default function HomeTargetTemp() {
+  const { data: roomTemp, setTargetMaxWithTrailingMin } = useHomeTempTarget();
+  const [heaterGpo] = useHomeHeater();
   const [showData, setShowData] = useState(false);
+
+  if (!heaterGpo) return null;
+
+  const isTempAvailable = typeof roomTemp?.min === "number";
   const displayTemp = isTempAvailable ? roomTemp.max : "-";
 
   return (

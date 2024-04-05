@@ -1,5 +1,5 @@
 import { HEATER_OVERRIDE } from "../../../constant/constant";
-import useHeaterGpoState from "../hooks/useHeaterGpoState";
+import useHeaterGpoState from "../hooks/old.useHeaterGpoState";
 import Card from "./Card";
 
 const restTimes = [0.1, 15, 30, 60];

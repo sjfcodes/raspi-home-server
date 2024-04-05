@@ -19,6 +19,7 @@ export function log(channel: string, message: string, data: any = {}) {
         label = label.substring(0, config.log.labelWidth - 1) + "…";
 
     const args = [time, `[${label}]:`, message];
+
     if (config.log.showData) args.push(JSON.stringify(data));
 
     console.log(...args);
