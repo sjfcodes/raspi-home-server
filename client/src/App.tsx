@@ -1,4 +1,3 @@
-import { PRIMARY_THERMOSTAT } from "../../constant/constant";
 import "./App.css";
 import Block from "./components/Block";
 import LogStream from "./components/LogStream";
