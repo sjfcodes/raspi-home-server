@@ -3,12 +3,12 @@ import { SSE_HEADERS } from "../../../constant/constant";
 import { log } from "../utils/general";
 
 type SseClient = { id: string; res: any };
-class SseDataStream {
+class SseDataStream<T> {
     private path: string;
-    private state: any;
+    private state: T;
     private sseClients: SseClient[];
 
-    constructor(server: any, path: string, initalState: any) {
+    constructor(server: any, path: string, initalState: T) {
         this.path = path;
         this.state = initalState;
         this.sseClients = [];
@@ -39,11 +39,19 @@ class SseDataStream {
     }
 
     // publish SSE to browsers
-    publish(newState: any) {
-        log(this.path, "publish");
+    publish(newState: T) {
+        log(this.path, "publish", newState);
         for (const client of this.sseClients) {
             client.res.write(`data: ${JSON.stringify(newState)}\n\n`);
         }
+    }
+
+    getState(): T {
+        return this.state;
+    }
+
+    setState(newState: T) {
+        this.state = newState;
     }
 }
 

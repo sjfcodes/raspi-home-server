@@ -1,6 +1,6 @@
 export const config = {
     log: {
-        showData: true,
+        showData: !true,
         labelWidth: 28,
     },
 };

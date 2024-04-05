@@ -4,11 +4,11 @@ import SseDataStream from "../../lib/SseDataStream";
 import { log } from "../../utils/general";
 import { server } from "../server";
 
-let state = ROOM_TEMP_DEFAULT_STATE;
 const path = "/api/home/temperature/target";
-const stream = new SseDataStream(server, path, state);
+const stream = new SseDataStream(server, path, ROOM_TEMP_DEFAULT_STATE);
 
-export const setRoomTempState = (newState: RoomTempState) => {
+const setRoomTempState = (newState: RoomTempState) => {
+    const state = stream.getState();
     if (newState === undefined) {
         console.error(new Error("newState must be defined"));
         return;
@@ -16,22 +16,29 @@ export const setRoomTempState = (newState: RoomTempState) => {
 
     if (!newState.max || !newState.min) {
         console.error(
-            new Error("unexpected room temp state: " + JSON.stringify(newState))
+            new Error(`unexpected state: ${JSON.stringify(newState)}`)
         );
         return;
     }
 
-    // only set new state if valid
-    if (newState.max >= newState.min) {
-        state = newState;
+    if (newState.max < newState.min) {
+        console.error(new Error("max must be >= min"));
+        return;
     }
+
+    stream.setState(newState);
     stream.publish(state);
     log(path, "status", state);
 };
 
+server.post(path, (req, res) => {
+    if (req.body) setRoomTempState(req.body);
+    res.status(200).send({ message: "ok" });
+});
+
 // [NOTE] must export & call this function in index.ts BEFORE server.listen()
 export function initHomeTargetTemp() {
-  log(path, "start");
+    log(path, "start");
 }
 
-export const roomTempState = state;
+export const roomTemperatureStream = stream;

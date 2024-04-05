@@ -6,11 +6,11 @@ import { server } from "../server";
 import SseDataStream from "../../lib/SseDataStream";
 
 const path = "/api/home/thermostat";
-let state: ThermostatMap = {};
 
-const stream = new SseDataStream(server, path, state);
+const stream = new SseDataStream(server, path, {} as ThermostatMap);
 
 function setThermostatClient(client: Thermostat) {
+    const state = stream.getState();
     if (client === undefined) {
         console.error(new Error("client must be defined"));
         return;
@@ -30,7 +30,7 @@ function setThermostatClient(client: Thermostat) {
     const tempAverage =
         tempFHistory.reduce((acc, curr) => acc + curr, 0) / tempFHistory.length;
 
-    state = getSortedObject({
+    stream.setState(getSortedObject({
         ...state,
         [client.chipId]: {
             chipId: client.chipId,
@@ -41,7 +41,7 @@ function setThermostatClient(client: Thermostat) {
             updatedAt: new Date().toLocaleTimeString(),
             tempFHistory,
         },
-    });
+    }));
 
     stream.publish(state);
 }
@@ -56,4 +56,4 @@ export function initAllThermostats() {
     log(path, "start");
 }
 
-export const clientMapState = state;
+export const thermostatMapStream = stream;
