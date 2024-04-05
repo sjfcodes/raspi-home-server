@@ -1,11 +1,9 @@
-import { DigitalOutput } from "raspi-gpio";
 import { WebSocketServer } from "ws";
 import {
-  CHANNEL,
-  HEATER_CAB,
-  HEATER_GPO_DEFAULT_STATE,
-  HEATER_OVERRIDE,
-  PRIMARY_THERMOSTAT,
+    CHANNEL,
+    HEATER_CAB,
+    HEATER_GPO_DEFAULT_STATE,
+    PRIMARY_THERMOSTAT,
 } from "../../../../constant/constant";
 import { HeaterCabState } from "../../../../types/main";
 import { writeLog } from "../logs/logger";
@@ -13,184 +11,132 @@ import { roomTempState } from "../room/temperature";
 import { clientMapState } from "./temperature";
 import { app } from "../server";
 
-export const heaterGpo = new DigitalOutput("GPIO4");
-export let heaterGpoState = HEATER_GPO_DEFAULT_STATE;
+// state singleton
+const state = HEATER_GPO_DEFAULT_STATE;
 
-const wssHeaterGpo = new WebSocketServer({
-  path: CHANNEL.HEATER_CAB_0,
-  port: 3001,
+// wss connection to heater
+const wssHeater = new WebSocketServer({
+    path: CHANNEL.HEATER_CAB_0,
+    port: 3001,
 });
 
-const log = (message: string, data: any = "") => {
-  console.log(`[${CHANNEL.HEATER_CAB_0}]:`, message, data);
-};
+function log(message: string, data: any = "") {
+    console.log(`[${CHANNEL.HEATER_CAB_0}]:`, message, data);
+}
 
-wssHeaterGpo.on("connection", (ws) => {
-  log("wss client connection");
-  /**
-   * [NOTE]: Don't send server state to client on connect.
-   * Instead, wait for esp32 state update to broadcast to connected clients.
-   */
-  // ws.send(JSON.stringify(heaterGpoState));
-  ws.on("close", () => console.log("wssHeaterGpo client disconnected"));
-  ws.on("message", (data) => {
+function handleMessageIn(data: string) {
     const input: HeaterCabState = JSON.parse(data.toString());
     // console.log('input', input)
     if (input.chipId === HEATER_CAB.HOME) {
-      heaterGpoState.cabHumidity = input.cabHumidity;
-      heaterGpoState.cabTempF = input.cabTempF;
-      heaterGpoState.chipId = input.chipId;
-      heaterGpoState.updatedAt = new Date().toLocaleTimeString();
-      
-      if (input.heaterPinVal !== undefined) {
-        heaterGpo.write(input.heaterPinVal ? 1 : 0);
-        heaterGpoState.heaterPinVal = input.heaterPinVal;
-      }
-      emitStateUpdate();
+        state.cabHumidity = input.cabHumidity;
+        state.cabTempF = input.cabTempF;
+        state.chipId = input.chipId;
+        state.updatedAt = new Date().toLocaleTimeString();
+
+        if (input.heaterPinVal !== undefined) {
+            state.heaterPinVal = input.heaterPinVal;
+        }
+        emitStateUpdate();
     }
-  });
-  ws.onerror = function (error) {
-    console.error(error);
-  };
+}
+
+wssHeater.on("connection", (ws) => {
+    log("wss heater conneced");
+    ws.on("message", handleMessageIn);
+    ws.on("close", () => log("wss heater disconnected"));
+    ws.onerror = console.error;
 });
 
 const emitStateUpdate = () => {
-  const stringified = JSON.stringify(heaterGpoState);
-  // wssHeaterGpo.clients.forEach((client) => client.send(stringified));
-  writeHeaterClients(heaterGpoState)
-  log("EMIT:", stringified);
+    const stringified = JSON.stringify(state);
+    wssHeater.clients.forEach((client) => client.send(stringified));
+    publish(state);
+    // log("EMIT:", stringified);
+    log("EMIT");
 };
 
-// check heater status changes every x seconds
-export const checkHeaterStatus = (forceOn = false) => {
-  const curTemp =
-    clientMapState?.[PRIMARY_THERMOSTAT]?.tempF +
-    clientMapState?.[PRIMARY_THERMOSTAT]?.calibrate;
-  writeLog(`current temp is ${curTemp}`);
+const turnHeaterOff = () => {
+    // if (state.manualOverride?.status === HEATER_OVERRIDE.ON) {
+    //   turnHeaterOn();
+    //   return;
+    // }
 
-  // if heater off & current temp below below min
-  const shouldTurnOn =
-    heaterGpoState.heaterPinVal === 0 && curTemp < roomTempState.min;
-  // if heater on & current temp above max
-  const shouldTurnOff =
-    heaterGpoState.heaterPinVal === 1 && curTemp > roomTempState.max;
-
-  if (forceOn || shouldTurnOn) {
-    setHeaterGpioOn();
-  } else if (shouldTurnOff) {
-    setHeaterGpoOff();
-  }
-};
-
-export const setHeaterGpoOff = (emit = true) => {
-  if (heaterGpoState.manualOverride?.status === HEATER_OVERRIDE.ON) {
-    setHeaterGpioOn();
-    return;
-  }
-
-  heaterGpo.write(0);
-  heaterGpoState.heaterPinVal = 0;
-  if (emit) emitStateUpdate();
-  writeLog("heater off");
-};
-
-export const setHeaterGpioOn = (emit = true) => {
-  if (heaterGpoState.manualOverride?.status === HEATER_OVERRIDE.OFF) {
-    setHeaterGpoOff();
-    return;
-  }
-
-  heaterGpo.write(1);
-  heaterGpoState.heaterPinVal = 1;
-  if (emit) emitStateUpdate();
-  writeLog("heater on");
-};
-
-// let timeout: NodeJS.Timeout;
-// export const setHeaterManualOverride = (
-//   override: HeaterManualOverride | null
-// ) => {
-//   if (override?.expireAt) {
-//     const ms = new Date(override?.expireAt).getTime();
-//     const remaining = ms - Date.now();
-//     // if new override has expired, do not set
-//     if (remaining < 0) {
-//       return;
-//     }
-
-//     if (override.status === HEATER_OVERRIDE.OFF) {
-//       setHeaterGpoOff(false);
-//     } else if (override.status === HEATER_OVERRIDE.ON) {
-//       setHeaterGpioOn(false);
-//     }
-
-//     // if override has not expired
-//     // clear previous override
-//     clearTimeout(timeout);
-//     // set new override
-//     timeout = setTimeout(() => {
-//       // when override expires, clear override & emit update
-//       heaterGpoState.manualOverride = null;
-//       emitStateUpdate();
-//     }, remaining);
-//   }
-
-//   // apply to global state
-//   heaterGpoState.manualOverride = override;
-//   emitStateUpdate();
-// };
-
-// user updates pin state
-export const setHeaterGpioState = (newState: HeaterCabState) => {
-  if (newState === undefined) {
-    console.error(new Error("newState must be defined"));
-    return;
-  }
-
-  if (
-    typeof newState.heaterPinVal === "number" &&
-    heaterGpoState.heaterPinVal !== newState.heaterPinVal
-  ) {
-    if (newState.heaterPinVal) {
-      setHeaterGpioOn();
-    } else {
-      setHeaterGpoOff();
-    }
-  }
-
-  heaterGpoState = newState;
-
-  if (newState.manualOverride) {
-    // setHeaterManualOverride(newState.manualOverride);
-  } else {
+    if (state.heaterPinVal === 0) return;
+    state.heaterPinVal = 0;
     emitStateUpdate();
-  }
+    writeLog("heater off");
 };
 
-let heaterClients: { id: number; res: any }[] = [];
-app.get("/api/home", (req, res) => {
-  const sseHeaders = {
-    "Content-Type": "text/event-stream",
-    Connection: "keep-alive",
-    "Cache-Control": "no-cache",
-  };
-  res.writeHead(200, sseHeaders);
-  res.write(`data: ${JSON.stringify(heaterGpoState)}\n\n`);
+const turnHeaterOn = () => {
+    // if (state.manualOverride?.status === HEATER_OVERRIDE.OFF) {
+    //   turnHeaterOff();
+    //   return;
+    // }
 
-  const clientId = Date.now();
-  const newClient = { id: clientId, res };
-  heaterClients.push(newClient);
-  console.log(`[${clientId}] connection open`);
+    if (state.heaterPinVal === 1) return;
+    state.heaterPinVal = 1;
+    emitStateUpdate();
+    writeLog("heater on");
+};
 
-  req.on("close", () => {
+type HeaterClient = { id: number; res: any };
+let heaterClients: HeaterClient[] = [];
+
+function subscribe(client: HeaterClient) {
+    heaterClients.push(client);
+    console.log(`[${client.id}] subscribed`);
+}
+
+function unsubscribe(clientId: number) {
     console.log(`[${clientId}] connection close`);
     heaterClients = heaterClients.filter((client) => client.id !== clientId);
-  });
+}
+
+app.get("/api/home", (req, res) => {
+    const sseHeaders = {
+        "Content-Type": "text/event-stream",
+        Connection: "keep-alive",
+        "Cache-Control": "no-cache",
+    };
+    const clientId = Date.now();
+    // start connection
+    res.writeHead(200, sseHeaders);
+    // send state to client
+    res.write(`data: ${JSON.stringify(state)}\n\n`);
+    // subscribe to updates
+    subscribe({ id: clientId, res });
+    // unsubscribe from updates
+    req.on("close", () => unsubscribe(clientId));
 });
 
-export const writeHeaterClients = (newState: HeaterCabState) => {
-  for(const client of heaterClients) {
-    client.res.write(`data: ${JSON.stringify(newState)}\n\n`);
-  }
+// publish SSE to browsers
+const publish = (newState: HeaterCabState) => {
+    for (const client of heaterClients) {
+        client.res.write(`data: ${JSON.stringify(newState)}\n\n`);
+    }
+};
 
+export function initHeaterApp() {
+    // check heater status changes every x seconds
+    const checkHeaterStatus = (forceOn = true) => {
+        const curTemp =
+            clientMapState?.[PRIMARY_THERMOSTAT]?.tempF +
+            clientMapState?.[PRIMARY_THERMOSTAT]?.calibrate;
+        writeLog(`current temp is ${curTemp}`);
+
+        // if heater off & current temp below below min
+        const shouldTurnOn =
+            state.heaterPinVal === 0 && curTemp < roomTempState.min;
+        // if heater on & current temp above max
+        const shouldTurnOff =
+            state.heaterPinVal === 1 && curTemp > roomTempState.max;
+
+        if (forceOn || shouldTurnOn) {
+            turnHeaterOn();
+        } else if (shouldTurnOff) {
+            turnHeaterOff();
+        }
+    };
+
+    setInterval(checkHeaterStatus, 1000);
 }
