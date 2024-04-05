@@ -30,20 +30,20 @@ function setThermostatClient(client: Thermostat) {
     const tempAverage =
         tempFHistory.reduce((acc, curr) => acc + curr, 0) / tempFHistory.length;
 
-    stream.setState(getSortedObject({
-        ...state,
-        [client.chipId]: {
-            chipId: client.chipId,
-            // @ts-ignore
-            chipName: THERMOSTAT[client.chipId] || client.chipName,
-            tempF: Math.trunc(tempAverage),
-            calibrate: client.calibrate || 0,
-            updatedAt: new Date().toLocaleTimeString(),
-            tempFHistory,
-        },
-    }));
-
-    stream.publish(state);
+    stream.setState(
+        getSortedObject({
+            ...state,
+            [client.chipId]: {
+                chipId: client.chipId,
+                // @ts-ignore
+                chipName: THERMOSTAT[client.chipId] || client.chipName,
+                tempF: Math.trunc(tempAverage),
+                calibrate: client.calibrate || 0,
+                updatedAt: new Date().toLocaleTimeString(),
+                tempFHistory,
+            },
+        })
+    );
 }
 
 server.post("/api/temperature", (req, res) => {

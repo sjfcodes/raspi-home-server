@@ -34,6 +34,8 @@ function handleMessageIn(data: string) {
         if (input.heaterPinVal !== undefined) {
             state.heaterPinVal = input.heaterPinVal;
         }
+
+        stream.setState(state);
         emitStateUpdate();
     }
 }
@@ -49,7 +51,6 @@ const emitStateUpdate = () => {
     const state = stream.getState();
     const stringified = JSON.stringify(state);
     wss.clients.forEach((client) => client.send(stringified));
-    stream.publish(state);
     log(CHANNEL.HEATER_CAB_0, "publish", state);
 };
 
@@ -62,6 +63,7 @@ export function turnHeaterOff() {
 
     if (state.heaterPinVal === 0) return;
     state.heaterPinVal = 0;
+    stream.setState(state);
     emitStateUpdate();
     writeLog("heater off");
 }
@@ -75,6 +77,7 @@ export function turnHeaterOn() {
 
     if (state.heaterPinVal === 1) return;
     state.heaterPinVal = 1;
+    stream.setState(state);
     emitStateUpdate();
     writeLog("heater on");
 }

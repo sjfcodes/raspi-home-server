@@ -17,6 +17,7 @@ export default function useHomeTempTarget() {
   }, []);
 
   function dispatch(newState: RoomTempState) {
+    const currState = JSON.stringify(state);
     fetch(path, {
       method: "POST",
       headers: {
@@ -26,7 +27,7 @@ export default function useHomeTempTarget() {
       body: JSON.stringify(newState),
     }).catch((error) => {
       console.error(error);
-      // setState(JSON.parse(currState));
+      setState(JSON.parse(currState));
     });
   }
 

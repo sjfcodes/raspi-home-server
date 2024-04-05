@@ -39,10 +39,10 @@ class SseDataStream<T> {
     }
 
     // publish SSE to browsers
-    publish(newState: T) {
-        log(this.path, "publish", newState);
+    publish() {
+        log(this.path, "publish", this.state);
         for (const client of this.sseClients) {
-            client.res.write(`data: ${JSON.stringify(newState)}\n\n`);
+            client.res.write(`data: ${JSON.stringify(this.state)}\n\n`);
         }
     }
 
@@ -52,6 +52,7 @@ class SseDataStream<T> {
 
     setState(newState: T) {
         this.state = newState;
+        this.publish();
     }
 }
 

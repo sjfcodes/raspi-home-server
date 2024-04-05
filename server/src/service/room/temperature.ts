@@ -32,7 +32,6 @@ const setRoomTempState = (newState: RoomTempState) => {
     }
 
     stream.setState(newState);
-    stream.publish(state);
 };
 
 server.post(path, (req, res) => {

@@ -35,6 +35,6 @@ function getPiTemp() {
 }
 
 export function initPiTemperature() {
-    setInterval(() => stream.publish(getPiTemp()), 1000);
+    setInterval(() => stream.setState(getPiTemp()), 1000);
     log(path, "start");
 }
