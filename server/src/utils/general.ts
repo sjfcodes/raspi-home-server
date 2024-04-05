@@ -10,7 +10,10 @@ export const getSortedObject = (object: Record<any, any>) => {
 };
 
 export function log(channel: string, message: string, data: any = "") {
+    const time = new Date().toLocaleTimeString();
+    
     let label = channel.padEnd(23, " ");
     if (label.length > 23) label = label.substring(0, 22) + '…';
-    console.log(`[${label}]:`, message, data);
+    
+    console.log(time, `[${label}]:`, message, data);
 }
