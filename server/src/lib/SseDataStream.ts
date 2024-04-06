@@ -1,6 +1,6 @@
-import { v4 } from "uuid";
-import { SSE_HEADERS } from "../../../constant/constant";
-import { log } from "../utils/general";
+import { v4 } from 'uuid';
+import { SSE_HEADERS } from '../../../constant/constant';
+import { log } from '../utils/general';
 
 type SseClient = { id: string; res: any };
 class SseDataStream<T> {
@@ -22,25 +22,25 @@ class SseDataStream<T> {
             res.writeHead(200, SSE_HEADERS);
             res.write(`data: ${JSON.stringify(this.state)}\n\n`);
             this.subscribe({ id: clientId, res });
-            req.on("close", () => this.unsubscribe(clientId));
+            req.on('close', () => this.unsubscribe(clientId));
         });
     }
 
     private subscribe(client: SseClient) {
         this.sseClients.push(client);
-        log(client.id.toString(), "subscribed");
+        log(client.id.toString(), 'subscribed');
     }
 
     private unsubscribe(clientId: string) {
-        log(clientId.toString(), "unsubscribe");
+        log(clientId.toString(), 'unsubscribe');
         this.sseClients = this.sseClients.filter(
-            (client) => client.id !== clientId
+            (client) => client.id !== clientId,
         );
     }
 
     // publish SSE to browsers
     publish() {
-        log(this.path, "publish", this.state);
+        log(this.path, 'publish', this.state);
         for (const client of this.sseClients) {
             client.res.write(`data: ${JSON.stringify(this.state)}\n\n`);
         }

@@ -13,7 +13,7 @@ const logEnabled = {
 export const socketLogger = (
   channel: CHANNEL,
   message: string | null = null,
-  data: any = null
+  data: any = null,
 ) => {
   if (logEnabled[channel]) {
     console.log(`${channel}:`, message, data);

@@ -1,18 +1,18 @@
-import { v4 as uuidV4 } from "uuid";
-import { WebSocketServer } from "ws";
+import { v4 as uuidV4 } from 'uuid';
+import { WebSocketServer } from 'ws';
 import {
     CHANNEL,
     HEATER_CAB,
     HEATER_GPO_DEFAULT_STATE,
     SSE_HEADERS,
-} from "../../../../constant/constant";
-import { HeaterCabState } from "../../../../types/main";
-import { writeLog } from "../pi/logs";
-import { server } from "../server";
-import { log } from "../../utils/general";
-import SseDataStream from "../../lib/SseDataStream";
+} from '../../../../constant/constant';
+import { HeaterCabState } from '../../../../types/main';
+import { writeLog } from '../pi/logs';
+import { server } from '../server';
+import { log } from '../../utils/general';
+import SseDataStream from '../../lib/SseDataStream';
 
-const path = "/api/home/heater";
+const path = '/api/home/heater';
 
 // wss connection to heater
 const wss = new WebSocketServer({
@@ -40,10 +40,10 @@ function handleMessageIn(data: string) {
     }
 }
 
-wss.on("connection", (ws) => {
-    log(CHANNEL.HEATER_CAB_0, "wss conneced");
-    ws.on("message", handleMessageIn);
-    ws.on("close", () => log(CHANNEL.HEATER_CAB_0, "wss disconnected"));
+wss.on('connection', (ws) => {
+    log(CHANNEL.HEATER_CAB_0, 'wss conneced');
+    ws.on('message', handleMessageIn);
+    ws.on('close', () => log(CHANNEL.HEATER_CAB_0, 'wss disconnected'));
     ws.onerror = console.error;
 });
 
@@ -51,7 +51,7 @@ const emitStateUpdate = () => {
     const state = stream.getState();
     const stringified = JSON.stringify(state);
     wss.clients.forEach((client) => client.send(stringified));
-    log(CHANNEL.HEATER_CAB_0, "publish", state);
+    log(CHANNEL.HEATER_CAB_0, 'publish', state);
 };
 
 export function turnHeaterOff() {
@@ -65,7 +65,7 @@ export function turnHeaterOff() {
     state.heaterPinVal = 0;
     stream.setState(state);
     emitStateUpdate();
-    writeLog("heater off");
+    writeLog('heater off');
 }
 
 export function turnHeaterOn() {
@@ -79,11 +79,11 @@ export function turnHeaterOn() {
     state.heaterPinVal = 1;
     stream.setState(state);
     emitStateUpdate();
-    writeLog("heater on");
+    writeLog('heater on');
 }
 
 export const homeHeaterStream = stream;
 
 export function initHomeHeater() {
-    log(path, "start");
+    log(path, 'start');
 }

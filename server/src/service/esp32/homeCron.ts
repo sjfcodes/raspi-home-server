@@ -1,9 +1,9 @@
-import { PRIMARY_THERMOSTAT } from "../../../../constant/constant";
-import { log } from "../../utils/general";
-import { writeLog } from "../pi/logs";
-import { roomTemperatureStream } from "../room/temperature";
-import { homeHeaterStream, turnHeaterOff, turnHeaterOn } from "./heater";
-import { thermostatMapStream } from "./thermostat";
+import { PRIMARY_THERMOSTAT } from '../../../../constant/constant';
+import { log } from '../../utils/general';
+import { writeLog } from '../pi/logs';
+import { roomTemperatureStream } from '../room/temperature';
+import { homeHeaterStream, turnHeaterOff, turnHeaterOn } from './heater';
+import { thermostatMapStream } from './thermostat';
 
 const checkHeaterStatus = (forceOn = false) => {
     const tStats = thermostatMapStream.getState();
@@ -26,7 +26,7 @@ const checkHeaterStatus = (forceOn = false) => {
         turnHeaterOff();
     }
 
-    log("homeCron", "status", {
+    log('homeCron', 'status', {
         forceOn,
         currTemp,
         shouldTurnOn,
@@ -37,5 +37,5 @@ const checkHeaterStatus = (forceOn = false) => {
 setInterval(checkHeaterStatus, 1000);
 
 export function initHomeCron() {
-    log("homeCron", "start");
+    log('homeCron', 'start');
 }

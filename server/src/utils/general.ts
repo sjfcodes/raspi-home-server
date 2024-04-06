@@ -1,4 +1,4 @@
-import { config } from "../../config";
+import { config } from '../../config';
 
 export const getSortedObject = (object: Record<any, any>) => {
     const keys = Object.keys(object).sort();
@@ -14,9 +14,9 @@ export const getSortedObject = (object: Record<any, any>) => {
 export function log(channel: string, message: string, data: any = {}) {
     const time = new Date().toLocaleTimeString();
 
-    let label = channel.padEnd(config.log.labelWidth, " ");
+    let label = channel.padEnd(config.log.labelWidth, ' ');
     if (label.length > config.log.labelWidth)
-        label = label.substring(0, config.log.labelWidth - 1) + "…";
+        label = label.substring(0, config.log.labelWidth - 1) + '…';
 
     const args = [time, `[${label}]:`, message];
 

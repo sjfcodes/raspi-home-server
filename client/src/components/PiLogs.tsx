@@ -31,9 +31,9 @@ export default function LogStream() {
 
           return acc;
         },
-        { label: "logs", data: [] as Temps[] } as Series
+        { label: "logs", data: [] as Temps[] } as Series,
       ),
-    [logs[0]]
+    [logs[0]],
   );
 
   const primaryAxis = useMemo(
@@ -41,7 +41,7 @@ export default function LogStream() {
       getValue: (datum) => datum.date,
       scaleType: "localTime",
     }),
-    []
+    [],
   );
   const secondaryAxes = useMemo(
     (): AxisOptions<Temps>[] => [
@@ -49,7 +49,7 @@ export default function LogStream() {
         getValue: (datum) => datum.temp,
       },
     ],
-    []
+    [],
   );
 
   if (!logs.length) return null;

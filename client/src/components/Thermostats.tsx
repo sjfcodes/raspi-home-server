@@ -10,7 +10,7 @@ export default function Thermostats({ hideIds = [] }: { hideIds?: string[] }) {
     .sort((a, b) => (a.chipName > b.chipName ? 1 : -1));
 
   return sorted.map((thermostat) => (
-    <div key={thermostat.chipId} >
+    <div key={thermostat.chipId}>
       <Thermostat key={thermostat.chipId} thermostat={thermostat} />
       <Block />
     </div>

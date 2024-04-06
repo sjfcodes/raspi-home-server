@@ -15,7 +15,7 @@ export default function useHeaterGpoState(chipId: string) {
   useEffect(() => {
     // connect to ws server
     const ws = new WebSocket(
-      `ws://${RASP_PI.ip}:${RASP_PI.wsPort}${CHANNEL.HEATER_CAB_0}`
+      `ws://${RASP_PI.ip}:${RASP_PI.wsPort}${CHANNEL.HEATER_CAB_0}`,
     );
 
     // add event listener reacting when message is received

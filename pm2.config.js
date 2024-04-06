@@ -8,10 +8,10 @@ module.exports = {
       shutdown_with_message: true,
       max_restarts: 10,
       env_production: {
-        NODE_ENV: "production"
+        NODE_ENV: "production",
       },
       env_development: {
-        NODE_ENV: "development"
+        NODE_ENV: "development",
       },
     },
     {
@@ -22,11 +22,11 @@ module.exports = {
       max_restarts: 10,
       shutdown_with_message: true,
       env_production: {
-        NODE_ENV: "production"
+        NODE_ENV: "production",
       },
       env_development: {
-        NODE_ENV: "development"
-      }
+        NODE_ENV: "development",
+      },
     },
   ],
 };

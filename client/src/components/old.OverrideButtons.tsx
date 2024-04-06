@@ -36,7 +36,7 @@ export default function OverrideButtons() {
           Timeout:{" "}
           {heaterGpo?.manualOverride?.expireAt
             ? ` until ${new Date(
-                heaterGpo.manualOverride.expireAt
+                heaterGpo.manualOverride.expireAt,
               ).toLocaleTimeString(undefined, { timeStyle: "short" })}`
             : ""}
         </span>

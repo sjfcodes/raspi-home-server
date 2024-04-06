@@ -50,11 +50,7 @@ export default function Card({
           {label} {preview}
         </div>
 
-        {showContent ? (
-          <>
-            {content}
-          </>
-        ) : null}
+        {showContent ? <>{content}</> : null}
       </div>
     </div>
   );

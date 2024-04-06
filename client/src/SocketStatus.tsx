@@ -1,7 +1,11 @@
 import { CSSProperties, useEffect, useState } from "react";
 import { socket } from "./utils/socket";
 
-export default function SocketStatus({ style = {} }: { style?: CSSProperties }) {
+export default function SocketStatus({
+  style = {},
+}: {
+  style?: CSSProperties;
+}) {
   const [online, setOnline] = useState(false);
 
   useEffect(() => {
