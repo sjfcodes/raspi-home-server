@@ -3,7 +3,7 @@ import compression from 'compression';
 import cors from 'cors';
 import helmet from 'helmet';
 
-import { UtilityService } from '../../services/utility';
+import { handleError } from '../../services/utility';
 import { env } from '../../config/globals';
 import { logger } from '../../config/logger';
 
@@ -29,7 +29,7 @@ export function registerMiddleware(router: Router): void {
 
 export function registerErrorHandler(router: Router): Response | void {
 	router.use((err: Error, _req: Request, res: Response, next: NextFunction) => {
-		UtilityService.handleError(err);
+		handleError(err);
 
 		return res.status(500).json({
 			error: err.message || err,
