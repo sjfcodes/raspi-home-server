@@ -10,11 +10,10 @@ import { registerErrorHandler, registerMiddleware } from './middleware';
  * @returns {void}
  */
 export function initRestRoutes(router: Router): void {
-	const prefix: string = '/api/v1';
+    const prefix: string = '/api/v1';
 
-	router.get(prefix, (req: Request, res: Response) => res.send('PING'));
-
-	registerMiddleware(router);
-	registerApiRoutes(router, prefix);
-	registerErrorHandler(router);
+    router.get(prefix, (_req: Request, res: Response) => res.send('PING'));
+    registerMiddleware(router);
+    registerApiRoutes(router, prefix);
+    registerErrorHandler(router);
 }

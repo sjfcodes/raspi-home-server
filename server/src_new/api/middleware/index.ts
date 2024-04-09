@@ -1,13 +1,19 @@
+import { json, NextFunction, Request, Response, Router } from 'express';
 import compression from 'compression';
 import cors from 'cors';
 import helmet from 'helmet';
-
-import { json, NextFunction, Request, Response, Router } from 'express';
 
 // import { AuthService } from '../../services/auth';
 import { UtilityService } from '../../services/utility';
 
 import { env } from '../../config/globals';
+import { logger } from '../../config/logger';
+
+export function routeLogger(req: Request, _res: Response, next: NextFunction) {
+    logger.info(req.path);
+    next();
+}
+
 
 /**
  * Init Express middleware
@@ -27,6 +33,7 @@ export function registerMiddleware(router: Router): void {
 
 	router.use(json());
 	router.use(compression());
+	router.use(routeLogger);
 
 	// Setup passport strategies
 	// new AuthService().initStrategies();
@@ -39,7 +46,7 @@ export function registerMiddleware(router: Router): void {
  * @returns {void}
  */
 export function registerErrorHandler(router: Router): Response | void {
-	router.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+	router.use((err: Error, _req: Request, res: Response, next: NextFunction) => {
 		UtilityService.handleError(err);
 
 		return res.status(500).json({

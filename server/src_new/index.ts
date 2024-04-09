@@ -1,31 +1,23 @@
-
 // Set env variables from .env file
 import { config } from 'dotenv';
 config();
 
-import express from 'express';
-
 import { createServer, Server as HttpServer } from 'http';
-// import { Connection, createConnection } from 'typeorm';
-
 import { env } from './config/globals';
 import { logger } from './config/logger';
-
-import { Server } from './api/server';
+import { app } from './api/server';
 import { RedisService } from './services/redis';
 
 // Startup
 (async function main() {
 	try {
 		// Connect db
-		logger.info('Initializing ORM connection...');
+		// logger.info('Initializing ORM connection...');
 		// const connection: Connection = await createConnection();
 
 		// Connect redis
-		RedisService.connect();
+		// RedisService.connect();
 
-		// Init express server
-		const app: express.Application = new Server().app;
 		const server: HttpServer = createServer(app);
 
 		// Start express server

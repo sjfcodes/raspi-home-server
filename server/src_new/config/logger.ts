@@ -1,6 +1,7 @@
 import { existsSync, mkdirSync } from 'fs';
 import { join } from 'path';
 import { createLogger, format, transports } from 'winston';
+import { NextFunction, Request, Response } from 'express';
 
 import { env } from './globals';
 
@@ -42,7 +43,6 @@ export const logger = createLogger({
     ],
 });
 
-console.log(env.NODE_ENV);
 if (env.NODE_ENV !== 'production') {
     logger.add(
     	new transports.Console({
