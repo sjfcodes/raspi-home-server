@@ -12,17 +12,4 @@ export class User {
 	public firstname: string;
 	public lastname: string;
 	public created: string;
-
-
-	// static deserialize(obj: User): User {
-	// 	const user: User = new User(obj.id, obj.email, obj.firstname, obj.lastname, obj.password, obj.active);
-	// 	user.userRole = obj.userRole;
-	// 	return user;
-	// }
-
-	// public static mockTestUser(): User {
-	// 	const user = new User(1, 'test@email.com', 'testFirstname', 'testLastname', 'testPassword', true);
-	// 	user.userRole = new UserRole(1, 'Admin');
-	// 	return user;
-	// }
 }
