@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
 import { getManager, writeOne } from './store';
-import { generateUuid } from '../../../services/utility';
 
 export async function readItems(
     req: Request,

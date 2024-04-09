@@ -1,13 +1,39 @@
 import { NextFunction, Request, Response } from 'express';
-import { Item } from './model';
-import { readAll } from './store';
+import { getManager, writeOne } from './store';
 
-
-export async function readItems(_req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+export async function readItems(
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<Response | void> {
     try {
-        const items: Item[] = await readAll();
+        const manager = await getManager();
 
-        return res.json(items);
+        if (req.query.subscribe === 'true') {
+            return manager.subscribe(req, res);
+        } else {
+            return res.status(200).json({
+                message: 'success',
+                data: manager.getState(),
+            });
+        }
+    } catch (err) {
+        return next(err);
+    }
+}
+
+export async function writeItem(
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<Response | void> {
+    try {
+        await writeOne(req.body);
+
+        return res.status(200).json({
+            message: 'success',
+            data: {},
+        });
     } catch (err) {
         return next(err);
     }
