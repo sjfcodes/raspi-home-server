@@ -1,21 +1,38 @@
-import { RASP_PI } from '../../constant/constant';
-import { initHomeHeater } from './service/esp32/heater';
-import { initHomeCron } from './service/esp32/homeCron';
-import { initAllThermostats } from './service/esp32/thermostat';
-import { initPiTemperature } from './service/pi/temperature';
-import { initHomeTargetTemp } from './service/room/temperature';
-import { server } from './service/server';
-import { log } from './utils/general';
-import { ipAddress } from './utils/ipAddress';
+// Set env variables from .env file
+import { config } from 'dotenv';
+config();
 
-const { PORT = RASP_PI.serverPort } = process.env;
+import { createServer, Server as HttpServer } from 'http';
+import { env } from './config/globals';
+import { logger } from './config/logger';
+import { app } from './api/server';
+import { RedisService } from './services/redis';
 
-initAllThermostats();
-initHomeHeater();
-initHomeCron();
-initPiTemperature();
-initHomeTargetTemp();
+// Startup
+(async function main() {
+	try {
+		// Connect db
+		// logger.info('Initializing ORM connection...');
+		// const connection: Connection = await createConnection();
 
-server.listen(PORT, () =>
-    log('server', 'listen', `http://${ipAddress}:${PORT}`),
-);
+		// Connect redis
+		// RedisService.connect();
+
+		const server: HttpServer = createServer(app);
+
+		// Start express server
+		server.listen(env.NODE_PORT);
+
+		server.on('listening', () => {
+			logger.info(`node server is listening on port ${env.NODE_PORT} in ${env.NODE_ENV} mode`);
+		});
+
+		server.on('close', () => {
+			// connection.close();
+			RedisService.disconnect();
+			logger.info('node server closed');
+		});
+	} catch (err) {
+		logger.error((err as Error).stack);
+	}
+})();
