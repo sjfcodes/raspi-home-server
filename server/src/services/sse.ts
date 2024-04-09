@@ -1,7 +1,7 @@
 import { log } from '../../src_old/utils/general';
 
 type Subscriber = { id: string; res: any };
-class SubscriptionManager<T> {
+export class SseManager<T> {
     private path: string;
     private state: T;
     private subs: Subscriber[];
@@ -40,4 +40,3 @@ class SubscriptionManager<T> {
     }
 }
 
-export default SubscriptionManager;

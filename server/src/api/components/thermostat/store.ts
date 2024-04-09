@@ -1,9 +1,9 @@
 import { THERMOSTAT } from '../../../../../constant/constant';
 import { ThermostatMap } from '../../../../../types/main';
-import SubscriptionManager from '../../../services/SubscriptionManager';
+import {SseManager} from '../../../services/sse';
 import { Thermostat } from './model';
 
-const manager = new SubscriptionManager('api/thermostat', {} as ThermostatMap)
+const manager = new SseManager('api/thermostat', {} as ThermostatMap)
 
 export async function getManager() {
     return manager;
