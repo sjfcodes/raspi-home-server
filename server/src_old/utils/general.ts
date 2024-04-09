@@ -11,16 +11,20 @@ export const getSortedObject = (object: Record<any, any>) => {
     return copy;
 };
 
-export function log(channel: string, message: string, data: any = {}) {
-    const time = new Date().toLocaleTimeString();
+export function formatLog(channel: string, message: string, data: any = {}): string[]{
 
     let label = channel.padEnd(config.log.labelWidth, ' ');
     if (label.length > config.log.labelWidth)
         label = label.substring(0, config.log.labelWidth - 1) + '…';
 
-    const args = [time, `[${label}]:`, message];
+    const args = [label, message];
 
     if (config.log.showData) args.push(JSON.stringify(data));
 
-    console.log(...args);
+    return args;
+}
+
+export function log(channel: string, message: string, data: any = {}) {
+
+    console.log(...formatLog(channel, message, data));
 }

@@ -1,9 +1,9 @@
 import { THERMOSTAT } from '../../../../../constant/constant';
 import { ThermostatMap } from '../../../../../types/main';
-import {SseManager} from '../../../services/sse';
+import { SseManager } from '../../../services/sse';
 import { Thermostat } from './model';
 
-const manager = new SseManager('api/thermostat', {} as ThermostatMap)
+const manager = new SseManager('/api/temperature', {} as ThermostatMap);
 
 export async function getManager() {
     return manager;
@@ -12,7 +12,6 @@ export async function getManager() {
 export async function readAll(): Promise<ThermostatMap> {
     return manager.getState();
 }
-
 
 export async function writeOne(item: Thermostat): Promise<Thermostat | void> {
     const state = manager.getState();

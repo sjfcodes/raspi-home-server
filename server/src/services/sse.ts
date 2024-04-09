@@ -1,4 +1,5 @@
-import { log } from '../../src_old/utils/general';
+import { formatLog, log } from '../../src_old/utils/general';
+import { logger } from '../config/logger';
 
 type Subscriber = { id: string; res: any };
 export class SseManager<T> {
@@ -22,7 +23,7 @@ export class SseManager<T> {
     }
 
     public publish() {
-        log(this.path, 'publish', this.state);
+        logger.info(formatLog(this.path, 'publish', this.state).join(''));
         for (const client of this.subs) {
             client.res.write(`data: ${JSON.stringify(this.state)}\n\n`);
             client.res.flush(); // required for sse with compression https://expressjs.com/en/resources/middleware/compression.html#:~:text=add%20all%20routes-,Server%2DSent%20Events,-Because%20of%20the
@@ -31,11 +32,11 @@ export class SseManager<T> {
 
     public subscribe(client: Subscriber) {
         this.subs.push(client);
-        log(client.id.toString(), 'subscribed');
+        logger.info(formatLog(client.id.toString(), 'subscribed').join(''));
     }
 
     public unsubscribe(clientId: string) {
-        log(clientId.toString(), 'unsubscribe');
+        logger.info(formatLog(clientId.toString(), 'unsubscribe').join(''));
         this.subs = this.subs.filter((client) => client.id !== clientId);
     }
 }
