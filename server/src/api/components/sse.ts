@@ -1,19 +1,22 @@
 import { Request, Response } from 'express';
-import { SSE_HEADERS } from '../../../constant/constant';
-import { formatLog, log } from '../../src_old/utils/general';
-import { logger } from '../config/logger';
-import { generateUuid } from './utility';
+import { SSE_HEADERS } from '../../../../constant/constant';
+import { formatLog, log } from '../../../src_old/utils/general';
+import { logger } from '../../config/logger';
+import { generateUuid } from '../../services/utility';
 
 type Subscriber = { id: string; res: Response };
 export class SseManager<T> {
-    private path: string;
+    private path?: string;
     private state: T;
     private subs: Subscriber[];
 
-    constructor(path: string, initalState: T) {
-        this.path = path;
+    constructor(initalState: T) {
         this.state = initalState;
         this.subs = [];
+    }
+
+    public setPath(path:string) {
+        this.path = path;
     }
 
     public getState(): T {
@@ -26,6 +29,9 @@ export class SseManager<T> {
     }
 
     public publish() {
+        if(!this.path) {
+            throw new Error('missing sse path')
+        }
         logger.info(formatLog(this.path, 'publish', this.getState()).join(''));
         for (const client of this.subs) {
             client.res.write(`data: ${JSON.stringify(this.state)}\n\n`);

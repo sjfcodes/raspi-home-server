@@ -1,8 +1,10 @@
 import { Router } from 'express';
-import { thermostatRouter } from './thermostat/router';
+import { registerThermostatRoutes } from './thermostat/router';
+import { registerItemRoutes } from './template/router';
 
 export function registerApiRoutes(router: Router, prefix: string = ''): void {
-	// [TODO] update thermostats to use new route
-	// router.use(`${prefix}/thermostat`, thermostatRouter);
-	router.use(`/api/temperature`, thermostatRouter);
+    registerItemRoutes(router, `${prefix}/item`);
+    // [TODO] update thermostats to use new route
+    registerThermostatRoutes(router, `${prefix}/thermostat`);
+    registerThermostatRoutes(router, `/api/temperature`);
 }

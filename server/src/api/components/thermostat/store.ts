@@ -1,20 +1,20 @@
 import { THERMOSTAT } from '../../../../../constant/constant';
 import { ThermostatMap } from '../../../../../types/main';
-import { SseManager } from '../../../services/sse';
+import { SseManager } from '../sse';
 import { Thermostat } from './model';
 
-const manager = new SseManager('/api/temperature', {} as ThermostatMap);
+export const sseManager = new SseManager({} as ThermostatMap);
 
 export async function getManager() {
-    return manager;
+    return sseManager;
 }
 
 export async function readAll(): Promise<ThermostatMap> {
-    return manager.getState();
+    return sseManager.getState();
 }
 
 export async function writeOne(item: Thermostat): Promise<Thermostat | void> {
-    const state = manager.getState();
+    const state = sseManager.getState();
     if (item === undefined) {
         console.error(new Error('item must be defined'));
         return;
@@ -45,5 +45,5 @@ export async function writeOne(item: Thermostat): Promise<Thermostat | void> {
     };
 
     state[item.chipId] = newItem;
-    manager.setState(state);
+    sseManager.setState(state);
 }

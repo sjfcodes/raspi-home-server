@@ -1,8 +1,10 @@
 import { Router } from 'express';
 import { readItems, writeItem } from './controller';
+import { sseManager } from './store';
 
-const thermostatRouter = Router();
-thermostatRouter.get('/', readItems);
-thermostatRouter.post('/', writeItem);
+export function registerThermostatRoutes(router: Router, prefix: string) {
+    sseManager.setPath(prefix + '/');
+    router.get(prefix + '/', readItems);
+    router.post(prefix + '/', writeItem);
+}
 
-export { thermostatRouter };
