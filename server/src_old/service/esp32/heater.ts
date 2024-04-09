@@ -1,10 +1,8 @@
-import { v4 as uuidV4 } from 'uuid';
 import { WebSocketServer } from 'ws';
 import {
     CHANNEL,
     HEATER_CAB,
     HEATER_GPO_DEFAULT_STATE,
-    SSE_HEADERS,
 } from '../../../../constant/constant';
 import { HeaterCabState } from '../../../../types/main';
 import { writeLog } from '../pi/logs';

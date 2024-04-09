@@ -1,7 +1,10 @@
+import { Request, Response } from 'express';
+import { SSE_HEADERS } from '../../../constant/constant';
 import { formatLog, log } from '../../src_old/utils/general';
 import { logger } from '../config/logger';
+import { generateUuid } from './utility';
 
-type Subscriber = { id: string; res: any };
+type Subscriber = { id: string; res: Response };
 export class SseManager<T> {
     private path: string;
     private state: T;
@@ -23,21 +26,27 @@ export class SseManager<T> {
     }
 
     public publish() {
-        logger.info(formatLog(this.path, 'publish', this.state).join(''));
+        logger.info(formatLog(this.path, 'publish', this.getState()).join(''));
         for (const client of this.subs) {
             client.res.write(`data: ${JSON.stringify(this.state)}\n\n`);
             client.res.flush(); // required for sse with compression https://expressjs.com/en/resources/middleware/compression.html#:~:text=add%20all%20routes-,Server%2DSent%20Events,-Because%20of%20the
         }
     }
 
-    public subscribe(client: Subscriber) {
-        this.subs.push(client);
-        logger.info(formatLog(client.id.toString(), 'subscribed').join(''));
+    public subscribe(req: Request, res: Response) {
+        const id = generateUuid();
+
+        res.writeHead(200, SSE_HEADERS);
+        res.write(`data: ${JSON.stringify(this.state)}\n\n`);
+        res.flush(); // required for sse with compression https://expressjs.com/en/resources/middleware/compression.html#:~:text=add%20all%20routes-,Server%2DSent%20Events,-Because%20of%20the
+
+        req.on('close', () => this.unsubscribe(id));
+        this.subs.push({ id, res });
+        logger.info(formatLog(id.toString(), 'subscribed').join(''));
     }
 
-    public unsubscribe(clientId: string) {
-        logger.info(formatLog(clientId.toString(), 'unsubscribe').join(''));
-        this.subs = this.subs.filter((client) => client.id !== clientId);
+    public unsubscribe(id: string) {
+        logger.info(formatLog(id.toString(), 'unsubscribe').join(''));
+        this.subs = this.subs.filter((sub) => sub.id !== id);
     }
 }
-
