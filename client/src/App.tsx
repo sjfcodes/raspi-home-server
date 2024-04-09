@@ -13,38 +13,43 @@ function App() {
   return (
     <div
       style={{
-        width: "100%",
-        maxWidth: APP_MAX_WIDTH,
-        // height: "calc(100vh - 100px)",
-        height: "100vh",
-        margin: "0 auto",
-        overflowY: "scroll",
-        overflowX: "hidden",
-        paddingBottom: "1rem",
+        minHeight: "100vh",
+        width: "100vw",
       }}
     >
-      <Block />
-      <Logos />
-      <Block />
+      <div
+        style={{
+          width: "100%",
+          maxWidth: APP_MAX_WIDTH,
+          height: "100%",
+          margin: "0 auto",
+          overflowX: "hidden",
+          paddingBottom: "1rem",
+        }}
+      >
+        <Block />
+        <Logos />
+        <Block />
 
-      <HomeHeaterState />
-      <Block />
+        <HomeHeaterState />
+        <Block />
 
-      <HomeTemperatureTarget />
-      <Block />
+        <HomeTemperatureTarget />
+        <Block />
 
-      {/* <PiLogs />
+        {/* <PiLogs />
       <Block /> */}
 
-      <div style={{ maxWidth: APP_MAX_WIDTH, overflow: "scroll" }}>
-        <Thermostats />
+        <div style={{ maxWidth: APP_MAX_WIDTH, overflow: "scroll" }}>
+          <Thermostats />
+        </div>
+
+        <PiTemp />
+        <Block />
+
+        <QrCode value={location.href} />
+        <Block />
       </div>
-
-      <PiTemp />
-      <Block />
-
-      <QrCode value={location.href} />
-      <Block />
     </div>
   );
 }

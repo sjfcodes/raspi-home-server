@@ -8449,6 +8449,7 @@
 2024-04-09T01:54:08.343Z: current temp is 69
 2024-04-09T02:10:04.817Z: current temp is 69
 2024-04-09T08:24:53.867Z: current temp is 66
-2024-04-09T08:26:13.267Z: current temp is NaN
 2024-04-09T08:26:14.266Z: current temp is 66
 2024-04-09T08:27:08.672Z: current temp is 66
+2024-04-09T08:27:55.696Z: heater on
+2024-04-09T08:27:56.691Z: current temp is 66

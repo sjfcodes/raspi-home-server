@@ -4,7 +4,7 @@ module.exports = {
       name: "client",
       cwd: "/home/sjfox/code/raspi-home-server/client",
       script: "npm run dev",
-      watch: false,
+      watch: true,
       shutdown_with_message: true,
       max_restarts: 10,
       env_production: {
