@@ -1,11 +1,4 @@
 export class Thermostat {
-	public chipName: string;
-	public chipId: string;
-	public tempF: number;
-	public calibrate: number;
-	public tempFHistory: number[];
-	public updatedAt: string;
-	
     constructor(
         chipName: string,
         chipId: string,
@@ -22,4 +15,10 @@ export class Thermostat {
         this.updatedAt = updatedAt;
     }
 
+    public chipName: string;
+    public chipId: string;
+    public tempF: number;
+    public calibrate: number;
+    public tempFHistory: number[];
+    public updatedAt: string;
 }
