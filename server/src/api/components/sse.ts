@@ -35,8 +35,10 @@ export class SseManager<T> {
         if (!this.path) {
             throw new Error('missing sse path');
         }
+        
+        if (!this.subs.length) return;
 
-        logger.info(formatLog(this.path, 'publish', this.getState()).join(''));
+        logger.info(formatLog(this.path, ' --> publish', this.getState()).join(''));
         for (const sub of this.subs) {
             // ignore unmatched items when sub only listens for one item.
             if (sub.itemId && sub.itemId !== itemId) continue;

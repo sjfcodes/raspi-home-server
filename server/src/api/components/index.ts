@@ -4,12 +4,14 @@ import { registerItemRoutes } from './_template/router';
 import { registerHeaterRoutes } from './heater/router';
 import { registerRemoteRoutes } from './remote/router';
 import { registerZoneRoutes } from './zone/router';
+import { registerSystemRoutes } from './system/router';
 
 export function registerApiRoutes(router: Router, prefix: string = ''): void {
     registerItemRoutes(router, `${prefix}/item`);
     registerHeaterRoutes(router, `${prefix}/heater`);
     registerRemoteRoutes(router, `${prefix}/remote`);
     registerZoneRoutes(router, `${prefix}/zone`);
+    registerSystemRoutes(router, `${prefix}/system`);
 
     // [TODO] update thermostats to use new route & PUT instead of POST
     registerThermostatRoutes(router, `${prefix}/thermostat`);
@@ -50,21 +52,21 @@ export function registerApiRoutes(router: Router, prefix: string = ''): void {
  *     PATH: /thermostat
  *     POST: write temperature to store
  *     GET : read thermostats
-*
-*     [TODO] PATH: /thermostat/:id
-*            GET : read one thermostat
-*
-* ZONE
-*     PATH: /zone
-*     PUT: write zone to store
-*     GET : read zones
-*
-*     [TODO] PATH: /zone/:id
-*            GET : read one zone
-*
- * [NEXT]
+ *
+ *     [TODO] PATH: /thermostat/:id
+ *            GET : read one thermostat
+ *
+ * ZONE
+ *     PATH: /zone
+ *     PUT: write zone to store
+ *     GET : read zones
+ *
+ *     [TODO] PATH: /zone/:id
+ *            GET : read one zone
+ *
  * SYSTEM
  *     PATH: /system
  *     GET: read system status
- *
+*
+ * [NEXT]
  */
