@@ -42,8 +42,7 @@ export class SseManager<T> {
             if (sub.itemId && sub.itemId !== itemId) continue;
 
             // if sending to sub, check if sub wants one item or entire map.
-            const data = itemId ? this.state[itemId] : this.state;
-            sub.res.write(`data: ${JSON.stringify(data)}\n\n`);
+            sub.res.write(`data: ${JSON.stringify(this.state)}\n\n`);
             sub.res.flush(); // required for sse with compression https://expressjs.com/en/resources/middleware/compression.html#:~:text=add%20all%20routes-,Server%2DSent%20Events,-Because%20of%20the
         }
     }
