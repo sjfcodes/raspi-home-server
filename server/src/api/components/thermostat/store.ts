@@ -5,10 +5,6 @@ import { Thermostat } from './model';
 
 export const sseManager = new SseManager({} as ThermostatMap);
 
-export function getManager() {
-    return sseManager;
-}
-
 export function readAll(): ThermostatMap {
     return sseManager.getState() as ThermostatMap;
 }
@@ -18,12 +14,12 @@ export function writeOne(item: Thermostat): Thermostat | void {
         console.error(new Error('item must be defined'));
         return;
     }
-    
+
     if (!item.chipId) {
         console.error(new Error('item.chipId must be defined'));
         return;
     }
-    
+
     const state = sseManager.getState() as Record<string, Thermostat>;
     const maxLen = 60;
     const temp = Math.trunc(item.tempF);

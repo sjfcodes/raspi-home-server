@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { getManager, writeOne } from './store';
+import { sseManager, writeOne } from './store';
 
 export async function readItems(
     req: Request,
@@ -7,14 +7,12 @@ export async function readItems(
     next: NextFunction
 ): Promise<Response | void> {
     try {
-        const manager = getManager();
-
         if (req.query.subscribe === 'true') {
-            return manager.subscribe(req, res);
+            return sseManager.subscribe(req, res);
         } else {
             return res.status(200).json({
                 message: 'success',
-                data: manager.getState(),
+                data: sseManager.getState(),
             });
         }
     } catch (err) {
@@ -28,14 +26,12 @@ export async function readItem(
     next: NextFunction
 ): Promise<Response | void> {
     try {
-        const manager = getManager();
-
         if (req.query.subscribe === 'true') {
-            return manager.subscribe(req, res);
+            return sseManager.subscribe(req, res);
         } else {
             return res.status(200).json({
                 message: 'success',
-                data: manager.getState(),
+                data: sseManager.getState(),
             });
         }
     } catch (err) {
