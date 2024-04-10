@@ -35,6 +35,7 @@ export type PiTemp = {
 };
 
 export type RoomTempState = {
+  id: string;
   type: "F" | "C";
   max: number;
   min: number;
