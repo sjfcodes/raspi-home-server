@@ -5,26 +5,26 @@ import { Thermostat } from './model';
 
 export const sseManager = new SseManager({} as ThermostatMap);
 
-export async function getManager() {
+export function getManager() {
     return sseManager;
 }
 
-export async function readAll(): Promise<ThermostatMap> {
-    return sseManager.getState();
+export function readAll(): ThermostatMap {
+    return sseManager.getState() as ThermostatMap;
 }
 
-export async function writeOne(item: Thermostat): Promise<Thermostat | void> {
-    const state = sseManager.getState();
+export function writeOne(item: Thermostat): Thermostat | void {
     if (item === undefined) {
         console.error(new Error('item must be defined'));
         return;
     }
-
+    
     if (!item.chipId) {
         console.error(new Error('item.chipId must be defined'));
         return;
     }
-
+    
+    const state = sseManager.getState() as Record<string, Thermostat>;
     const maxLen = 60;
     const temp = Math.trunc(item.tempF);
     let tempFHistory = state[item.chipId]?.tempFHistory || [];
@@ -34,7 +34,7 @@ export async function writeOne(item: Thermostat): Promise<Thermostat | void> {
     const tempAverage =
         tempFHistory.reduce((acc, curr) => acc + curr, 0) / tempFHistory.length;
 
-    const newItem: Thermostat = {
+    const thermostat: Thermostat = {
         chipId: item.chipId,
         // @ts-ignore
         chipName: THERMOSTAT[item.chipId] || item.chipName,
@@ -44,6 +44,5 @@ export async function writeOne(item: Thermostat): Promise<Thermostat | void> {
         tempFHistory,
     };
 
-    state[item.chipId] = newItem;
-    sseManager.setState(state);
+    sseManager.setState(item.chipId, thermostat);
 }

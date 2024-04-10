@@ -12,15 +12,8 @@ export const getSortedObject = (object: Record<any, any>) => {
 };
 
 export function formatLog(channel: string, message: string, data: any = {}): string[]{
-
-    let label = channel.padEnd(config.log.labelWidth, ' ');
-    if (label.length > config.log.labelWidth)
-        label = label.substring(0, config.log.labelWidth - 1) + '…';
-
-    const args = [label, message];
-
+    const args = [channel, message];
     if (config.log.showData) args.push(JSON.stringify(data));
-
     return args;
 }
 

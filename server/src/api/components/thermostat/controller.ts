@@ -7,7 +7,28 @@ export async function readItems(
     next: NextFunction
 ): Promise<Response | void> {
     try {
-        const manager = await getManager();
+        const manager = getManager();
+
+        if (req.query.subscribe === 'true') {
+            return manager.subscribe(req, res);
+        } else {
+            return res.status(200).json({
+                message: 'success',
+                data: manager.getState(),
+            });
+        }
+    } catch (err) {
+        return next(err);
+    }
+}
+
+export async function readItem(
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<Response | void> {
+    try {
+        const manager = getManager();
 
         if (req.query.subscribe === 'true') {
             return manager.subscribe(req, res);
@@ -28,7 +49,7 @@ export async function writeItem(
     next: NextFunction
 ): Promise<Response | void> {
     try {
-        await writeOne(req.body);
+        writeOne(req.body);
 
         return res.status(200).json({
             message: 'success',
