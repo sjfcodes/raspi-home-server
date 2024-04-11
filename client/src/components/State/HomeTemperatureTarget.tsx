@@ -1,7 +1,7 @@
 import { CSSProperties, useState } from "react";
 import useHomeTempTarget from "../../hooks/useHomeTempTarget";
 import JsonCode from "../JsonCode";
-import useHomeHeater from "../../hooks/useHomeHeater";
+import useHeater from "../../hooks/useHeater";
 
 const cold = "#6bbcd1";
 const hot = "#e23201";
@@ -25,7 +25,7 @@ const buttonStyle = {
 
 export default function HomeTemperatureTarget() {
   const { data: roomTemp, decrement, increment } = useHomeTempTarget();
-  const [heaterGpo] = useHomeHeater();
+  const [heaterGpo] = useHeater();
   const [showData, setShowData] = useState(false);
 
   if (!heaterGpo) return null;

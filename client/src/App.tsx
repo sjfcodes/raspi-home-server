@@ -4,10 +4,11 @@ import PiLogs from "./components/PiLogs";
 import Logos from "./components/Logos";
 import PiTemp from "./components/PiTemp";
 import QrCode from "./components/QrCode";
-import HomeTemperatureTarget from "./components/Home/HomeTemperatureTarget";
+import HomeTemperatureTarget from "./components/State/HomeTemperatureTarget";
 import Thermostats from "./components/Thermostats";
 import { APP_MAX_WIDTH } from "./utils/constants";
-import HomeHeaterState from "./components/Home/HomeHeaterState";
+import HeaterState from "./components/State/HeaterState";
+import RemoteState from "./components/State/RemoteState";
 
 function App() {
   return (
@@ -27,7 +28,10 @@ function App() {
       <Logos />
       <Block />
 
-      <HomeHeaterState />
+      <HeaterState />
+      <Block />
+
+      <RemoteState />
       <Block />
 
       <HomeTemperatureTarget />

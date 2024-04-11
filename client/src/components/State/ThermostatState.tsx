@@ -1,13 +1,13 @@
-import useHomeHeater from "../../hooks/useHomeHeater";
+import useThermostat from "../../hooks/useThermostat";
 import Card from "../Card";
 import JsonCode from "../JsonCode";
 
-export default function HomeHeaterState() {
-  const [state] = useHomeHeater();
+export default function ThermostatState() {
+  const [state] = useThermostat();
 
   return (
     <Card
-      label={`House Heater Cabinet`}
+      label={`Thermostat State`}
       content={
         <div style={{ width: "100%", overflow: "scroll" }}>
           <JsonCode code={JSON.stringify(state, null, 4)} />

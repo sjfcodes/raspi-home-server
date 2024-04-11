@@ -1,4 +1,4 @@
-import useThermostatMap from "../../hooks/useThermostatMap";
+import useThermostat from "../../hooks/useThermostat";
 import Card from "../Card";
 import JsonCode from "../JsonCode";
 
@@ -7,7 +7,7 @@ export default function HomeCurrentTemp({
 }: {
   thermostatId: string;
 }) {
-  const [thermostatMap] = useThermostatMap();
+  const [thermostatMap] = useThermostat();
 
   const thermostat = thermostatMap[thermostatId];
   if (!thermostat) return null;
