@@ -1,5 +1,5 @@
 import { ROOM_TEMP_DEFAULT_STATE } from '../../../../constant/constant';
-import { RoomTempState } from '../../../../types/main';
+import { RemoteState } from '../../../../types/main';
 import SseDataStream from '../../lib/SseDataStream';
 import { log } from '../../utils/general';
 import { server } from '../server';
@@ -7,7 +7,7 @@ import { server } from '../server';
 const path = '/api/home/temperature/target';
 const stream = new SseDataStream(server, path, ROOM_TEMP_DEFAULT_STATE);
 
-const setRoomTempState = (newState: RoomTempState) => {
+const setRoomTempState = (newState: RemoteState) => {
     log(path, 'setRoomTempState', newState);
     const state = stream.getState();
     if (newState === undefined) {

@@ -29,7 +29,7 @@ export type Thermostat = {
 
 export type SystemTemperatureState = Record<string, PiSytemTemperature>;
 
-export type RoomTempState = {
+export type RemoteState = {
   id: string;
   type: "F" | "C";
   max: number;

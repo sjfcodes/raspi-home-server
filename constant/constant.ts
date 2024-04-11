@@ -1,4 +1,4 @@
-import { HeaterCabState, RoomTempState } from "../types/main";
+import { HeaterCabState, RemoteState } from "../types/main";
 
 export const RASP_PI = {
   ip: "192.168.68.142",
@@ -40,7 +40,7 @@ export const HEATER_GPO_DEFAULT_STATE: HeaterCabState = {
   updatedAt: "",
 };
 
-export const ROOM_TEMP_DEFAULT_STATE: RoomTempState = {
+export const ROOM_TEMP_DEFAULT_STATE: RemoteState = {
   id: 'home',
   type: "F",
   max: 66,
