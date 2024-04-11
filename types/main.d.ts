@@ -27,12 +27,7 @@ export type Thermostat = {
   updatedAt: string;
 };
 
-export type PiTemp = {
-  tempC: number;
-  tempF: number;
-  message: string;
-  updatedAt: string;
-};
+export type SystemTemperatureState = Record<string, PiSytemTemperature>;
 
 export type RoomTempState = {
   id: string;
@@ -52,11 +47,11 @@ export type PiSytemInfo = {
   processor: string;
   BogoMIPS: string;
   Features: string;
-  'CPU implementer': string;
-  'CPU architecture': string;
-  'CPU variant': string;
-  'CPU part': string;
-  'CPU revision': string;
+  "CPU implementer": string;
+  "CPU architecture": string;
+  "CPU variant": string;
+  "CPU part": string;
+  "CPU revision": string;
   Revision: string;
   Serial: string;
   Model: string;

@@ -23,7 +23,7 @@ export default function Thermostat({
       content={
         <div style={{ width: "100%", overflow: "scroll" }}>
           {children}
-          <JsonCode code={JSON.stringify(copy, null, 4)} />
+          <JsonCode code={JSON.stringify(copy, null, 2)} />
         </div>
       }
     />

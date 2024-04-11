@@ -30,7 +30,7 @@ export default function HomeCurrentTemp({
       content={
         <>
           <div style={{ width: "100%", overflowX: "scroll" }}>
-            <JsonCode code={JSON.stringify(copy, null, 4)} />
+            <JsonCode code={JSON.stringify(copy, null, 2)} />
           </div>
         </>
       }

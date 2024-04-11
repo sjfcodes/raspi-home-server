@@ -10,7 +10,7 @@ export default function HeaterState() {
       label={`Heater State`}
       content={
         <div style={{ width: "100%", overflow: "scroll" }}>
-          <JsonCode code={JSON.stringify(state, null, 4)} />
+          <JsonCode code={JSON.stringify(state, null, 2)} />
         </div>
       }
     />

@@ -2,7 +2,7 @@ import "./App.css";
 import Block from "./components/Block";
 import PiLogs from "./components/PiLogs";
 import Logos from "./components/Logos";
-import PiTemp from "./components/PiTemp";
+import SystemTemperatureState from "./components/State/SystemTemperatureState";
 import QrCode from "./components/QrCode";
 import HomeTemperatureTarget from "./components/State/HomeTemperatureTarget";
 import Thermostats from "./components/Thermostats";
@@ -44,7 +44,7 @@ function App() {
         <Thermostats />
       </div>
 
-      <PiTemp />
+      <SystemTemperatureState />
       <Block />
 
       <QrCode value={location.href} />

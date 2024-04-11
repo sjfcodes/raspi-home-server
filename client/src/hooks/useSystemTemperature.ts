@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { RASP_PI } from "../../../constant/constant";
-import { PiTemp } from "../../../types/main";
+import { SystemTemperatureState } from "../../../types/main";
 
-const path = `http://${RASP_PI.ip}:${RASP_PI.serverPort}/api/home/pi/temperature`;
-export default function usePiTemperature() {
-  const [state, setState] = useState({} as PiTemp);
+const path = `http://${RASP_PI.ip}:${RASP_PI.serverPort}/api/v1/system/temperature?subscribe=true`;
+export default function useSystemTemperature() {
+  const [state, setState] = useState({} as SystemTemperatureState);
 
   useEffect(() => {
     const sse = new EventSource(path);
