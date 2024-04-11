@@ -9,6 +9,7 @@ import Thermostats from "./components/Thermostats";
 import { APP_MAX_WIDTH } from "./utils/constants";
 import HeaterState from "./components/State/HeaterState";
 import RemoteState from "./components/State/RemoteState";
+import SystemInfoState from "./components/State/SystemInfoState";
 
 function App() {
   return (
@@ -16,7 +17,6 @@ function App() {
       style={{
         width: "100%",
         maxWidth: APP_MAX_WIDTH,
-        // height: "calc(100vh - 100px)",
         height: "100vh",
         margin: "0 auto",
         overflowY: "scroll",
@@ -45,6 +45,9 @@ function App() {
       </div>
 
       <SystemTemperatureState />
+      <Block />
+
+      <SystemInfoState />
       <Block />
 
       <QrCode value={location.href} />
