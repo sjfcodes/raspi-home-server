@@ -8,15 +8,12 @@ export default defineConfig({
   plugins: [react()],
   server: {
     host: "192.168.68.142", // raspberry pi's ip address
+    port: 5173,
+    strictPort: true,
     proxy: {
       "/api": {
         target: `http://localhost:${PORT}`,
         changeOrigin: true,
-      },
-      "/socket.io": {
-        target: `http://localhost:${PORT}`,
-        changeOrigin: true,
-        ws: true,
       },
     },
   },
