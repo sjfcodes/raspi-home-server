@@ -46,16 +46,18 @@ export const logger = createLogger({
 
 if (env.NODE_ENV !== 'production') {
     logger.add(
-    	new transports.Console({
-    		format: format.combine(
-    			format.colorize(),
-    			format.printf((info) => `${info.timestamp} ${info.level}: ${info.message}`)
-    		),
-    		level: 'debug'
-    	})
+        new transports.Console({
+            level: 'debug',
+            format: format.combine(
+                format.colorize(),
+                format.printf(
+                    (info) => `${info.timestamp} ${info.level}: ${info.message}`
+                )
+            ),
+        })
     );
 
-	// log errors to console
+    // log errors to console
     logger.exceptions.handle(
         new transports.Console({
             format: format.simple(),

@@ -15,7 +15,7 @@ export default function QrCode({ value }: { value: string }) {
             width: "90%",
             background: "white",
             padding: "16px",
-            borderRadius: "1em",
+            borderRadius: ".5em",
           }}
         >
           <QRCode

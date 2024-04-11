@@ -62,7 +62,7 @@ export default function LogStream() {
         border: "1px solid orange",
         backgroundColor: "white",
         height: "300px",
-        borderRadius: "1rem",
+        borderRadius: ".5rem",
       }}
     >
       <Chart

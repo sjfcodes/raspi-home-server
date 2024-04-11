@@ -8,11 +8,9 @@ import { env } from '../../config/globals';
 import { logger } from '../../config/logger';
 
 export function routeLogger(req: Request, _res: Response, next: NextFunction) {
-    logger.info(
-        `${req.method}: ${req.path} ${
-            typeof req.body === 'object' ? JSON.stringify(req.body) : req.body
-        }`
-    );
+    const data =
+        typeof req.body === 'object' ? JSON.stringify(req.body) : req.body;
+    logger.info(`${req.method} ${req.path} ${data}`);
     next();
 }
 

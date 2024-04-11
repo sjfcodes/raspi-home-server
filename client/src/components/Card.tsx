@@ -31,7 +31,7 @@ export default function Card({
         margin: "0 auto",
         minHeight: "5rem",
         border: "1px solid orange",
-        borderRadius: "1rem",
+        borderRadius: ".5rem",
         display: "flex",
         justifyContent: "center",
         alignItems: "start",
