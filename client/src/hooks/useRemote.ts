@@ -13,19 +13,24 @@ export default function useRemote() {
     sse.onerror = console.error;
   }, []);
 
-  function dispatch(newState: RemoteState) {
-    const currState = JSON.stringify(state);
-    fetch(path, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newState),
-    }).catch((error) => {
+  async function dispatch(newState: RemoteState) {
+    // const currState = JSON.stringify(state);
+    try {
+      const response = await fetch(path, {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ home: newState }),
+      });
+
+      const { data } = await response.json();
+      console.log(data);
+    } catch (error) {
       console.error(error);
-      setState(JSON.parse(currState));
-    });
+      // setState(JSON.parse(currState));
+    }
   }
 
   function decrement() {
@@ -53,17 +58,7 @@ export default function useRemote() {
       min: target - trailing,
     };
 
-    fetch(path, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newState),
-    }).catch((error) => {
-      console.error(error);
-      // setState(JSON.parse(currState));
-    });
+    dispatch(newState);
   };
 
   return {

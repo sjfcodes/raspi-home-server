@@ -17,4 +17,3 @@ export function registerApiRoutes(router: Router, prefix: string = ''): void {
     registerThermostatRoutes(router, `${prefix}/thermostat`);
     registerThermostatRoutes(router, `/api/temperature`);
 }
-
