@@ -22,10 +22,10 @@ const wss = new WebSocketServer({
 });
 
 wss.on('connection', (ws) => {
-    logger.info(formatLog(CHANNEL.HEATER_CAB_0, 'wss conneced'));
+    logger.info(`WSS:3001 ${CHANNEL.HEATER_CAB_0} connected`);
     ws.on('message', handleMessageIn);
     ws.on('close', () =>
-        logger.info(formatLog(CHANNEL.HEATER_CAB_0, 'wss disconnected'))
+        logger.info(`WSS:3001 ${CHANNEL.HEATER_CAB_0} disconnected`)
     );
     ws.onerror = console.error;
 });
