@@ -4,7 +4,16 @@
   "description": "",
   "main": "pm2.config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ci:client": "cd client && npm ci && cd ../",
+    "ci:server": "cd server && npm ci && cd ../",
+    "ci:all": "npm run ci:client && npm run ci:server",
+    "save[NOTE]": "echo 'set current pm2 state to use on system reboot (apps must be running)'",
+    "save": "sudo pm2 save",
+    "logs": "sudo pm2 logs",
+    "start": "sudo pm2 start pm2.config.js --env production && npm run logs",
+    "dev": "sudo pm2 start pm2.config.js --env development && npm run logs",
+    "stop": "sudo pm2 stop pm2.config.js"
   },
   "keywords": [],
   "author": "",
