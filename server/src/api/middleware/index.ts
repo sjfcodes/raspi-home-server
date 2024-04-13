@@ -6,27 +6,18 @@ import helmet from 'helmet';
 import { handleError } from '../../services/utility';
 import { env } from '../../config/globals';
 import { logger } from '../../config/logger';
+import { config } from '../../../config';
 
 export function routeLogger(req: Request, _res: Response, next: NextFunction) {
     const data =
         typeof req.body === 'object' ? JSON.stringify(req.body) : req.body;
-    logger.info(`${req.method} ${req.path} ${data}`);
+    const info = [req.method, req.path];
+    if (config.log.showData) info.push(data);
+    logger.info(info.join(' '));
     next();
 }
 
 export function registerMiddleware(router: Router): void {
-    router.options('/*', function (_req, res, next) {
-        res.header('Access-Control-Allow-Origin', '*');
-        res.header(
-            'Access-Control-Allow-Methods',
-            'GET,PUT,POST,DELETE,OPTIONS'
-        );
-        res.header(
-            'Access-Control-Allow-Headers',
-            'Content-Type, Authorization, Content-Length, X-Requested-With'
-        );
-        res.send(200);
-    });
     // router.use(helmet());
 
     if (env.NODE_ENV === 'development') {
