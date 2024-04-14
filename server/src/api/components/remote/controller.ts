@@ -45,11 +45,10 @@ export async function writeItem(
     next: NextFunction
 ): Promise<Response | void> {
     try {
-        // writeOne(req.body);
+        writeOne(req.body);
 
         return res.status(200).json({
             message: 'success',
-            data: {},
         });
     } catch (err) {
         return next(err);

@@ -1,4 +1,4 @@
-import { config } from '../../config';
+import { config } from '../../src/config/config';
 
 export const getSortedObject = (object: Record<any, any>) => {
     const keys = Object.keys(object).sort();

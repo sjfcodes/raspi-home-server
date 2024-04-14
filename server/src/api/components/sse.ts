@@ -3,7 +3,7 @@ import { SSE_HEADERS } from '../../../../constant/constant';
 import { formatLog, log } from '../../../src_old/utils/general';
 import { logger } from '../../config/logger';
 import { generateUuid } from '../../services/utility';
-import { config } from '../../../config';
+import { config } from '../../config/config';
 
 type Subscriber = { id: string; itemId?: string; res: Response };
 export class SseManager<T> {

@@ -1,6 +1,7 @@
+// [TODO] move to globals?
 export const config = {
     log: {
-        includeBody: false,
+        includeBody: true,
         includeMethods: [
             'GET',
             'POST',

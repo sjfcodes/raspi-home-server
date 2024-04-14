@@ -40,9 +40,10 @@ function App() {
       {/* <PiLogs />
       <Block /> */}
 
-      <div style={{ maxWidth: APP_MAX_WIDTH, overflow: "scroll" }}>
+      {/* [BUG]  adding component here breaks PUT for home remote.. wth? */}
+      {/* <div style={{ maxWidth: APP_MAX_WIDTH, overflow: "scroll" }}>
         <Thermostats />
-      </div>
+      </div> */}
 
       <SystemTemperatureState />
       <Block />

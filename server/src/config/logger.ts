@@ -1,7 +1,6 @@
 import { existsSync, mkdirSync } from 'fs';
 import { join } from 'path';
 import { createLogger, format, transports } from 'winston';
-import { NextFunction, Request, Response } from 'express';
 
 import { env } from './globals';
 
@@ -26,7 +25,6 @@ export const logger = createLogger({
             (info) => `${info.timestamp} ${info.level}: ${info.message}`
         )
     ),
-    // [NOTE]: writes to files triggers server restsart in dev mode
     // transports: [
     //     new transports.File({
     //         filename: errorLog,

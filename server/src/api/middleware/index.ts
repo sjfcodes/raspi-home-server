@@ -6,7 +6,7 @@ import cors from 'cors';
 import { handleError } from '../../services/utility';
 import { env } from '../../config/globals';
 import { logger } from '../../config/logger';
-import { config } from '../../../config';
+import { config } from '../../config/config';
 
 export function routeLogger(req: Request, _res: Response, next: NextFunction) {
     if (config.log.includeMethods.includes(req.method)) {
