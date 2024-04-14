@@ -1,6 +1,12 @@
 import { CSSProperties, useState } from "react";
 import JsonCode from "./JsonCode";
-import { HeaterCabStateMap, RemoteStateMap } from "../../../types/main";
+import { HeaterCabStateMap } from "../../../types/main";
+import { useAtom } from "jotai";
+import {
+  remoteMapAtom,
+  remoteTempDown,
+  remoteTempUp,
+} from "../store/remoteMap/remoteMap.atom";
 
 const cold = "#6bbcd1";
 const hot = "#e23201";
@@ -24,26 +30,17 @@ const buttonStyle = {
 
 type Props = {
   remoteId: string;
-  remoteState?: RemoteStateMap;
   heaterId: string;
   heaterState?: HeaterCabStateMap;
-  incrementRemoteState: (remoteId: string) => void;
-  decrementRemoteState: (remoteId: string) => void;
 };
-export default function HomeRemote({
-  remoteId,
-  remoteState,
-  heaterId,
-  heaterState,
-  incrementRemoteState,
-  decrementRemoteState,
-}: Props) {
+export default function HomeRemote({ remoteId, heaterId, heaterState }: Props) {
+  const [remoteMap] = useAtom(remoteMapAtom);
   const [showData, setShowData] = useState(false);
 
   const heater = heaterState?.[heaterId];
   if (!heater) return null;
 
-  const remote = remoteState?.[remoteId];
+  const remote = remoteMap?.[remoteId];
   if (!remote) return null;
 
   const isTempAvailable = typeof remote?.min === "number";
@@ -55,7 +52,7 @@ export default function HomeRemote({
         style={{ ...buttonStyle, backgroundColor: hot }}
         onClick={(e) => {
           e.stopPropagation();
-          incrementRemoteState(remoteId);
+          remoteTempUp(remoteId);
         }}
       >
         +
@@ -93,7 +90,7 @@ export default function HomeRemote({
         style={{ ...buttonStyle, backgroundColor: cold }}
         onClick={(e) => {
           e.stopPropagation();
-          decrementRemoteState(remoteId);
+          remoteTempDown(remoteId);
         }}
       >
         -

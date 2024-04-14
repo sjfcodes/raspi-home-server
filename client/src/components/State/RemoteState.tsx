@@ -1,16 +1,17 @@
-import { RemoteStateMap } from "../../../../types/main";
+import { useAtom } from "jotai";
 import Card from "../Card";
 import JsonCode from "../JsonCode";
+import { remoteMapAtom } from "../../store/remoteMap/remoteMap.atom";
 
-type Props = { state: RemoteStateMap };
-export default function RemoteState({ state }: Props) {
+export default function RemoteState() {
+  const [remoteState] = useAtom(remoteMapAtom);
 
   return (
     <Card
       label={`Remote State`}
       content={
         <div style={{ width: "100%", overflow: "scroll" }}>
-          <JsonCode code={JSON.stringify(state, null, 2)} />
+          <JsonCode code={JSON.stringify(remoteState, null, 2)} />
         </div>
       }
     />
