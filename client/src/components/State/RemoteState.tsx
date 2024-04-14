@@ -1,7 +1,7 @@
 import { useAtom } from "jotai";
 import Card from "../Card";
 import JsonCode from "../JsonCode";
-import { remoteMapAtom } from "../../store/remoteMap/remoteMap.atom";
+import { remoteMapAtom } from "../../store/remoteMap.atom";
 
 export default function RemoteState() {
   const [remoteState] = useAtom(remoteMapAtom);

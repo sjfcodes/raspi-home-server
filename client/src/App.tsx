@@ -11,7 +11,7 @@ import HeaterState from "./components/State/HeaterState";
 import SystemInfoState from "./components/State/SystemInfoState";
 import useHeater from "./hooks/useHeater";
 import RemoteState from "./components/State/RemoteState";
-import { remoteMapStore } from "./store/remoteMap/remoteMap.atom";
+import { remoteMapStore } from "./store/remoteMap.atom";
 
 export default function App() {
   /**

@@ -1,7 +1,7 @@
 import { atom, createStore } from "jotai";
-import { RemoteStateMap } from "../../../../types/main";
-import { dispatch } from "../dispatch";
-import { urls } from "../../config.global";
+import { RemoteStateMap } from "../../../types/main";
+import { dispatch } from "./dispatch";
+import { urls } from "../config.global";
 
 // see docs for more info: https://jotai.org/docs/guides/using-store-outside-react
 /**

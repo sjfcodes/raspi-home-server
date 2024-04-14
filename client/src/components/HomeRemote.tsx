@@ -6,7 +6,7 @@ import {
   remoteMapAtom,
   remoteTempDown,
   remoteTempUp,
-} from "../store/remoteMap/remoteMap.atom";
+} from "../store/remoteMap.atom";
 
 const cold = "#6bbcd1";
 const hot = "#e23201";
