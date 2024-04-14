@@ -1,12 +1,12 @@
-import { PiSytemTemperature } from "../../../../types/main";
+import { SytemTemperature } from "../../../../types/main";
 import useSystemTemperature from "../../hooks/useSystemTemperature";
 import Card from "../Card";
 import JsonCode from "../JsonCode";
 
-export default function SystemTemperatureState() {
+export default function SystemTemperatureMap() {
   const [piTemp] = useSystemTemperature();
 
-  const pi = piTemp["system"] as PiSytemTemperature;
+  const pi = piTemp["system"] as SytemTemperature;
 
   if (!pi) return null;
 

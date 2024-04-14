@@ -1,15 +1,15 @@
 import { REMOTE_HOME_DEFAULT_STATE, REMOTE_OFFICE_DEFAULT_STATE } from '../../../../../constant/constant';
 import { logger } from '../../../config/logger';
 import { SseManager } from '../sse';
-import { Item } from './model';
+import { Item, ItemMap } from './model';
 
 export const sseManager = new SseManager({
     [REMOTE_HOME_DEFAULT_STATE.id]: REMOTE_HOME_DEFAULT_STATE,
     [REMOTE_OFFICE_DEFAULT_STATE.id]: REMOTE_OFFICE_DEFAULT_STATE,
-} as Record<string, Item>);
+} as ItemMap);
 
-export function readAll(): Record<string, Item> {
-    return sseManager.getState() as Record<string, Item>;
+export function readAll(): ItemMap {
+    return sseManager.getState() as ItemMap;
 }
 
 export function writeOne(item: Item): void {

@@ -1,15 +1,14 @@
 import { THERMOSTAT } from '../../../../../constant/constant';
-import { ThermostatMap } from '../../../../../types/main';
 import { SseManager } from '../sse';
-import { Thermostat } from './model';
+import { Item, ItemMap } from './model';
 
-export const sseManager = new SseManager({} as ThermostatMap);
+export const sseManager = new SseManager({} as ItemMap);
 
-export function readAll(): ThermostatMap {
-    return sseManager.getState() as ThermostatMap;
+export function readAll(): ItemMap {
+    return sseManager.getState() as ItemMap;
 }
 
-export function writeOne(item: Thermostat): Thermostat | void {
+export function writeOne(item: Item): Item | void {
     if (item === undefined) {
         console.error(new Error('item must be defined'));
         return;
@@ -20,7 +19,7 @@ export function writeOne(item: Thermostat): Thermostat | void {
         return;
     }
 
-    const state = sseManager.getState() as Record<string, Thermostat>;
+    const state = sseManager.getState() as ItemMap;
     const maxLen = 60;
     const temp = Math.trunc(item.tempF);
     let tempFHistory = state[item.chipId]?.tempFHistory || [];
@@ -30,7 +29,7 @@ export function writeOne(item: Thermostat): Thermostat | void {
     const tempAverage =
         tempFHistory.reduce((acc, curr) => acc + curr, 0) / tempFHistory.length;
 
-    const thermostat: Thermostat = {
+    const thermostat: Item = {
         chipId: item.chipId,
         // @ts-ignore
         chipName: THERMOSTAT[item.chipId] || item.chipName,

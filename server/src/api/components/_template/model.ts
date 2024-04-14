@@ -1,9 +1,9 @@
-export class Item {
-    constructor(id: string, updatedAt: string) {
-        this.id = id;
-        this.updatedAt = updatedAt;
-    }
+// inport references to data types
+type MyImportMap = Record<string, MyImport>;
+type MyImport = {
+    id: string;
+    updatedAt: string;
+};
 
-    public id: string;
-    public updatedAt: string;
-}
+export type ItemMap = MyImportMap;
+export type Item = MyImport;

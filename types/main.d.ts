@@ -1,8 +1,6 @@
 import { HEATER_OVERRIDE } from "../constant/constant";
 
-export type ThermostatMap = {
-  [key: string]: Thermostat;
-};
+
 
 export type HeaterManualOverride = {
   status: HEATER_OVERRIDE;
@@ -15,10 +13,11 @@ export type HeaterCabState = {
   cabTempF: number;
   chipId: string;
   heaterPinVal: 1 | 0 | null;
-  manualOverride: HeaterManualOverride | null;
+  manualOverride?: HeaterManualOverride;
   updatedAt: string;
 };
 
+export type ThermostatMap = Record<string, Thermostat>;
 export type Thermostat = {
   chipName: string;
   chipId: string;
@@ -28,7 +27,6 @@ export type Thermostat = {
   updatedAt: string;
 };
 
-export type SystemTemperatureState = Record<string, PiSytemTemperature>;
 
 export type RemoteStateMap = Record<string, RemoteState>;
 export type RemoteState = {
@@ -38,11 +36,21 @@ export type RemoteState = {
   min: number;
 };
 
-export type PiSytemTemperature = {
+export type SystemTemperatureMap = Record<string, SytemTemperature>;
+export type SytemTemperature = {
   id: string;
   tempC: number;
   tempF: number;
   readAt: string;
+};
+
+export type ZoneMap = Record<string, Zone>;
+export type Zone = {
+  id: string,
+  zoneName: string,
+  remoteId: string,
+  thermostatId: string,
+  heaterId: string
 };
 
 export type PiSytemInfo = {

@@ -1,21 +1,4 @@
-export class Item {
-    constructor(
-        id: string,
-        zoneName: string,
-        remoteId: string,
-        thermostatId: string,
-        heaterId: string
-    ) {
-        this.id = id;
-        this.zoneName = zoneName;
-        this.remoteId = remoteId;
-        this.thermostatId = thermostatId;
-        this.heaterId = heaterId;
-    }
+import { Zone, ZoneMap } from "../../../../../types/main";
 
-    public id: string;
-    public zoneName: string;
-    public remoteId: string;
-    public thermostatId: string;
-    public heaterId: string;
-}
+export type ItemMap = ZoneMap;
+export type Item = Zone;

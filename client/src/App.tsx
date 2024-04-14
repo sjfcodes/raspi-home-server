@@ -2,7 +2,7 @@ import "./App.css";
 import Block from "./components/Block";
 import PiLogs from "./components/PiLogs";
 import Logos from "./components/Logos";
-import SystemTemperatureState from "./components/State/SystemTemperatureState";
+import SystemTemperatureMap from "./components/State/SystemTemperatureState";
 import QrCode from "./components/QrCode";
 import HomeRemote from "./components/HomeRemote";
 import Thermostats from "./components/Thermostats";
@@ -75,7 +75,7 @@ function App() {
         <Thermostats />
       </div>
 
-      <SystemTemperatureState />
+      <SystemTemperatureMap />
       <Block />
 
       <SystemInfoState />
