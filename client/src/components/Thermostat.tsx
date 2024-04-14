@@ -3,10 +3,8 @@ import Card from './Card';
 import Snippet from './Snippet/Snippet';
 
 export default function Thermostat({
-    children,
     thermostat,
 }: {
-    children?: React.ReactNode;
     thermostat: _Thermostat;
 }) {
     if (!thermostat) return null;
@@ -17,12 +15,7 @@ export default function Thermostat({
     return (
         <Card
             label={`${copy.chipName}:  ${isNaN(curTemp) ? '-' : curTemp + '℉'}`}
-            content={
-                <div style={{ width: '100%', overflow: 'scroll' }}>
-                    {children}
-                    <Snippet text={JSON.stringify(copy, null, 2)} />
-                </div>
-            }
+            content={<Snippet text={JSON.stringify(copy, null, 2)} />}
         />
     );
 }

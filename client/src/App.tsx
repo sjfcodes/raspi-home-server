@@ -45,15 +45,19 @@ export default function App() {
                 <Logos />
                 <Block />
 
-                <Remote remoteId="home" heaterId="d0fc8ad4" />
+                <Remote
+                    remoteId="home"
+                    heaterId="d0fc8ad4"
+                    thermostatId="9efc8ad4"
+                />
                 <Block />
 
-                <HeaterMap />
-                <Block />
-                <RemoteMap />
+                {/* <HeaterMap /> */}
+                {/* <Block /> */}
+                {/* <RemoteMap /> */}
 
-                <Remote remoteId="office" heaterId="d0fc8ad4" />
-                <Block />
+                {/* <Remote remoteId="office" heaterId="d0fc8ad4" /> */}
+                {/* <Block /> */}
 
                 <ThermostatMap />
 

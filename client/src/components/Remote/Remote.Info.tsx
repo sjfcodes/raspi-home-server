@@ -14,7 +14,10 @@ export default function RemoteInfo({ className = '', cover, children }: Props) {
     return (
         <RemoteCard
             className={classNames.join(' ')}
-            onClick={() => setShowData((curr) => !curr)}
+            onClick={(e) => {
+                e.stopPropagation();
+                setShowData((curr) => !curr);
+            }}
         >
             {showData ? children : cover}
         </RemoteCard>

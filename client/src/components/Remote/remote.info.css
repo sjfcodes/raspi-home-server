@@ -4,5 +4,5 @@
     align-items: center;
     justify-content: center;
     background-color: var(--color-info-purple-00);
+    position: relative;
 }
-

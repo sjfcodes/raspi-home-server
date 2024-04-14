@@ -1,9 +1,10 @@
-import useThermostat from '../../hooks/useThermostat';
+import { useAtom } from 'jotai';
+import { thermostatMapAtom } from '../../store/thermostatMap.atom';
 import Card from '../Card';
 import Snippet from '../Snippet/Snippet';
 
 export default function ThermostatState() {
-    const [state] = useThermostat();
+    const [state] = useAtom(thermostatMapAtom);
 
     return (
         <Card

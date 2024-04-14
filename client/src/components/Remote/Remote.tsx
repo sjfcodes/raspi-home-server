@@ -1,4 +1,3 @@
-import { RefObject, useRef } from 'react';
 import { useAtom } from 'jotai';
 import {
     remoteMapAtom,
@@ -10,14 +9,20 @@ import RemoteControl from './Remote.Control';
 import RemoteInfo from './Remote.Info';
 import './remote.css';
 import Snippet from '../Snippet/Snippet';
+import { thermostatMapAtom } from '../../store/thermostatMap.atom';
 
 type Props = {
     remoteId: string;
     heaterId: string;
+    thermostatId: string;
 };
-export default function Remote({ remoteId, heaterId }: Props) {
-    const [remoteMap] = useAtom(remoteMapAtom);
+export default function Remote({ remoteId, heaterId, thermostatId }: Props) {
+    const [thermostatMap] = useAtom(thermostatMapAtom);
     const [heaterMap] = useAtom(heaterMapAtom);
+    const [remoteMap] = useAtom(remoteMapAtom);
+
+    const thermostat = thermostatMap?.[thermostatId];
+    if (!thermostat) return null;
 
     const heater = heaterMap?.[heaterId];
     if (!heater) return null;
@@ -25,22 +30,27 @@ export default function Remote({ remoteId, heaterId }: Props) {
     const remote = remoteMap?.[remoteId];
     if (!remote) return null;
 
-    const isTempAvailable = typeof remote?.min === 'number';
-    const displayTemp = isTempAvailable ? remote.max?.toString() : '-';
-
     return (
         <div className="remote">
             <RemoteInfo
                 className="remote-card-full"
                 cover={
                     <div style={{ textAlign: 'center' }}>
-                        <b>{displayTemp}</b>
+                        <b>{thermostat.tempF}</b>
                         <br />
                         <b>{remote.id}</b>
                     </div>
                 }
             >
-                <Snippet text={JSON.stringify({ heater, remote }, null, 2)} />
+                <div style={{ position: 'absolute', top: '0px' }}>
+                    <Snippet
+                        text={JSON.stringify(
+                            { thermostat, heater, remote },
+                            null,
+                            2
+                        )}
+                    />
+                </div>
             </RemoteInfo>
 
             <RemoteControl
