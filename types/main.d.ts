@@ -23,7 +23,6 @@ export type Thermostat = {
   chipId: string;
   tempF: number;
   calibrate: number;
-  tempFHistory: number[];
   updatedAt: string;
 };
 

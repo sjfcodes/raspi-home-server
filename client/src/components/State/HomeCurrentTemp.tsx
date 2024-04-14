@@ -13,14 +13,10 @@ export default function HomeCurrentTemp({
   if (!thermostat) return null;
 
   const curTemp = thermostat?.tempF + thermostat?.calibrate;
-  const copy = structuredClone(thermostat);
-
-  // @ts-ignore
-  copy.tempFHistory = JSON.stringify(copy.tempFHistory);
 
   const label = (
     <div style={{ fontSize: "1.5rem", width: "100%", textAlign: "center" }}>
-      {`${copy.chipName}:  ${isNaN(curTemp) ? "-" : curTemp + "℉"}`}
+      {`${thermostat.chipName}:  ${isNaN(curTemp) ? "-" : curTemp + "℉"}`}
     </div>
   );
 
@@ -30,7 +26,7 @@ export default function HomeCurrentTemp({
       content={
         <>
           <div style={{ width: "100%", overflowX: "scroll" }}>
-            <JsonCode code={JSON.stringify(copy, null, 2)} />
+            <JsonCode code={JSON.stringify(thermostat, null, 2)} />
           </div>
         </>
       }

@@ -14,9 +14,6 @@ export default function Thermostat({
   const curTemp = thermostat?.tempF + thermostat?.calibrate;
   const copy = structuredClone(thermostat);
 
-  // @ts-ignore
-  copy.tempFHistory = JSON.stringify(copy.tempFHistory);
-
   return (
     <Card
       label={`${copy.chipName}:  ${isNaN(curTemp) ? "-" : curTemp + "℉"}`}

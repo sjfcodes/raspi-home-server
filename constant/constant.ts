@@ -36,7 +36,6 @@ export const HEATER_GPO_DEFAULT_STATE: HeaterCabState = {
   cabTempF: 0,
   chipId: "",
   heaterPinVal: 0,
-  manualOverride: null,
   updatedAt: "",
 };
 
