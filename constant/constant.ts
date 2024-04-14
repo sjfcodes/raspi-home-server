@@ -1,4 +1,4 @@
-import { HeaterCabState, RemoteState } from "../types/main";
+import { HeaterCab, Remote } from "../types/main";
 
 export const RASP_PI = {
   ip: "192.168.68.142",
@@ -14,9 +14,9 @@ export enum CHANNEL {
   LOG_STREAM = "log-stream-0",
 }
 
-export enum HEATER_OVERRIDE {
-  OFF = "OFF",
-  ON = "ON",
+export enum HEATER_STATE {
+  FORCE_OFF = "FORCE_OFF",
+  FORCE_ON = "FORCE_ON",
 }
 
 export const PRIMARY_THERMOSTAT = "9efc8ad4";
@@ -31,7 +31,7 @@ export enum HEATER_CAB {
   HOME = "d0fc8ad4",
 }
 
-export const HEATER_GPO_DEFAULT_STATE: HeaterCabState = {
+export const HEATER_GPO_DEFAULT_STATE: HeaterCab = {
   cabHumidity: 0,
   cabTempF: 0,
   chipId: "",
@@ -39,14 +39,14 @@ export const HEATER_GPO_DEFAULT_STATE: HeaterCabState = {
   updatedAt: "",
 };
 
-export const REMOTE_HOME_DEFAULT_STATE: RemoteState = {
+export const REMOTE_HOME_DEFAULT_STATE: Remote = {
   id: 'home',
   type: "F",
   max: 66,
   min: 66,
 };
 
-export const REMOTE_OFFICE_DEFAULT_STATE: RemoteState = {
+export const REMOTE_OFFICE_DEFAULT_STATE: Remote = {
   id: 'office',
   type: "F",
   max: 66,

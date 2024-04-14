@@ -1,0 +1,16 @@
+.remote-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+}
+.remote-control:hover {
+    cursor: pointer;
+}
+.remote-control-cooler {
+    background-color: var(--color-cold-blue-00);
+}
+
+.remote-control-warmer {
+    background-color: var(--color-hot-red-00);
+}

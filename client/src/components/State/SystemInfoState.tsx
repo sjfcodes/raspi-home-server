@@ -1,14 +1,14 @@
-import useSystemInfo from "../../hooks/useSystemInfo";
-import Card from "../Card";
-import JsonCode from "../JsonCode";
+import useSystemInfo from '../../hooks/useSystemInfo';
+import Card from '../Card';
+import Snippet from '../Snippet/Snippet';
 
-export default function SystemInfoState() {
-  const [piTemp] = useSystemInfo();
+export default function SystemInfo() {
+    const [piTemp] = useSystemInfo();
 
-  return (
-    <Card
-      label={`Pi System Info`}
-      content={<JsonCode code={JSON.stringify(piTemp, null, 2)} />}
-    />
-  );
+    return (
+        <Card
+            label={`Pi System Info`}
+            content={<Snippet text={JSON.stringify(piTemp, null, 2)} />}
+        />
+    );
 }

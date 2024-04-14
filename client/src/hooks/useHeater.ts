@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { RASP_PI } from "../../../constant/constant";
-import { HeaterCabStateMap } from "../../../types/main";
+import { HeaterCabMap } from "../../../types/main";
 
 const path = `http://${RASP_PI.ip}:${RASP_PI.serverPort}/api/v1/heater?subscribe=true`;
 export default function useHeater() {
-  const [state, setState] = useState({} as HeaterCabStateMap);
+  const [state, setState] = useState({} as HeaterCabMap);
 
   useEffect(() => {
     const sse = new EventSource(path);

@@ -1,10 +1,16 @@
 import { RASP_PI } from "../../constant/constant";
 
-const server = `http://${RASP_PI.ip}:${RASP_PI.serverPort}`;
+const host = `http://${RASP_PI.ip}:${RASP_PI.serverPort}`;
+const version = '/api/v1'
+const api = host + version;
 
 export const urls = {
+  heater: {
+    get: api + "/heater?subscribe=true",
+    put: api + "/heater",
+  },
   remote: {
-    get: server + "/api/v1/remote?subscribe=true",
-    put: server + "/api/v1/remote",
+    get: api + "/remote?subscribe=true",
+    put: api + "/remote",
   },
 };

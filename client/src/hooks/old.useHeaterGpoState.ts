@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import {
   CHANNEL,
   HEATER_GPO_DEFAULT_STATE,
-  HEATER_OVERRIDE,
+  HEATER_STATE,
   RASP_PI,
 } from "../../../constant/constant";
-import { HeaterCabState, HeaterManualOverride } from "../../../types/main";
+import { HeaterCab, HeaterCabState } from "../../../types/main";
 import { socketLogger } from "../utils/socket";
 
 export default function useHeaterGpoState(chipId: string) {
@@ -20,7 +20,7 @@ export default function useHeaterGpoState(chipId: string) {
 
     // add event listener reacting when message is received
     ws.onmessage = ({ data }: MessageEvent) => {
-      const newState: HeaterCabState = JSON.parse(data);
+      const newState: HeaterCab = JSON.parse(data);
       if (newState.chipId === chipId) {
         setHeaterGpio(newState);
         socketLogger(CHANNEL.HEATER_CAB_0, "in", newState);
@@ -41,7 +41,7 @@ export default function useHeaterGpoState(chipId: string) {
         if (curr?.heaterPinVal === 1) heaterPinValue = 0;
         else if (curr?.heaterPinVal === 0) heaterPinValue = 1;
 
-        const newState: HeaterCabState = {
+        const newState: HeaterCab = {
           ...curr,
           heaterPinVal: forceOn || heaterPinValue,
         };
@@ -54,8 +54,8 @@ export default function useHeaterGpoState(chipId: string) {
     });
   };
 
-  const setManualOverride = (status: HEATER_OVERRIDE, mins: number | null) => {
-    let manualOverride: HeaterManualOverride | null = null;
+  const setManualOverride = (status: HEATER_STATE, mins: number | null) => {
+    let manualOverride: HeaterCabState | null = null;
     if (typeof mins === "number" && mins > 0) {
       manualOverride = {
         status,
@@ -65,7 +65,7 @@ export default function useHeaterGpoState(chipId: string) {
 
     setHeaterGpio((curr) => {
       if (ws) {
-        const newState: HeaterCabState = { ...curr, manualOverride };
+        const newState: HeaterCab = { ...curr, state: manualOverride };
         console.log("out:", newState);
         ws.send(JSON.stringify(newState));
         return newState;

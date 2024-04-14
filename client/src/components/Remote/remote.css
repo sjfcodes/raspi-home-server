@@ -1,0 +1,23 @@
+.remote {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 1rem;
+    gap: 1rem;
+    box-sizing: border-box;
+    color: #1a1a1a;
+}
+
+.remote-card-full {
+    width: calc(100% - 1rem);
+    /* aspect-ratio: 2 / 1; */
+    aspect-ratio: 1 / 1;
+    overflow-y: scroll;
+}
+
+.remote-card-half {
+    width: calc(50% - 1rem);
+    aspect-ratio: 1 / 1;
+}

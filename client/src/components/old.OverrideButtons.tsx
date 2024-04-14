@@ -1,4 +1,4 @@
-import { HEATER_OVERRIDE } from "../../../constant/constant";
+import { HEATER_STATE } from "../../../constant/constant";
 import useHeaterGpoState from "../hooks/old.useHeaterGpoState";
 import Card from "./Card";
 
@@ -7,10 +7,10 @@ const restTimes = [0.1, 15, 30, 60];
 export default function OverrideButtons() {
   const { heaterGpo, setManualOverride } = useHeaterGpoState();
 
-  const controlButtons = heaterGpo.manualOverride ? (
+  const controlButtons = heaterGpo.state ? (
     <button
       className={`background-${heaterGpo?.heaterPinVal ? "on" : "off"}`}
-      onClick={() => setManualOverride(HEATER_OVERRIDE.OFF, null)}
+      onClick={() => setManualOverride(HEATER_STATE.FORCE_OFF, null)}
     >
       cancel timeout
     </button>
@@ -20,7 +20,7 @@ export default function OverrideButtons() {
         <button
           key={time}
           className="background-off"
-          onClick={() => setManualOverride(HEATER_OVERRIDE.OFF, time)}
+          onClick={() => setManualOverride(HEATER_STATE.FORCE_OFF, time)}
           style={{ margin: ".5rem" }}
         >
           {time} {`minute${time > 1 ? "s" : ""}`}
@@ -34,9 +34,9 @@ export default function OverrideButtons() {
       label={
         <span style={{ fontSize: "1.5rem" }}>
           Timeout:{" "}
-          {heaterGpo?.manualOverride?.expireAt
+          {heaterGpo?.state?.expireAt
             ? ` until ${new Date(
-                heaterGpo.manualOverride.expireAt,
+                heaterGpo.state.expireAt,
               ).toLocaleTimeString(undefined, { timeStyle: "short" })}`
             : ""}
         </span>

@@ -1,19 +1,17 @@
-import { HEATER_OVERRIDE } from "../constant/constant";
+import { HEATER_STATE } from "../constant/constant";
 
-
-
-export type HeaterManualOverride = {
-  status: HEATER_OVERRIDE;
+export type HeaterCabState = {
+  status: HEATER_STATE;
   expireAt: string;
 };
 
-export type HeaterCabStateMap = Record<string, HeaterCabState>;
-export type HeaterCabState = {
+export type HeaterCabMap = Record<string, HeaterCab>;
+export type HeaterCab = {
   cabHumidity: number;
   cabTempF: number;
   chipId: string;
   heaterPinVal: 1 | 0 | null;
-  manualOverride?: HeaterManualOverride;
+  state?: HeaterCabState;
   updatedAt: string;
 };
 
@@ -26,9 +24,8 @@ export type Thermostat = {
   updatedAt: string;
 };
 
-
-export type RemoteStateMap = Record<string, RemoteState>;
-export type RemoteState = {
+export type RemoteMap = Record<string, Remote>;
+export type Remote = {
   id: string;
   type: "F" | "C";
   max: number;
@@ -45,14 +42,14 @@ export type SytemTemperature = {
 
 export type ZoneMap = Record<string, Zone>;
 export type Zone = {
-  id: string,
-  zoneName: string,
-  remoteId: string,
-  thermostatId: string,
-  heaterId: string
+  id: string;
+  zoneName: string;
+  remoteId: string;
+  thermostatId: string;
+  heaterId: string;
 };
 
-export type PiSytemInfo = {
+export type SytemInfo = {
   processor: string;
   BogoMIPS: string;
   Features: string;
