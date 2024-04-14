@@ -34,11 +34,10 @@ export class SseManager<T> {
 
     public publish(itemId = '') {
         if (!this.path) throw new Error('missing sse path');
-
         if (!this.subs.length) return;
 
         if (config.log.includeSsePublish) {
-            logger.info(formatLog(this.path, 'publish', this.getState()));
+            logger.info(formatLog('PUBLISH', this.path, this.getState()));
         }
 
         for (const sub of this.subs) {
@@ -62,15 +61,15 @@ export class SseManager<T> {
         req.on('close', () => this.unsubscribe(id));
         this.subs.push({ id, res });
         if (config.log.includeSseSubScribe) {
-            logger.info(formatLog(this.path, 'subscribe', id))
+            logger.info(formatLog('SUBSCRIBE', this.path, id));
         }
     }
-    
+
     public unsubscribe(id: string) {
         if (!this.path) throw new Error('missing sse path');
         this.subs = this.subs.filter((sub) => sub.id !== id);
         if (config.log.includeSseUnsubScribe) {
-            logger.info(formatLog(this.path, ' unsubscribe ', id))
+            logger.info(formatLog('UNSUBSCRIBE', this.path, id));
         }
     }
 }

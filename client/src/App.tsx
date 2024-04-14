@@ -19,6 +19,8 @@ function App() {
    *    SSE on http (update express to http2, or use fastify?)
    *    is limited to 6 connections. If server has 6 active
    *    connections, the next request will jam the server...
+   *      checkout: https://github.com/spdy-http2/node-spdy
+   *      checkout: https://fastify.dev/docs/v3.29.x/Reference/HTTP2/
    *    
    *    Import sse connections at top level for single
    *    connections to be passed to children.
