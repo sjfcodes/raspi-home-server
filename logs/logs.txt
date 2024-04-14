@@ -8761,3 +8761,24 @@
 2024-04-13T17:01:23.017Z: current temp is 67
 2024-04-13T17:01:23.020Z: heater off
 2024-04-13T17:01:24.017Z: current temp is 67
+2024-04-13T18:28:51.814Z: current temp is NaN
+2024-04-13T18:28:52.815Z: current temp is 67
+2024-04-13T18:29:39.299Z: current temp is NaN
+2024-04-13T18:29:40.299Z: current temp is 67
+2024-04-13T18:30:09.310Z: heater on
+2024-04-13T18:30:10.308Z: current temp is 67
+2024-04-13T18:30:11.311Z: heater off
+2024-04-13T18:30:12.309Z: current temp is 67
+2024-04-13T18:33:30.401Z: current temp is 66
+2024-04-13T18:39:57.575Z: current temp is 67
+2024-04-13T18:52:58.010Z: current temp is 66
+2024-04-13T18:54:30.037Z: current temp is 67
+2024-04-13T18:55:27.057Z: current temp is 66
+2024-04-13T18:57:00.074Z: current temp is 67
+2024-04-13T22:41:42.238Z: current temp is 68
+2024-04-13T23:24:45.249Z: current temp is 69
+2024-04-13T23:24:53.249Z: current temp is 68
+2024-04-13T23:26:30.280Z: current temp is 69
+2024-04-14T00:23:38.643Z: current temp is 68
+2024-04-14T00:27:05.756Z: current temp is 69
+2024-04-14T00:40:47.091Z: current temp is 68
