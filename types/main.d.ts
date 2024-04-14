@@ -9,6 +9,7 @@ export type HeaterManualOverride = {
   expireAt: string;
 };
 
+export type HeaterCabStateMap = Record<string, HeaterCabState>;
 export type HeaterCabState = {
   cabHumidity: number;
   cabTempF: number;
@@ -29,6 +30,7 @@ export type Thermostat = {
 
 export type SystemTemperatureState = Record<string, PiSytemTemperature>;
 
+export type RemoteStateMap = Record<string, RemoteState>;
 export type RemoteState = {
   id: string;
   type: "F" | "C";

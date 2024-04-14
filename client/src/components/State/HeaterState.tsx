@@ -1,10 +1,9 @@
-import useHeater from "../../hooks/useHeater";
+import { HeaterCabStateMap } from "../../../../types/main";
 import Card from "../Card";
 import JsonCode from "../JsonCode";
 
-export default function HeaterState() {
-  const [state] = useHeater();
-
+type Props = { state: HeaterCabStateMap };
+export default function HeaterState({ state }: Props) {
   return (
     <Card
       label={`Heater State`}

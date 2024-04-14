@@ -12,7 +12,7 @@ export function routeLogger(req: Request, _res: Response, next: NextFunction) {
     if (config.log.includeMethods.includes(req.method)) {
         const info = [];
         info.push(req.method, req.path);
-        if (config.log.includeBody) {
+        if (config.log.includeData) {
             const data =
                 typeof req.body === 'object'
                     ? JSON.stringify(req.body)

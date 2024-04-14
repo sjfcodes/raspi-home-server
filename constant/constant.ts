@@ -40,8 +40,15 @@ export const HEATER_GPO_DEFAULT_STATE: HeaterCabState = {
   updatedAt: "",
 };
 
-export const ROOM_TEMP_DEFAULT_STATE: RemoteState = {
+export const REMOTE_HOME_DEFAULT_STATE: RemoteState = {
   id: 'home',
+  type: "F",
+  max: 66,
+  min: 66,
+};
+
+export const REMOTE_OFFICE_DEFAULT_STATE: RemoteState = {
+  id: 'office',
   type: "F",
   max: 66,
   min: 66,

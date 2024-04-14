@@ -1,7 +1,6 @@
 import { CSSProperties, useState } from "react";
-import useRemote from "../hooks/useRemote";
 import JsonCode from "./JsonCode";
-import useHeater from "../hooks/useHeater";
+import { HeaterCabStateMap, RemoteStateMap } from "../../../types/main";
 
 const cold = "#6bbcd1";
 const hot = "#e23201";
@@ -23,15 +22,32 @@ const buttonStyle = {
   display: "block",
 };
 
-export default function HomeRemote() {
-  const { data: roomTemp, decrement, increment } = useRemote();
-  const [heaterGpo] = useHeater();
+type Props = {
+  remoteId: string;
+  remoteState?: RemoteStateMap;
+  heaterId: string;
+  heaterState?: HeaterCabStateMap;
+  incrementRemoteState: (remoteId: string) => void;
+  decrementRemoteState: (remoteId: string) => void;
+};
+export default function HomeRemote({
+  remoteId,
+  remoteState,
+  heaterId,
+  heaterState,
+  incrementRemoteState,
+  decrementRemoteState,
+}: Props) {
   const [showData, setShowData] = useState(false);
 
-  if (!heaterGpo) return null;
+  const heater = heaterState?.[heaterId];
+  if (!heater) return null;
 
-  const isTempAvailable = typeof roomTemp?.min === "number";
-  const displayTemp = isTempAvailable ? roomTemp.max : "-";
+  const remote = remoteState?.[remoteId];
+  if (!remote) return null;
+
+  const isTempAvailable = typeof remote?.min === "number";
+  const displayTemp = isTempAvailable ? remote.max : "-";
 
   return (
     <div style={{ width: "100%" }}>
@@ -39,7 +55,7 @@ export default function HomeRemote() {
         style={{ ...buttonStyle, backgroundColor: hot }}
         onClick={(e) => {
           e.stopPropagation();
-          increment();
+          incrementRemoteState(remoteId);
         }}
       >
         +
@@ -47,7 +63,7 @@ export default function HomeRemote() {
       <div
         style={{
           ...numberStyle,
-          color: heaterGpo.heaterPinVal ? "green" : "red",
+          color: heater.heaterPinVal ? "green" : "red",
           height: "5rem",
           display: "flex",
           alignItems: "center",
@@ -67,7 +83,7 @@ export default function HomeRemote() {
               margin: "0 auto",
             }}
           >
-            <JsonCode code={JSON.stringify(roomTemp)} />
+            <JsonCode code={JSON.stringify(remote)} />
           </div>
         ) : (
           displayTemp
@@ -77,7 +93,7 @@ export default function HomeRemote() {
         style={{ ...buttonStyle, backgroundColor: cold }}
         onClick={(e) => {
           e.stopPropagation();
-          decrement();
+          decrementRemoteState(remoteId);
         }}
       >
         -

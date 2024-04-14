@@ -1,16 +1,16 @@
-import useRemote from "../../hooks/useRemote";
+import { RemoteStateMap } from "../../../../types/main";
 import Card from "../Card";
 import JsonCode from "../JsonCode";
 
-export default function RemoteState() {
-  const { data } = useRemote();
+type Props = { state: RemoteStateMap };
+export default function RemoteState({ state }: Props) {
 
   return (
     <Card
       label={`Remote State`}
       content={
         <div style={{ width: "100%", overflow: "scroll" }}>
-          <JsonCode code={JSON.stringify(data, null, 2)} />
+          <JsonCode code={JSON.stringify(state, null, 2)} />
         </div>
       }
     />

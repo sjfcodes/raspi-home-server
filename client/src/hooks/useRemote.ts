@@ -1,21 +1,27 @@
 import { useEffect, useState } from "react";
 import { RASP_PI } from "../../../constant/constant";
-import { RemoteState } from "../../../types/main";
+import { RemoteState, RemoteStateMap } from "../../../types/main";
 
 const sseUrl = `http://${RASP_PI.ip}:${RASP_PI.serverPort}/api/v1/remote?subscribe=true`;
 const putUrl = `http://${RASP_PI.ip}:${RASP_PI.serverPort}/api/v1/remote`;
 
-export default function useRemote(remoteKey = "home") {
-  const [state, setState] = useState(null as null | RemoteState);
+export default function useRemote(remoteId?: string) {
+  const [state, setState] = useState({} as RemoteStateMap);
 
   // Listen for server state changes
   useEffect(() => {
     const sse = new EventSource(sseUrl);
+    sse.onerror = console.error;
     sse.onmessage = (e) => {
       console.log("onmessage", sseUrl);
-      setState(JSON.parse(e.data)[remoteKey]);
+      let data = JSON.parse(e.data);
+      if (!data) {
+        console.warn("data is undefined", { remoteId, data });
+        return;
+      }
+
+      setState(data);
     };
-    sse.onerror = console.error;
   }, []);
 
   // Request server state change
@@ -27,38 +33,28 @@ export default function useRemote(remoteKey = "home") {
     });
   }
 
-  function decrement() {
-    if (!state) return;
+  function decrement(remoteId: string) {
+    const target = state[remoteId];
+    if (!target) return;
     dispatch({
-      ...state,
-      max: state.max - 1,
-      min: state.max - 1,
+      ...target,
+      max: target.max - 1,
+      min: target.max - 1,
     });
   }
-  function increment() {
-    if (!state) return;
+  function increment(remoteId: string) {
+    const target = state[remoteId];
+    if (!target) return;
     dispatch({
-      ...state,
-      max: state.max + 1,
-      min: state.max + 1,
+      ...target,
+      max: target.max + 1,
+      min: target.max + 1,
     });
   }
-
-  const setTargetMaxWithTrailingMin = (target: number, trailing = 0) => {
-    if (!state) return;
-    const newState: RemoteState = {
-      ...state,
-      max: target,
-      min: target - trailing,
-    };
-
-    dispatch(newState);
-  };
 
   return {
     data: state,
     decrement,
     increment,
-    setTargetMaxWithTrailingMin,
   };
 }

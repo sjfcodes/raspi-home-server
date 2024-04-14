@@ -10,8 +10,24 @@ import { APP_MAX_WIDTH } from "./utils/constants";
 import HeaterState from "./components/State/HeaterState";
 import RemoteState from "./components/State/RemoteState";
 import SystemInfoState from "./components/State/SystemInfoState";
+import useHeater from "./hooks/useHeater";
+import useRemote from "./hooks/useRemote";
 
 function App() {
+  /**
+   * [NOTE]
+   *    SSE on http (update express to http2, or use fastify?)
+   *    is limited to 6 connections. If server has 6 active
+   *    connections, the next request will jam the server...
+   *    
+   *    Import sse connections at top level for single
+   *    connections to be passed to children.
+   *    A better apporach could be to use jo-tai atoms
+   *    and set sse connection within atom. Then one
+   *    connection can be accessed by any componet.
+   */
+  const { data: heaterState } = useHeater();
+  const { data: remoteState, decrement, increment } = useRemote();
   return (
     <div
       style={{
@@ -28,22 +44,36 @@ function App() {
       <Logos />
       <Block />
 
-      <HeaterState />
+      <HeaterState state={heaterState} />
       <Block />
 
-      <RemoteState />
+      <RemoteState state={remoteState} />
       <Block />
 
-      <HomeRemote />
+      <HomeRemote
+        remoteId="home"
+        remoteState={remoteState}
+        decrementRemoteState={decrement}
+        incrementRemoteState={increment}
+        heaterId="d0fc8ad4"
+        heaterState={heaterState}
+      />
+      <HomeRemote
+        remoteId="office"
+        remoteState={remoteState}
+        decrementRemoteState={decrement}
+        incrementRemoteState={increment}
+        heaterId="d0fc8ad4"
+        heaterState={heaterState}
+      />
       <Block />
 
       {/* <PiLogs />
       <Block /> */}
 
-      {/* [BUG]  adding component here breaks PUT for home remote.. wth? */}
-      {/* <div style={{ maxWidth: APP_MAX_WIDTH, overflow: "scroll" }}>
+      <div style={{ maxWidth: APP_MAX_WIDTH, overflow: "scroll" }}>
         <Thermostats />
-      </div> */}
+      </div>
 
       <SystemTemperatureState />
       <Block />

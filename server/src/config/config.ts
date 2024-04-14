@@ -1,13 +1,15 @@
 // [TODO] move to globals?
 export const config = {
     log: {
-        includeBody: true,
+        includeData: true,
         includeMethods: [
-            'GET',
-            'POST',
+            // 'GET',
+            // 'POST',
             'PUT',
         ],
         includeSsePublish: true,
+        includeSseSubScribe: true,
+        includeSseUnsubScribe: true,
         labelWidth: 23,
     },
 };
