@@ -3,6 +3,7 @@ import { SSE_HEADERS } from '../../../../constant/constant';
 import { formatLog, log } from '../../../src_old/utils/general';
 import { logger } from '../../config/logger';
 import { generateUuid } from '../../services/utility';
+import { config } from '../../../config';
 
 type Subscriber = { id: string; itemId?: string; res: Response };
 export class SseManager<T> {
@@ -35,10 +36,15 @@ export class SseManager<T> {
         if (!this.path) {
             throw new Error('missing sse path');
         }
-        
+
         if (!this.subs.length) return;
 
-        logger.info(formatLog(this.path, ' --> publish', this.getState()).join(''));
+        if (config.log.includeSsePublish) {
+            logger.info(
+                formatLog(this.path, ' --> publish', this.getState()).join('')
+            );
+        }
+
         for (const sub of this.subs) {
             // ignore unmatched items when sub only listens for one item.
             if (sub.itemId && sub.itemId !== itemId) continue;

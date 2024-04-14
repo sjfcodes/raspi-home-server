@@ -8,7 +8,10 @@ export default function useThermostat() {
 
   useEffect(() => {
     const sse = new EventSource(path);
-    sse.onmessage = (e) => setState(JSON.parse(e.data));
+    sse.onmessage = (e) => {
+      console.log('onmessage', path)
+      setState(JSON.parse(e.data))
+    };
     sse.onerror = console.error;
   }, []);
 

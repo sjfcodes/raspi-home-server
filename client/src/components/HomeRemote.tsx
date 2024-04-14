@@ -39,7 +39,6 @@ export default function HomeRemote() {
         style={{ ...buttonStyle, backgroundColor: hot }}
         onClick={(e) => {
           e.stopPropagation();
-          if (typeof roomTemp?.max !== "number") return;
           increment();
         }}
       >
@@ -63,7 +62,7 @@ export default function HomeRemote() {
           <div
             style={{
               textAlign: "center",
-              fontSize: "1rem",
+              fontSize: ".75rem",
               width: "100%",
               margin: "0 auto",
             }}
@@ -78,7 +77,6 @@ export default function HomeRemote() {
         style={{ ...buttonStyle, backgroundColor: cold }}
         onClick={(e) => {
           e.stopPropagation();
-          if (typeof roomTemp?.max !== "number") return;
           decrement();
         }}
       >

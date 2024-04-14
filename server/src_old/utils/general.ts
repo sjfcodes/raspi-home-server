@@ -13,11 +13,11 @@ export const getSortedObject = (object: Record<any, any>) => {
 
 export function formatLog(channel: string, message: string, data: any = {}): string[]{
     const args = [channel, message];
-    if (config.log.showData) args.push(JSON.stringify(data));
+    if (config.log.includeBody) args.push(JSON.stringify(data));
     return args;
 }
 
 export function log(channel: string, message: string, data: any = {}) {
 
-    console.log(...formatLog(channel, message, data));
+    console.log('deprecated, use winston logger');
 }

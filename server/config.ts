@@ -1,6 +1,12 @@
 export const config = {
     log: {
-        showData: false,
+        includeBody: false,
+        includeMethods: [
+            'GET',
+            'POST',
+            'PUT',
+        ],
+        includeSsePublish: true,
         labelWidth: 23,
     },
 };

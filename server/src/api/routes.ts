@@ -4,8 +4,10 @@ import { registerErrorHandler, registerMiddleware } from './middleware';
 
 export function initRestRoutes(router: Router): void {
     const prefix: string = '/api/v1';
-    
-    router.get(prefix, (_req: Request, res: Response) => res.send('PING'));
+
+    router.get(prefix + '/healthcheck', (_req: Request, res: Response) =>
+        res.send({ mesage: 'alive' })
+    );
     registerMiddleware(router);
     registerApiRoutes(router, prefix);
     registerErrorHandler(router);

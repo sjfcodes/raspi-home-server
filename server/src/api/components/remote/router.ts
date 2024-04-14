@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { readItems, readItem, writeItem } from './controller';
+import { readItems, writeItem } from './controller';
 import { sseManager } from './store';
 
 export function registerRemoteRoutes(router: Router, prefix: string) {

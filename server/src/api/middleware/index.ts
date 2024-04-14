@@ -1,7 +1,7 @@
 import { json, NextFunction, Request, Response, Router } from 'express';
 import compression from 'compression';
 import cors from 'cors';
-import helmet from 'helmet';
+// import helmet from 'helmet';
 
 import { handleError } from '../../services/utility';
 import { env } from '../../config/globals';
@@ -9,22 +9,29 @@ import { logger } from '../../config/logger';
 import { config } from '../../../config';
 
 export function routeLogger(req: Request, _res: Response, next: NextFunction) {
-    const data =
-        typeof req.body === 'object' ? JSON.stringify(req.body) : req.body;
-    const info = [req.method, req.path];
-    if (config.log.showData) info.push(data);
-    logger.info(info.join(' '));
+    if (config.log.includeMethods.includes(req.method)) {
+        const info = [];
+        info.push(req.method, req.path);
+        if (config.log.includeBody) {
+            const data =
+                typeof req.body === 'object'
+                    ? JSON.stringify(req.body)
+                    : req.body;
+            info.push(data);
+        }
+        logger.info(info.join(' '));
+    }
     next();
 }
 
 export function registerMiddleware(router: Router): void {
     // router.use(helmet());
 
-    if (env.NODE_ENV === 'development') {
-        router.use(cors({ origin: '*' }));
+    if (env.NODE_ENV === 'production') {
+        // [TODO] configure cors?
+        router.use(cors());
     } else {
-        // [TODO] use raspberry pi ip & port globals
-        router.use(cors({ origin: ['http://192.168.68.142:5173/'] }));
+        router.use(cors());
     }
 
     router.use(json());
