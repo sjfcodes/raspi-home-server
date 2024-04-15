@@ -14,7 +14,7 @@ export const sseManager: SseManager<Item> = new SseManager({
         id: 'office',
         zoneName: 'office',
         remoteId: 'office',
-        heaterId: 'd0fc8ad4',
+        heaterId: '',
         thermostatId: 'abe342a8',
         isActive: false,
     },

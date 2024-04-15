@@ -22,24 +22,18 @@ export default function Remote({ remoteId, heaterId, thermostatId }: Props) {
     const [remoteMap] = useAtom(remoteMapAtom);
 
     const thermostat = thermostatMap?.[thermostatId];
-    if (!thermostat) return null;
-
     const heater = heaterMap?.[heaterId];
-    if (!heater) return null;
-
     const remote = remoteMap?.[remoteId];
-    if (!remote) return null;
 
     return (
         <div className="remote">
             <RemoteInfo
                 className="remote-card-full"
                 cover={
-                    <div style={{ textAlign: 'center' }}>
-                        <b>{thermostat.tempF}</b>
-                        <br />
-                        <b>{remote.id}</b>
-                    </div>
+                    <RemoteCover
+                        tempF={thermostat?.tempF}
+                        remoteId={remote?.id}
+                    />
                 }
             >
                 <div style={{ position: 'absolute', top: '0px' }}>
@@ -65,6 +59,17 @@ export default function Remote({ remoteId, heaterId, thermostatId }: Props) {
             >
                 warmer
             </RemoteControl>
+        </div>
+    );
+}
+
+type RemoteCoverProp = { tempF?: number; remoteId?: string };
+function RemoteCover({ tempF, remoteId }: RemoteCoverProp) {
+    return (
+        <div style={{ textAlign: 'center' }}>
+            <b>{tempF || '-'}</b>
+            <br />
+            <b>{remoteId || '-'}</b>
         </div>
     );
 }

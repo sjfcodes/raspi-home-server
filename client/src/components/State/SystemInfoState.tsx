@@ -1,9 +1,10 @@
-import useSystemInfo from '../../hooks/useSystemInfo';
+import { useAtom } from 'jotai';
 import Card from '../Card';
 import Snippet from '../Snippet/Snippet';
+import { systemInformationAtom } from '../../store/systemInformation.atom';
 
 export default function SystemInfo() {
-    const [piTemp] = useSystemInfo();
+    const [piTemp] = useAtom(systemInformationAtom);
 
     return (
         <Card

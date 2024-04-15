@@ -5,7 +5,7 @@ export type HeaterCabState = {
   expireAt: string;
 };
 
-export type HeaterCabMap = Record<string, HeaterCab>;
+export type HeaterCabMap = Record<string, HeaterCab | undefined>;
 export type HeaterCab = {
   cabHumidity: number;
   cabTempF: number;
@@ -15,7 +15,7 @@ export type HeaterCab = {
   updatedAt: string;
 };
 
-export type ThermostatMap = Record<string, Thermostat>;
+export type ThermostatMap = Record<string, Thermostat | undefined>;
 export type Thermostat = {
   chipName: string;
   chipId: string;
@@ -24,7 +24,7 @@ export type Thermostat = {
   updatedAt: string;
 };
 
-export type RemoteMap = Record<string, Remote>;
+export type RemoteMap = Record<string, Remote | undefined>;
 export type Remote = {
   id: string;
   type: "F" | "C";
@@ -32,7 +32,7 @@ export type Remote = {
   min: number;
 };
 
-export type SystemTemperatureMap = Record<string, SytemTemperature>;
+export type SystemTemperatureMap = Record<string, SytemTemperature | undefined>;
 export type SytemTemperature = {
   id: string;
   tempC: number;
@@ -40,7 +40,7 @@ export type SytemTemperature = {
   readAt: string;
 };
 
-export type ZoneMap = Record<string, Zone>;
+export type ZoneMap = Record<string, Zone | undefined>;
 export type Zone = {
   id: string;
   zoneName: string;
@@ -50,7 +50,7 @@ export type Zone = {
   isActive: boolean;
 };
 
-export type SytemInfo = {
+export type SytemInformation = {
   processor: string;
   BogoMIPS: string;
   Features: string;

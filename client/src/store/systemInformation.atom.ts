@@ -1,11 +1,11 @@
 import { atom } from 'jotai';
-import { ZoneMap } from '../../../types/main';
+import { SytemInformation } from '../../../types/main';
 import { urls } from '../config.global';
 import { store } from './store.global';
 
-export const zoneMapAtom = atom({} as ZoneMap);
+export const systemInformationAtom = atom({} as SytemInformation);
 
-fetch(urls.zone.get)
+fetch(urls.system.information.get)
     .then((response) => response.json())
     .then(({ data }) => {
         console.log;
@@ -13,5 +13,5 @@ fetch(urls.zone.get)
             console.warn('data is undefined', { data });
             return;
         }
-        store.set(zoneMapAtom, data);
+        store.set(systemInformationAtom, data);
     });

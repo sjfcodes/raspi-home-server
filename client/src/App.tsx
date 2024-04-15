@@ -3,7 +3,7 @@ import Block from './components/Block';
 import Logos from './components/Logos';
 import SystemTemperatureMap from './components/State/SystemTemperatureState';
 import QrCode from './components/QrCode';
-import ThermostatMap from './components/Thermostats';
+// import ThermostatMap from './components/Thermostats';
 import { APP_MAX_WIDTH } from './utils/constants';
 import SystemInfo from './components/State/SystemInfoState';
 import Zones from './components/Zone/Zones';
@@ -27,8 +27,8 @@ export default function App() {
             <Block />
             <Zones />
 
-            <Block />
-            <ThermostatMap />
+            {/* <Block />
+            <ThermostatMap /> */}
 
             <Block />
             <SystemTemperatureMap />

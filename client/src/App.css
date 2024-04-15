@@ -1,30 +1,26 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  /* text-align: center; */
-  font-family: monospace;
+    max-width: 1280px;
+    margin: 0 auto;
+    /* text-align: center; */
+    font-family: monospace;
 }
 
 *::-webkit-scrollbar {
-  display: none;
-}
-
-div {
-  box-sizing: border-box;
+    display: none;
 }
 
 .logo {
-  height: 3em;
-  padding: 0.5em 0.5em 0 0.5em;
-  will-change: filter;
-  transition: filter 300ms;
+    height: 3em;
+    padding: 0.5em 0.5em 0 0.5em;
+    will-change: filter;
+    transition: filter 300ms;
 }
 
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+    filter: drop-shadow(0 0 2em #646cffaa);
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+    filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
 /* @keyframes logo-spin {
@@ -44,32 +40,32 @@ div {
 
 h1,
 h2 {
-  margin: 0;
+    margin: 0;
 }
 
 .text-green {
-  color: green;
+    color: green;
 }
 .text-red {
-  color: red;
+    color: red;
 }
 .background-on {
-  color: white;
-  background-color: green;
+    color: white;
+    background-color: green;
 }
 .background-off {
-  color: white;
-  background-color: #1a1a1a;
+    color: white;
+    background-color: #1a1a1a;
 }
 
 textarea {
-  width: 400px;
+    width: 400px;
 }
 
 @media only screen and (max-width: 600px) {
-  #root {
-    /* background-color: lightblue; */
-    width: 100%;
-    margin: 0;
-  }
+    #root {
+        /* background-color: lightblue; */
+        width: 100%;
+        margin: 0;
+    }
 }

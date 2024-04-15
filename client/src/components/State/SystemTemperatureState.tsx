@@ -1,18 +1,16 @@
-import { SytemTemperature } from '../../../../types/main';
-import useSystemTemperature from '../../hooks/useSystemTemperature';
+import { useAtom } from 'jotai';
 import Card from '../Card';
 import Snippet from '../Snippet/Snippet';
+import { systemTemperatureAtom } from '../../store/systemTemperature.atom';
 
 export default function SystemTemperatureMap() {
-    const [piTemp] = useSystemTemperature();
+    const [piTemp] = useAtom(systemTemperatureAtom);
 
-    const pi = piTemp['system'] as SytemTemperature;
-
+    const pi = piTemp?.system;
     if (!pi) return null;
 
     // 85℃ (185℉) max rasbperry pi temp
     const percentage = (pi.tempF / 185) * 100;
-
     const json = JSON.stringify(piTemp, null, 2);
 
     return (

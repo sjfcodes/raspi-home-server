@@ -13,6 +13,14 @@ export const urls = {
         get: api + '/remote?subscribe=true',
         put: api + '/remote',
     },
+    system: {
+        temperature: {
+            get: api + '/system/temperature?subscribe=true',
+        },
+        information: {
+            get: api + '/system/information',
+        },
+    },
     thermostat: {
         get: api + '/thermostat?subscribe=true',
     },
