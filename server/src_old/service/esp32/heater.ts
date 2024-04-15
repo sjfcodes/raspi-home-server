@@ -4,11 +4,12 @@ import {
     HEATER_CAB,
     HEATER_GPO_DEFAULT_STATE,
 } from '../../../../constant/constant';
-import { HeaterCabState } from '../../../../types/main';
+import { Heater } from '../../../../types/main';
 import { writeLog } from '../pi/logs';
 import { server } from '../server';
 import { log } from '../../utils/general';
 import SseDataStream from '../../lib/SseDataStream';
+import { getDate } from '../../../src/services/utility';
 
 const path = '/api/home/heater';
 
@@ -22,12 +23,12 @@ const stream = new SseDataStream(server, path, HEATER_GPO_DEFAULT_STATE);
 
 function handleMessageIn(data: string) {
     const state = stream.getState();
-    const input: HeaterCabState = JSON.parse(data.toString());
+    const input: Heater = JSON.parse(data.toString());
     if (input.chipId === HEATER_CAB.HOME) {
         state.cabHumidity = input.cabHumidity;
         state.cabTempF = input.cabTempF;
         state.chipId = input.chipId;
-        state.updatedAt = new Date().toLocaleTimeString();
+        state.updatedAt = getDate();
 
         if (input.heaterPinVal !== undefined) {
             state.heaterPinVal = input.heaterPinVal;

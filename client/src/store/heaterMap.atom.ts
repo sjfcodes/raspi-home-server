@@ -1,11 +1,11 @@
 import { atom } from 'jotai';
-import { HeaterCabMap } from '../../../types/main';
+import { HeaterMap } from '../../../types/main';
 import { dispatch } from './dispatch';
 import { urls } from '../config.global';
 import { HEATER_STATE } from '../../../constant/constant';
 import { store } from './store.global';
 
-export const heaterMapAtom = atom({} as HeaterCabMap);
+export const heaterMapAtom = atom({} as HeaterMap);
 
 const stream = new EventSource(urls.heater.get);
 stream.onerror = console.error;

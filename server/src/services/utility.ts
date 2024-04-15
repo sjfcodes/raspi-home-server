@@ -60,3 +60,7 @@ export function hashString(text: string): string {
 export function generateUuid(): string {
     return v4();
 }
+
+export function getDate() {
+    return new Date().toISOString();
+}

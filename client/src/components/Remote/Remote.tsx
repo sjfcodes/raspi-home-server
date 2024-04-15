@@ -10,6 +10,7 @@ import RemoteInfo from './Remote.Info';
 import './remote.css';
 import Snippet from '../Snippet/Snippet';
 import { thermostatMapAtom } from '../../store/thermostatMap.atom';
+import { HeaterPinVal } from '../../../../types/main';
 
 type Props = {
     remoteId: string;
@@ -33,6 +34,7 @@ export default function Remote({ remoteId, heaterId, thermostatId }: Props) {
                     <RemoteCover
                         tempF={thermostat?.tempF}
                         remoteId={remote?.id}
+                        heaterPinVal={heater?.heaterPinVal}
                     />
                 }
             >
@@ -63,13 +65,23 @@ export default function Remote({ remoteId, heaterId, thermostatId }: Props) {
     );
 }
 
-type RemoteCoverProp = { tempF?: number; remoteId?: string };
-function RemoteCover({ tempF, remoteId }: RemoteCoverProp) {
+type RemoteCoverProp = {
+    tempF?: number;
+    remoteId?: string;
+    heaterPinVal?: HeaterPinVal;
+};
+function RemoteCover({ tempF, remoteId, heaterPinVal }: RemoteCoverProp) {
+    let heaterStatus = 'offline';
+    if (heaterPinVal === 0) heaterStatus = 'off';
+    if (heaterPinVal === 1) heaterStatus = 'on';
+
     return (
         <div style={{ textAlign: 'center' }}>
             <b>{tempF || '-'}</b>
             <br />
             <b>{remoteId || '-'}</b>
+            <hr />
+            <div style={{ fontSize: '1rem' }}>heater is: {heaterStatus}</div>
         </div>
     );
 }

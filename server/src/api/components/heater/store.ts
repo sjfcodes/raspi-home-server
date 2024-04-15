@@ -3,6 +3,7 @@ import { SseManager } from '../sse';
 import { Item, ItemMap } from './model';
 import { CHANNEL, HEATER_CAB } from '../../../../../constant/constant';
 import { logger } from '../../../config/logger';
+import { getDate } from '../../../services/utility';
 
 export const sseManager = new SseManager({} as ItemMap);
 
@@ -38,7 +39,7 @@ function handleMessageIn(data: string) {
             cabHumidity: input.cabHumidity,
             cabTempF: input.cabTempF,
             heaterPinVal: input.heaterPinVal ?? null,
-            updatedAt: new Date().toLocaleTimeString(),
+            updatedAt: getDate(),
         } as Item;
 
         writeOne(item);

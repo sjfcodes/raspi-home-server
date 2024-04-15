@@ -2,6 +2,7 @@ import { readFileSync } from 'fs';
 import { logger } from '../../../config/logger';
 import { Info, Temperature } from './model';
 import { SseManager } from '../sse';
+import { getDate } from '../../../services/utility';
 
 export const sseManager = new SseManager({} as Record<string, Temperature>);
 
@@ -20,7 +21,7 @@ export async function getPiCpuInfo(): Promise<Info | undefined> {
         if (key) prev[key.replaceAll('\t', '') as keyof Info] = value.trim();
         return prev;
     }, {} as Info);
-    map.readAt = new Date().toLocaleTimeString();
+    map.readAt = getDate();
 
     if (!cpuInfo) cpuInfo = map;
 
@@ -48,7 +49,7 @@ export async function getPiTemp(): Promise<Temperature | undefined> {
         id: cpuInfo?.Serial,
         tempC,
         tempF: Math.trunc((tempC * 9) / 5 + 32),
-        readAt: new Date().toLocaleTimeString(),
+        readAt: getDate(),
     };
 }
 

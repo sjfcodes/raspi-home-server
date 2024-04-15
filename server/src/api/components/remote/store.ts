@@ -2,6 +2,7 @@ import {
     REMOTE_HOME_DEFAULT_STATE,
     REMOTE_OFFICE_DEFAULT_STATE,
 } from '../../../../../constant/constant';
+import { getDate } from '../../../services/utility';
 import { SseManager } from '../sse';
 import { Item, ItemMap } from './model';
 
@@ -34,7 +35,7 @@ export function writeOne(item: Item): void {
 
     // only set if not duplicate update
     if (target && (target.max !== item.max || target.min !== item.min)) {
-        item.updatedAt = new Date().toISOString();
+        item.updatedAt = getDate();
         sseManager.setState(item.id, item);
     }
 }

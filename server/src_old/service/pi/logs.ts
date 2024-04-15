@@ -1,13 +1,13 @@
 import fs from 'fs';
+import { getDate } from '../../../src/services/utility';
 
-// @ts-ignore
 const thisDir = __dirname; // /home/sjfox/code/raspi-home-server/server/src/service/pi
 const logPath = `${thisDir}/../../../../logs/logs.txt`;
 
-let lastLog = ''
+let lastLog = '';
 export function writeLog(nextLog: string) {
     if (lastLog === nextLog) return;
     lastLog = nextLog;
-    
-    fs.appendFileSync(logPath, '\n' + new Date().toISOString() + ': ' + nextLog, 'utf-8');
+
+    fs.appendFileSync(logPath, '\n' + getDate() + ': ' + nextLog, 'utf-8');
 }

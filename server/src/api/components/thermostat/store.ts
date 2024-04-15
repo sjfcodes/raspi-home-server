@@ -1,4 +1,5 @@
 import { THERMOSTAT } from '../../../../../constant/constant';
+import { getDate } from '../../../services/utility';
 import { SseManager } from '../sse';
 import { Item, ItemMap } from './model';
 
@@ -40,7 +41,7 @@ export function writeOne(item: Item): Item | void {
         // @ts-ignore
         chipName: THERMOSTAT[item.chipId] || item.chipName,
         tempF: Math.trunc(tempAverage),
-        updatedAt: new Date().toLocaleTimeString(),
+        updatedAt: getDate(),
     };
 
     sseManager.setState(item.chipId, thermostat);

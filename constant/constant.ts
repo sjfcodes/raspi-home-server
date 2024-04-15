@@ -1,4 +1,4 @@
-import { HeaterCab, Remote } from "../types/main";
+import { Heater, Remote } from "../types/main";
 
 export const RASP_PI = {
   ip: "192.168.68.142",
@@ -31,7 +31,7 @@ export enum HEATER_CAB {
   HOME = "d0fc8ad4",
 }
 
-export const HEATER_GPO_DEFAULT_STATE: HeaterCab = {
+export const HEATER_GPO_DEFAULT_STATE: Heater = {
   cabHumidity: 0,
   cabTempF: 0,
   chipId: "",

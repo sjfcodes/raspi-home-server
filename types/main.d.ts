@@ -5,12 +5,14 @@ export type HeaterCabState = {
   expireAt: string;
 };
 
-export type HeaterCabMap = Record<string, HeaterCab | undefined>;
-export type HeaterCab = {
+export type HeaterMap = Record<string, Heater | undefined>;
+
+export type HeaterPinVal = 1 | 0;
+export type Heater = {
   cabHumidity: number;
   cabTempF: number;
   chipId: string;
-  heaterPinVal: 1 | 0 | null;
+  heaterPinVal: HeaterPinVal;
   state?: HeaterCabState;
   updatedAt: string;
 };
