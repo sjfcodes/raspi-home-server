@@ -1,13 +1,12 @@
 import { Zone as TZone } from '../../../../types/main';
 import Remote from '../Remote/Remote';
+import './zone.css';
 
 type Props = { zone: TZone };
 export default function Zone({ zone }: Props) {
     return (
-        <Remote
-            remoteId={zone.remoteId}
-            heaterId={zone.heaterId}
-            thermostatId={zone.thermostatId}
-        />
+        <div className="zone">
+            <Remote zone={zone} />
+        </div>
     );
 }
