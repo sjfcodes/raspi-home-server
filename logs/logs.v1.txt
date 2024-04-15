@@ -1,0 +1,6 @@
+THERMOSTAT::{"chipName":"esp32","chipId":"9efc8ad4","tempF":67,"updatedAt":"2024-04-15T09:56:03.883Z","itemType":"THERMOSTAT"}
+  HEATER_0::{"zoneId":"home","chipId":"d0fc8ad4","heaterPinVal":0,"cabTempF":84,"cabHumidity":34,"updatedAt":"2024-04-15T09:56:06.063Z","itemType":"HEATER"}
+  HEATER_1::{"zoneId":"home","chipId":"d0fc8ad4","heaterPinVal":1,"cabTempF":84,"cabHumidity":34,"updatedAt":"2024-04-15T09:56:11.065Z","itemType":"HEATER"}
+  HEATER_0::{"zoneId":"home","chipId":"d0fc8ad4","heaterPinVal":0,"cabTempF":84,"cabHumidity":34,"updatedAt":"2024-04-15T09:56:16.064Z","itemType":"HEATER"}
+THERMOSTAT::{"chipName":"esp32","chipId":"9efc8ad4","tempF":66,"updatedAt":"2024-04-15T09:56:59.307Z","itemType":"THERMOSTAT"}
+THERMOSTAT::{"chipName":"esp32","chipId":"9efc8ad4","tempF":67,"updatedAt":"2024-04-15T09:57:00.842Z","itemType":"THERMOSTAT"}
