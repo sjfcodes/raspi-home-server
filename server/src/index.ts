@@ -6,35 +6,46 @@ import { createServer, Server as HttpServer } from 'http';
 import { env } from './config/globals';
 import { logger } from './config/logger';
 import { app } from './api/server';
-import { RedisService } from './services/redis';
+// import { RedisService } from './services/redis';
+
+/**
+ * [NOTE]
+ *    SSE on http (update express to http2, or use fastify?)
+ *    is limited to 6 connections. If server has 6 active
+ *    connections, the next request will jam the server...
+ *      checkout: https://github.com/spdy-http2/node-spdy
+ *      checkout: https://fastify.dev/docs/v3.29.x/Reference/HTTP2/
+ */
 
 // Startup
 (async function main() {
-	try {
-		// Connect db
-		// logger.info('Initializing ORM connection...');
-		// const connection: Connection = await createConnection();
+    try {
+        // Connect db
+        // logger.info('Initializing ORM connection...');
+        // const connection: Connection = await createConnection();
 
-		// Connect redis
-		// RedisService.connect();
+        // Connect redis
+        // RedisService.connect();
 
-		const server: HttpServer = createServer(app);
+        const server: HttpServer = createServer(app);
 
-		// Start express server
-		server.listen(env.NODE_PORT);
+        // Start express server
+        server.listen(env.NODE_PORT);
 
-		server.on('listening', () => {
-			logger.info(`node server is listening on port ${env.NODE_PORT} in ${env.NODE_ENV} mode`);
-		});
+        server.on('listening', () => {
+            logger.info(
+                `node server is listening on port ${env.NODE_PORT} in ${env.NODE_ENV} mode`
+            );
+        });
 
-		server.on('close', () => {
-			// connection.close();
-			RedisService.disconnect();
-			logger.info('node server closed');
-		});
-	} catch (err) {
-		logger.error((err as Error).stack);
-	}
+        server.on('close', () => {
+            // connection.close();
+            // RedisService.disconnect();
+            logger.info('node server closed');
+        });
+    } catch (err) {
+        logger.error(err);
+    }
 })();
 
 /**

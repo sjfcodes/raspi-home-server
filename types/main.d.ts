@@ -47,6 +47,7 @@ export type Zone = {
   remoteId: string;
   thermostatId: string;
   heaterId: string;
+  isActive: boolean;
 };
 
 export type SytemInfo = {

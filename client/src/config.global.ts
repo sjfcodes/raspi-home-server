@@ -16,4 +16,7 @@ export const urls = {
     thermostat: {
         get: api + '/thermostat?subscribe=true',
     },
+    zone: {
+        get: api + '/zone',
+    },
 };

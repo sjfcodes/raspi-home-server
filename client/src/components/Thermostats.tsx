@@ -1,13 +1,14 @@
-import useThermostat from '../hooks/useThermostat';
+import { useAtom } from 'jotai';
 import Block from './Block';
 import Thermostat from './Thermostat';
+import { thermostatMapAtom } from '../store/thermostatMap.atom';
 
 export default function ThermostatMap({
     hideIds = [],
 }: {
     hideIds?: string[];
 }) {
-    const [thermostatMap] = useThermostat();
+    const [thermostatMap] = useAtom(thermostatMapAtom);
 
     const sorted = Object.values(thermostatMap)
         .filter((tstat) => !hideIds.includes(tstat.chipId))
