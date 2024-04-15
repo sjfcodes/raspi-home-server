@@ -10,20 +10,20 @@ import {
     ITEM_TYPE,
 } from '../../../config/globals';
 import { writeHeaterLog } from '../../../services/pi';
-import { Heater, HeaterPinVal } from '../../../../../types/main';
+import { HeaterPinVal } from '../../../../../types/main';
 
 export const sseManager = new SseManager({} as ItemMap);
 
-export function readAll(): ItemMap {
+export function getHeaters(): ItemMap {
     return sseManager.getState() as ItemMap;
 }
 
-export function readOne(heaterId: string): Item | undefined {
-    const heaters = readAll();
+export function getHeaterById(heaterId: string): Item | undefined {
+    const heaters = getHeaters();
     return heaters[heaterId];
 }
 
-export function writeOne(item: Item): void {
+export function setHeaterById(item: Item): void {
     sseManager.setState(item.chipId, item);
     writeHeaterLog(item);
 }
@@ -49,7 +49,9 @@ wss.on('connection', (ws) => {
 function handleMessageIn(data: string) {
     const input: Item = JSON.parse(data.toString());
     if (input.chipId !== HEATER_ID.HOME) return;
-    logger.info(`WSS:${PORT} ${WSS_CHANNEL.HEATER_CAB_0} MESSAGE-IN ${input}`);
+    logger.info(
+        `WSS:${PORT} ${WSS_CHANNEL.HEATER_CAB_0} MESSAGE-IN ${data.toString()}`
+    );
 
     const item: Item = {
         zoneId: ZONE_ID.HOME,
@@ -61,28 +63,10 @@ function handleMessageIn(data: string) {
         itemType: ITEM_TYPE.HEATER,
     };
 
-    writeOne(item);
+    setHeaterById(item);
 }
 
-export function turnHeaterOff(heaterId: string) {
-    const heater = readOne(heaterId);
-    if (!heater || heater.heaterPinVal === 0) return;
-
-    const nextState: Heater = { ...heater, heaterPinVal: 0 };
-    writeOne(nextState);
-    handleMessageOut(nextState.heaterPinVal);
-}
-
-export function turnHeaterOn(heaterId: string) {
-    const heater = readOne(heaterId);
-    if (!heater || heater.heaterPinVal === 1) return;
-
-    const nextState: Heater = { ...heater, heaterPinVal: 1 };
-    writeOne(nextState);
-    handleMessageOut(nextState.heaterPinVal);
-}
-
-const handleMessageOut = (heaterPinVal: HeaterPinVal) => {
+export const handleMessageOut = (heaterPinVal: HeaterPinVal) => {
     /**
      * [NOTE] Keep messages small when sending to esp32 boards
      */

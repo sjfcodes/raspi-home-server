@@ -23,15 +23,15 @@ export const sseManager: SseManager<Item> = new SseManager({
     },
 });
 
-export function readAll(): ItemMap {
+export function getZones(): ItemMap {
     return sseManager.getState() as ItemMap;
 }
 
-export function readOne(zoneId: string): Item | undefined {
-    const zones = readAll();
+export function getZoneById(zoneId: string): Item | undefined {
+    const zones = getZones();
     return zones[zoneId];
 }
 
-export function writeOne(item: Item): void {
+export function setZone(item: Item): void {
     sseManager.setState(item.zoneId, item);
 }

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { sseManager, writeOne } from './store';
+import { sseManager, setThermostat } from './store';
 
 export async function readItems(
     req: Request,
@@ -45,7 +45,7 @@ export async function writeItem(
     next: NextFunction
 ): Promise<Response | void> {
     try {
-        writeOne(req.body);
+        setThermostat(req.body);
 
         return res.status(200).json({
             message: 'success',

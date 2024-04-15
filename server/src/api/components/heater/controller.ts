@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { sseManager, writeOne } from './store';
+import { sseManager, setHeaterById } from './store';
 
 export function readItems(
     req: Request,
@@ -26,7 +26,7 @@ export function writeItem(
     next: NextFunction
 ): Response | void {
     try {
-        writeOne(req.body);
+        setHeaterById(req.body);
 
         return res.status(200).json({
             message: 'success',

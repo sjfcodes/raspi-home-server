@@ -4,6 +4,18 @@ import { createLogger, format, transports } from 'winston';
 
 import { env } from './globals';
 
+export const logging = {
+    includeData: true,
+    includeMethods: [
+        // 'GET',
+        // 'POST',
+        'PUT',
+    ],
+    includeSsePublish: !true,
+    includeSseSubScribe: !true,
+    includeSseUnsubScribe: !true,
+};
+
 const logDir = 'logs';
 
 // Create the log directory if it does not exist
@@ -61,4 +73,14 @@ if (env.NODE_ENV !== 'production') {
             format: format.simple(),
         })
     );
+}
+
+export function formatSseLog(
+    path: string,
+    message: string,
+    data: any = {}
+): string {
+    const args = [path, message];
+    if (logging.includeData) args.push(JSON.stringify(data));
+    return args.join(' ');
 }

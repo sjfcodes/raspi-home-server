@@ -25,16 +25,16 @@ export const sseManager = new SseManager({
     },
 } as ItemMap);
 
-export function readAll(): ItemMap {
+export function getRemotes(): ItemMap {
     return sseManager.getState();
 }
 
-export function readOne(id: string): Item | undefined {
-    const items = readAll();
+export function getRemoteById(id: string): Item | undefined {
+    const items = getRemotes();
     return items[id];
 }
 
-export function writeOne(candidate: Item): void {
+export function setRemote(candidate: Item): void {
     if (candidate === undefined) {
         throw new Error('candidate must be defined');
     }

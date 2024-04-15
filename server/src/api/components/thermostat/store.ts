@@ -2,16 +2,17 @@ import { ITEM_TYPE, THERMOSTAT_ID } from '../../../config/globals';
 import { writeThermostatLog } from '../../../services/pi';
 import { getDate } from '../../../services/utility';
 import { SseManager } from '../sse';
+import { onThermostatUpdate } from '../zone/actions';
 import { Item, ItemMap } from './model';
 
 export const sseManager = new SseManager({} as ItemMap);
 
-export function readAll(): ItemMap {
+export function getThermostats(): ItemMap {
     return sseManager.getState() as ItemMap;
 }
 
-export function readOne(id: string): Item | undefined {
-    const items = readAll();
+export function getThermostatById(id: string): Item | undefined {
+    const items = getThermostats();
     return items[id];
 }
 
@@ -22,20 +23,20 @@ export function readOne(id: string): Item | undefined {
  *      average to set as the current temperatuer.
  */
 const historyCache = {} as Record<string, number[]>;
-export function writeOne(item: Item): Item | void {
-    if (item === undefined) {
-        console.error(new Error('item must be defined'));
+export function setThermostat(candidate: Item): Item | void {
+    if (candidate === undefined) {
+        console.error(new Error('candidate must be defined'));
         return;
     }
 
-    if (!item.chipId) {
-        console.error(new Error('item.chipId must be defined'));
+    if (!candidate.chipId) {
+        console.error(new Error('candidate.chipId must be defined'));
         return;
     }
 
     const maxCacheLength = 60;
-    const temp = Math.trunc(item.tempF);
-    let cache = historyCache[item.chipId] || [];
+    const temp = Math.trunc(candidate.tempF);
+    let cache = historyCache[candidate.chipId] || [];
     if (cache.length < maxCacheLength) cache.unshift(temp);
     else cache = [temp, ...cache.slice(0, maxCacheLength - 1)];
 
@@ -43,16 +44,17 @@ export function writeOne(item: Item): Item | void {
         cache.reduce((acc, curr) => acc + curr, 0) / cache.length
     );
 
-    const thermostat: Item = {
-        ...item,
+    const nextState: Item = {
+        ...candidate,
         tempF: averageTemperature,
         updatedAt: getDate(),
         itemType: ITEM_TYPE.THERMOSTAT,
     };
 
-    sseManager.setState(item.chipId, thermostat);
+    sseManager.setState(nextState.chipId, nextState);
+    onThermostatUpdate(nextState);
 
-    if (item.chipId === THERMOSTAT_ID.HOME) {
-        writeThermostatLog(thermostat);
+    if (nextState.chipId === THERMOSTAT_ID.HOME) {
+        writeThermostatLog(nextState);
     }
 }
