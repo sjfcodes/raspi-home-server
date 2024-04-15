@@ -1,14 +1,19 @@
 import fs from 'fs';
 import { Heater, Thermostat } from '../../../types/main';
 
+enum LOG_LABEL {
+    THERMOSTAT = 'THERMOSTAT',
+    HEATER_OFF = '  HEATER_0',
+    HEATER_ON = '  HEATER_1',
+}
 const thisDir = __dirname; // /home/sjfox/code/raspi-home-server/server/src/service/pi
-const logPath = `${thisDir}/../../../logs/logs.txt`;
+const logPath = `${thisDir}/../../../logs/logs.v1.txt`;
 let lastLogCache: Record<string, object> = {};
-function writeLog(data: object) {
+function writeLog(label: LOG_LABEL, data: object) {
     if (!data) return;
 
     const stringified = JSON.stringify(data);
-    fs.appendFileSync(logPath, '\n' + stringified, 'utf-8');
+    fs.appendFileSync(logPath, '\n' + label + '::' + stringified, 'utf-8');
 }
 
 export function writeThermostatLog(thermostat: Thermostat) {
@@ -16,7 +21,7 @@ export function writeThermostatLog(thermostat: Thermostat) {
     if (cache?.tempF === thermostat.tempF) return;
     lastLogCache[thermostat.chipId] = thermostat;
 
-    writeLog(thermostat);
+    writeLog(LOG_LABEL.THERMOSTAT, thermostat);
 }
 
 export function writeHeaterLog(heater: Heater) {
@@ -24,5 +29,8 @@ export function writeHeaterLog(heater: Heater) {
     if (cache?.heaterPinVal === heater.heaterPinVal) return;
     lastLogCache[heater.chipId] = heater;
 
-    writeLog(heater);
+    const label =
+        heater.heaterPinVal === 1 ? LOG_LABEL.HEATER_ON : LOG_LABEL.HEATER_OFF;
+
+    writeLog(label, heater);
 }
