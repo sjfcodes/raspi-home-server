@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
-import { logger } from '../../config/logger';
-import { formatLog, generateUuid } from '../../services/utility';
-import { config } from '../../config/config';
+import { formatSseLog, logger, logging } from '../../config/logger';
+import { generateUuid } from '../../services/utility';
 
 type Subscriber = { id: string; itemId?: string; res: Response };
 export class SseManager<T> {
@@ -34,8 +33,8 @@ export class SseManager<T> {
         if (!this.path) throw new Error('missing sse path');
         if (!this.subs.length) return;
 
-        if (config.log.includeSsePublish) {
-            logger.info(formatLog('PUBLISH', this.path, this.getState()));
+        if (logging.includeSsePublish) {
+            logger.info(formatSseLog('PUBLISH', this.path, this.getState()));
         }
 
         for (const sub of this.subs) {
@@ -62,16 +61,16 @@ export class SseManager<T> {
 
         req.on('close', () => this.unsubscribe(id));
         this.subs.push({ id, res });
-        if (config.log.includeSseSubScribe) {
-            logger.info(formatLog('SUBSCRIBE', this.path, id));
+        if (logging.includeSseSubScribe) {
+            logger.info(formatSseLog('SUBSCRIBE', this.path, id));
         }
     }
 
     public unsubscribe(id: string) {
         if (!this.path) throw new Error('missing sse path');
         this.subs = this.subs.filter((sub) => sub.id !== id);
-        if (config.log.includeSseUnsubScribe) {
-            logger.info(formatLog('UNSUBSCRIBE', this.path, id));
+        if (logging.includeSseUnsubScribe) {
+            logger.info(formatSseLog('UNSUBSCRIBE', this.path, id));
         }
     }
 }

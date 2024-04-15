@@ -34,30 +34,38 @@ export function readOne(id: string): Item | undefined {
     return items[id];
 }
 
-export function writeOne(item: Item): Item | undefined {
-    if (item === undefined) {
-        throw new Error('item must be defined');
+export function writeOne(candidate: Item): void {
+    if (candidate === undefined) {
+        throw new Error('candidate must be defined');
     }
 
     // if either is not number
-    if (typeof item?.max !== 'number' || typeof item?.min !== 'number') {
-        throw new Error(`unexpected state: ${JSON.stringify(item)}`);
+    if (
+        typeof candidate?.max !== 'number' ||
+        typeof candidate?.min !== 'number'
+    ) {
+        throw new Error(`unexpected state: ${JSON.stringify(candidate)}`);
     }
 
     // if out of range
-    if (item.max < item.min) {
+    if (candidate.max < candidate.min) {
         throw new Error('max must be >= min');
     }
 
-    const state = sseManager.getState();
-    const target = state[item.remoteId];
+    const prevState = sseManager.getState()[candidate.remoteId];
 
-    // only set if not duplicate update
-    if (target && (target.max !== item.max || target.min !== item.min)) {
-        item.updatedAt = getDate();
-        item.itemType = ITEM_TYPE.REMOTE;
-        sseManager.setState(item.remoteId, item);
-        onRemoteUpdate(item.zoneId);
-        return item;
+    // Only update if candidate contains relevant changes
+    if (
+        prevState &&
+        (prevState.max !== candidate.max || prevState.min !== candidate.min)
+    ) {
+        const nextState = {
+            ...prevState,
+            ...candidate,
+            updatedAt: getDate(),
+        };
+        // candidate.itemType = ITEM_TYPE.REMOTE;
+        sseManager.setState(nextState.remoteId, nextState);
+        onRemoteUpdate(nextState.zoneId);
     }
 }

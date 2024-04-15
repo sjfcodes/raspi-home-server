@@ -5,14 +5,13 @@ import cors from 'cors';
 
 import { handleError } from '../../services/utility';
 import { env } from '../../config/globals';
-import { logger } from '../../config/logger';
-import { config } from '../../config/config';
+import { logger, logging } from '../../config/logger';
 
 export function routeLogger(req: Request, _res: Response, next: NextFunction) {
-    if (config.log.includeMethods.includes(req.method)) {
+    if (logging.includeMethods.includes(req.method)) {
         const info = [];
         info.push(req.method, req.path);
-        if (config.log.includeData) {
+        if (logging.includeData) {
             const data =
                 typeof req.body === 'object'
                     ? JSON.stringify(req.body)

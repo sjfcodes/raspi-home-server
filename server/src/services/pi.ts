@@ -1,5 +1,4 @@
 import fs from 'fs';
-import { logger } from '../config/logger';
 import { Heater, Thermostat } from '../../../types/main';
 
 const thisDir = __dirname; // /home/sjfox/code/raspi-home-server/server/src/service/pi
@@ -9,7 +8,6 @@ function writeLog(data: object) {
     if (!data) return;
 
     const stringified = JSON.stringify(data);
-    logger.info(stringified);
     fs.appendFileSync(logPath, '\n' + stringified, 'utf-8');
 }
 

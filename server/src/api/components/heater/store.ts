@@ -10,6 +10,7 @@ import {
     ITEM_TYPE,
 } from '../../../config/globals';
 import { writeHeaterLog } from '../../../services/pi';
+import { Heater, HeaterPinVal } from '../../../../../types/main';
 
 export const sseManager = new SseManager({} as ItemMap);
 
@@ -27,60 +28,68 @@ export function writeOne(item: Item): void {
     writeHeaterLog(item);
 }
 
+// [NOTE] This is set on heater as well
+const PORT = 3001;
+
 // wss connection to heater
 const wss = new WebSocketServer({
     path: WSS_CHANNEL.HEATER_CAB_0,
-    port: 3001,
+    port: PORT,
 });
 
 wss.on('connection', (ws) => {
-    logger.info(`WSS:3001 ${WSS_CHANNEL.HEATER_CAB_0} connected`);
+    logger.info(`WSS:${PORT} ${WSS_CHANNEL.HEATER_CAB_0} CONNETED`);
     ws.on('message', handleMessageIn);
     ws.on('close', () =>
-        logger.info(`WSS:3001 ${WSS_CHANNEL.HEATER_CAB_0} disconnected`)
+        logger.info(`WSS:${PORT} ${WSS_CHANNEL.HEATER_CAB_0} DISCONNECTED`)
     );
     ws.onerror = console.error;
 });
 
 function handleMessageIn(data: string) {
     const input: Item = JSON.parse(data.toString());
+    if (input.chipId !== HEATER_ID.HOME) return;
+    logger.info(`WSS:${PORT} ${WSS_CHANNEL.HEATER_CAB_0} MESSAGE-IN ${input}`);
 
-    if (input.chipId === HEATER_ID.HOME) {
-        const item: Item = {
-            zoneId: ZONE_ID.HOME,
-            chipId: input.chipId,
-            cabHumidity: input.cabHumidity,
-            cabTempF: input.cabTempF,
-            heaterPinVal: input.heaterPinVal ?? null,
-            updatedAt: getDate(),
-            itemType: ITEM_TYPE.HEATER,
-        };
+    const item: Item = {
+        zoneId: ZONE_ID.HOME,
+        chipId: input.chipId,
+        heaterPinVal: input.heaterPinVal ?? null,
+        cabTempF: input.cabTempF,
+        cabHumidity: input.cabHumidity,
+        updatedAt: getDate(),
+        itemType: ITEM_TYPE.HEATER,
+    };
 
-        writeOne(item);
-    }
+    writeOne(item);
 }
 
 export function turnHeaterOff(heaterId: string) {
     const heater = readOne(heaterId);
     if (!heater || heater.heaterPinVal === 0) return;
 
-    writeOne({ ...heater, heaterPinVal: 0 });
-    emitStateUpdate(heaterId);
+    const nextState: Heater = { ...heater, heaterPinVal: 0 };
+    writeOne(nextState);
+    handleMessageOut(nextState.heaterPinVal);
 }
 
 export function turnHeaterOn(heaterId: string) {
     const heater = readOne(heaterId);
     if (!heater || heater.heaterPinVal === 1) return;
 
-    writeOne({ ...heater, heaterPinVal: 1 });
-    emitStateUpdate(heaterId);
+    const nextState: Heater = { ...heater, heaterPinVal: 1 };
+    writeOne(nextState);
+    handleMessageOut(nextState.heaterPinVal);
 }
 
-const emitStateUpdate = (heaterId: string) => {
-    const heater = readOne(heaterId);
-    if (!heater) return;
-
-    const stringified = JSON.stringify(heater);
+const handleMessageOut = (heaterPinVal: HeaterPinVal) => {
+    /**
+     * [NOTE] Keep messages small when sending to esp32 boards
+     */
+    const message = { heaterPinVal };
+    const stringified = JSON.stringify(message);
     wss.clients.forEach((client) => client.send(stringified));
-    // log(WSS_CHANNEL.HEATER_CAB_0, 'publish', state);
+    logger.info(
+        `WSS:${PORT} ${WSS_CHANNEL.HEATER_CAB_0} MESSAGE-OUT ${stringified}`
+    );
 };
