@@ -30,8 +30,11 @@ export function writeOne(item: Item): void {
     }
 
     const state = sseManager.getState();
+    const target = state[item.id];
+
     // only set if not duplicate update
-    if (state[item.id]?.max !== item.max || state[item.id]?.min !== item.min) {
+    if (target && (target.max !== item.max || target.min !== item.min)) {
+        item.updatedAt = new Date().toISOString();
         sseManager.setState(item.id, item);
     }
 }

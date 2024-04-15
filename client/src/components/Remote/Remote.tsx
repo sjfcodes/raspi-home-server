@@ -39,7 +39,7 @@ export default function Remote({ remoteId, heaterId, thermostatId }: Props) {
                 <div style={{ position: 'absolute', top: '0px' }}>
                     <Snippet
                         text={JSON.stringify(
-                            { thermostat, heater, remote },
+                            { remote, thermostat, heater },
                             null,
                             2
                         )}

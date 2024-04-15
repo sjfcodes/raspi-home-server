@@ -40,17 +40,19 @@ export const HEATER_GPO_DEFAULT_STATE: HeaterCab = {
 };
 
 export const REMOTE_HOME_DEFAULT_STATE: Remote = {
-  id: 'home',
+  id: "home",
   type: "F",
   max: 66,
   min: 66,
+  updatedAt: new Date().toISOString(),
 };
 
 export const REMOTE_OFFICE_DEFAULT_STATE: Remote = {
-  id: 'office',
+  id: "office",
   type: "F",
   max: 66,
   min: 66,
+  updatedAt: new Date().toISOString(),
 };
 
 export const SSE_HEADERS = {

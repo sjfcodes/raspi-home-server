@@ -20,7 +20,6 @@ export type Thermostat = {
   chipName: string;
   chipId: string;
   tempF: number;
-  calibrate: number;
   updatedAt: string;
 };
 
@@ -30,6 +29,7 @@ export type Remote = {
   type: "F" | "C";
   max: number;
   min: number;
+  updatedAt: string;
 };
 
 export type SystemTemperatureMap = Record<string, SytemTemperature | undefined>;

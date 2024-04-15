@@ -40,7 +40,6 @@ export function writeOne(item: Item): Item | void {
         // @ts-ignore
         chipName: THERMOSTAT[item.chipId] || item.chipName,
         tempF: Math.trunc(tempAverage),
-        calibrate: item.calibrate || 0,
         updatedAt: new Date().toLocaleTimeString(),
     };
 
