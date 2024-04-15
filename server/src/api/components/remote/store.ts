@@ -1,12 +1,14 @@
-import { REMOTE_HOME_DEFAULT_STATE, REMOTE_OFFICE_DEFAULT_STATE } from '../../../../../constant/constant';
-import { logger } from '../../../config/logger';
+import {
+    REMOTE_HOME_DEFAULT_STATE,
+    REMOTE_OFFICE_DEFAULT_STATE,
+} from '../../../../../constant/constant';
 import { SseManager } from '../sse';
 import { Item, ItemMap } from './model';
 
-export const sseManager = new SseManager({
+export const sseManager: SseManager<ItemMap> = new SseManager({
     [REMOTE_HOME_DEFAULT_STATE.id]: REMOTE_HOME_DEFAULT_STATE,
     [REMOTE_OFFICE_DEFAULT_STATE.id]: REMOTE_OFFICE_DEFAULT_STATE,
-} as ItemMap);
+});
 
 export function readAll(): ItemMap {
     return sseManager.getState() as ItemMap;

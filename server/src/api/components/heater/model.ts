@@ -1,4 +1,4 @@
-import { HeaterCabState, HeaterCabStateMap } from '../../../../../types/main';
+import { HeaterCab, HeaterCabMap } from '../../../../../types/main';
 
-export type ItemMap = HeaterCabStateMap;
-export type Item = HeaterCabState;
+export type ItemMap = HeaterCabMap;
+export type Item = HeaterCab;
