@@ -1,4 +1,4 @@
-import { RemoteState, RemoteStateMap } from "../../../../../types/main";
+import { Remote, RemoteMap } from '../../../../../types/main';
 
-export type ItemMap = RemoteStateMap;
-export type Item = RemoteState;
+export type ItemMap = RemoteMap;
+export type Item = Remote;

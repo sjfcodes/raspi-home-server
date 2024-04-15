@@ -7,5 +7,5 @@ export default function Zones() {
     if (!zoneMap) return null;
     const zones = Object.values(zoneMap);
 
-    return zones.map((zone) => zone && <Zone key={zone?.id} zone={zone} />);
+    return zones.map((zone) => zone && <Zone key={zone?.zoneId} zone={zone} />);
 }

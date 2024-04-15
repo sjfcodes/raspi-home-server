@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { SSE_HEADERS } from '../../../../constant/constant';
 import { formatLog, log } from '../../../src_old/utils/general';
 import { logger } from '../../config/logger';
 import { generateUuid } from '../../services/utility';
@@ -54,7 +53,11 @@ export class SseManager<T> {
         if (!this.path) throw new Error('missing sse path');
         const id = generateUuid();
 
-        res.writeHead(200, SSE_HEADERS);
+        res.writeHead(200, {
+            'Content-Type': 'text/event-stream',
+            Connection: 'keep-alive',
+            'Cache-Control': 'no-cache',
+        });
         res.write(`data: ${JSON.stringify(this.state)}\n\n`);
         res.flush(); // required for sse with compression https://expressjs.com/en/resources/middleware/compression.html#:~:text=add%20all%20routes-,Server%2DSent%20Events,-Because%20of%20the
 

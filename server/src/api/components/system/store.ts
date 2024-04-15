@@ -3,6 +3,7 @@ import { logger } from '../../../config/logger';
 import { Info, Temperature } from './model';
 import { SseManager } from '../sse';
 import { getDate } from '../../../services/utility';
+import { ITEM_TYPE } from '../../../config/globals';
 
 export const sseManager = new SseManager({} as Record<string, Temperature>);
 
@@ -50,6 +51,7 @@ export async function getPiTemp(): Promise<Temperature | undefined> {
         tempC,
         tempF: Math.trunc((tempC * 9) / 5 + 32),
         readAt: getDate(),
+        itemType: ITEM_TYPE.SYSTEM_TEMPERATURE,
     };
 }
 

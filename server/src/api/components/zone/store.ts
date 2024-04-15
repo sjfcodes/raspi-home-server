@@ -1,29 +1,37 @@
+import { ITEM_TYPE, REMOTE_ID, ZONE_ID } from '../../../config/globals';
 import { SseManager } from '../sse';
-import { Item } from './model';
+import { Item, ItemMap } from './model';
 
 export const sseManager: SseManager<Item> = new SseManager({
-    home: {
-        id: 'home',
-        zoneName: 'home',
-        remoteId: 'home',
+    [ZONE_ID.HOME]: {
+        zoneId: ZONE_ID.HOME,
+        remoteId: REMOTE_ID.HOME,
         heaterId: 'd0fc8ad4',
         thermostatId: '9efc8ad4',
+        zoneName: 'home',
         isActive: true,
+        itemType: ITEM_TYPE.ZONE,
     },
-    office: {
-        id: 'office',
-        zoneName: 'office',
-        remoteId: 'office',
+    [ZONE_ID.OFFICE]: {
+        zoneId: ZONE_ID.OFFICE,
+        remoteId: REMOTE_ID.OFFICE,
         heaterId: '',
         thermostatId: 'abe342a8',
+        zoneName: 'office',
         isActive: false,
+        itemType: ITEM_TYPE.ZONE,
     },
 });
 
-export function readAll(): Record<string, Item> {
-    return sseManager.getState() as Record<string, Item>;
+export function readAll(): ItemMap {
+    return sseManager.getState() as ItemMap;
+}
+
+export function readOne(zoneId: string): Item | undefined {
+    const zones = readAll();
+    return zones[zoneId];
 }
 
 export function writeOne(item: Item): void {
-    sseManager.setState(item.id, item);
+    sseManager.setState(item.zoneId, item);
 }

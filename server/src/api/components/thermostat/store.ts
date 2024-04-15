@@ -1,4 +1,5 @@
-import { THERMOSTAT } from '../../../../../constant/constant';
+import { ITEM_TYPE, THERMOSTAT_ID } from '../../../config/globals';
+import { writeThermostatLog } from '../../../services/pi';
 import { getDate } from '../../../services/utility';
 import { SseManager } from '../sse';
 import { Item, ItemMap } from './model';
@@ -8,9 +9,15 @@ export const sseManager = new SseManager({} as ItemMap);
 export function readAll(): ItemMap {
     return sseManager.getState() as ItemMap;
 }
+
+export function readOne(id: string): Item | undefined {
+    const items = readAll();
+    return items[id];
+}
+
 /**
  * [NOTE]
- *      To slow thermostats form hasty temperature swings,
+ *      To slow thermostats form quick temperature swings,
  *      track temperatures for last minute and calculate
  *      average to set as the current temperatuer.
  */
@@ -26,23 +33,26 @@ export function writeOne(item: Item): Item | void {
         return;
     }
 
-    const state = sseManager.getState() as ItemMap;
-    const maxLen = 60;
+    const maxCacheLength = 60;
     const temp = Math.trunc(item.tempF);
     let cache = historyCache[item.chipId] || [];
-    if (cache.length < maxLen) cache.unshift(temp);
-    else cache = [temp, ...cache.slice(0, maxLen - 1)];
+    if (cache.length < maxCacheLength) cache.unshift(temp);
+    else cache = [temp, ...cache.slice(0, maxCacheLength - 1)];
 
-    const tempAverage =
-        cache.reduce((acc, curr) => acc + curr, 0) / cache.length;
+    const averageTemperature = Math.trunc(
+        cache.reduce((acc, curr) => acc + curr, 0) / cache.length
+    );
 
     const thermostat: Item = {
-        chipId: item.chipId,
-        // @ts-ignore
-        chipName: THERMOSTAT[item.chipId] || item.chipName,
-        tempF: Math.trunc(tempAverage),
+        ...item,
+        tempF: averageTemperature,
         updatedAt: getDate(),
+        itemType: ITEM_TYPE.THERMOSTAT,
     };
 
     sseManager.setState(item.chipId, thermostat);
+
+    if (item.chipId === THERMOSTAT_ID.HOME) {
+        writeThermostatLog(thermostat);
+    }
 }

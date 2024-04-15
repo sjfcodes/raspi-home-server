@@ -1,4 +1,5 @@
 import { HEATER_STATE } from "../constant/constant";
+import { ITEM_TYPE } from "../server/src/config/globals";
 
 export type HeaterCabState = {
   status: HEATER_STATE;
@@ -9,29 +10,35 @@ export type HeaterMap = Record<string, Heater | undefined>;
 
 export type HeaterPinVal = 1 | 0;
 export type Heater = {
+  zoneId: string;
+  chipId: string;
   cabHumidity: number;
   cabTempF: number;
-  chipId: string;
   heaterPinVal: HeaterPinVal;
   state?: HeaterCabState;
   updatedAt: string;
+  itemType: ITEM_TYPE.HEATER;
 };
 
 export type ThermostatMap = Record<string, Thermostat | undefined>;
 export type Thermostat = {
+  zoneId: string;
   chipName: string;
   chipId: string;
   tempF: number;
   updatedAt: string;
+  itemType: ITEM_TYPE.THERMOSTAT;
 };
 
 export type RemoteMap = Record<string, Remote | undefined>;
 export type Remote = {
-  id: string;
-  type: "F" | "C";
+  remoteId: string;
+  zoneId: string;
+  unit: "F" | "C";
   max: number;
   min: number;
   updatedAt: string;
+  itemType: ITEM_TYPE.REMOTE;
 };
 
 export type SystemTemperatureMap = Record<string, SytemTemperature | undefined>;
@@ -40,16 +47,18 @@ export type SytemTemperature = {
   tempC: number;
   tempF: number;
   readAt: string;
+  itemType: ITEM_TYPE.SYSTEM_TEMPERATURE;
 };
 
 export type ZoneMap = Record<string, Zone | undefined>;
 export type Zone = {
-  id: string;
+  zoneId: string;
   zoneName: string;
   remoteId: string;
   thermostatId: string;
   heaterId: string;
   isActive: boolean;
+  itemType: ITEM_TYPE.ZONE;
 };
 
 export type SytemInformation = {

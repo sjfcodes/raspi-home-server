@@ -77,7 +77,7 @@ function RemoteCover({ tempF, remote, heaterPinVal }: RemoteCoverProp) {
             <div style={{ textAlign: 'center' }}>
                 <b>{tempF || '-'}℉</b>
                 <br />
-                <b>{remote?.id || '-'}</b>
+                <b>{remote?.remoteId || '-'}</b>
             </div>
             <hr />
             <ul style={{ fontSize: '1rem' }}>

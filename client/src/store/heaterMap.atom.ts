@@ -2,8 +2,8 @@ import { atom } from 'jotai';
 import { HeaterMap } from '../../../types/main';
 import { dispatch } from './dispatch';
 import { urls } from '../config.global';
-import { HEATER_STATE } from '../../../constant/constant';
 import { store } from './store.global';
+import { HEATER_STATE } from '../../../constant/constant';
 
 export const heaterMapAtom = atom({} as HeaterMap);
 
