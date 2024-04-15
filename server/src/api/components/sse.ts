@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
-import { formatLog, log } from '../../../src_old/utils/general';
 import { logger } from '../../config/logger';
-import { generateUuid } from '../../services/utility';
+import { formatLog, generateUuid } from '../../services/utility';
 import { config } from '../../config/config';
 
 type Subscriber = { id: string; itemId?: string; res: Response };
