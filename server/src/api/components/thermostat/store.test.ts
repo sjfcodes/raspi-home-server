@@ -2,6 +2,10 @@
  * @group ut
  */
 
-test('should return arg', () => {
-    expect(true).toEqual('hello');
+import { getThermostats } from "./store";
+
+describe('getThermostats', ()=>{
+    test('should return empty store', () => {
+        expect(getThermostats()).toEqual({});
+    });
 });

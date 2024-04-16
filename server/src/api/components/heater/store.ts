@@ -1,4 +1,3 @@
-import { WebSocketServer } from 'ws';
 import { SseManager } from '../sse';
 import { Item, ItemMap } from './model';
 import { logger } from '../../../config/logger';
@@ -8,9 +7,11 @@ import {
     HEATER_ID,
     ZONE_ID,
     ITEM_TYPE,
+    env,
 } from '../../../config/globals';
 import { writeHeaterLog } from '../../../services/pi';
 import { HeaterPinVal } from '../../../../../types/main';
+import { getWss } from './wss';
 
 export const sseManager = new SseManager({} as ItemMap);
 
@@ -28,20 +29,14 @@ export function setHeaterById(item: Item): void {
     writeHeaterLog(item);
 }
 
-// [NOTE] This is set on heater as well
-const PORT = 3001;
+const logPrefix = `WSS:${env.WSS_PORT} ${WSS_CHANNEL.HEATER_CAB_0}`
 
-// wss connection to heater
-const wss = new WebSocketServer({
-    path: WSS_CHANNEL.HEATER_CAB_0,
-    port: PORT,
-});
-
+const wss = getWss();
 wss.on('connection', (ws) => {
-    logger.info(`WSS:${PORT} ${WSS_CHANNEL.HEATER_CAB_0} CONNETED`);
+    logger.info(`${logPrefix} CONNETED`);
     ws.on('message', handleMessageIn);
     ws.on('close', () =>
-        logger.info(`WSS:${PORT} ${WSS_CHANNEL.HEATER_CAB_0} DISCONNECTED`)
+        logger.info(`${logPrefix}  DISCONNECTED`)
     );
     ws.onerror = console.error;
 });
@@ -50,7 +45,7 @@ function handleMessageIn(data: string) {
     const input: Item = JSON.parse(data.toString());
     if (input.chipId !== HEATER_ID.HOME) return;
     logger.info(
-        `WSS:${PORT} ${WSS_CHANNEL.HEATER_CAB_0} MESSAGE-IN ${data.toString()}`
+        `${logPrefix}  MESSAGE-IN ${data.toString()}`
     );
 
     const item: Item = {
@@ -74,6 +69,6 @@ export const handleMessageOut = (heaterPinVal: HeaterPinVal) => {
     const stringified = JSON.stringify(message);
     wss.clients.forEach((client) => client.send(stringified));
     logger.info(
-        `WSS:${PORT} ${WSS_CHANNEL.HEATER_CAB_0} MESSAGE-OUT ${stringified}`
+        `${logPrefix}  MESSAGE-OUT ${stringified}`
     );
 };

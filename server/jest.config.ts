@@ -7,5 +7,7 @@ const config: Config = {
   testEnvironment: 'node',
   collectCoverage: false,
   collectCoverageFrom: ['**/*.{ts,tsx}', '!**/node_modules/**'],
+  setupFiles: ['./jest.setup.ts'],
+  detectOpenHandles: true
 };
 export default config;

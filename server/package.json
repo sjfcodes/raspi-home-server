@@ -6,7 +6,8 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "dev": "nodemon src/index.ts",
-    "test:ut": "jest --group=ut"
+    "test:ut": "jest --group=ut",
+    "test:ut:dev": "test:ut -- --watch"
   },
   "keywords": [],
   "author": "",
