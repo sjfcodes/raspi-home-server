@@ -1,4 +1,4 @@
-import { PiSytemInfo, SytemTemperature } from '../../../../../types/main';
+import { SystemInformation, SytemTemperature } from '../../../../../types/main';
 
 export type Temperature = SytemTemperature;
-export type Info = PiSytemInfo;
+export type Info = SystemInformation;

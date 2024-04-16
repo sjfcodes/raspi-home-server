@@ -61,7 +61,7 @@ export type Zone = {
   itemType: ITEM_TYPE.ZONE;
 };
 
-export type SytemInformation = {
+export type SystemInformation = {
   processor: string;
   BogoMIPS: string;
   Features: string;
