@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { heaterStore, setHeaterById } from './store';
+import { Heater } from '../../../../../types/main';
 
 export function readItems(
     req: Request,
@@ -26,7 +27,8 @@ export function writeItem(
     next: NextFunction
 ): Response | void {
     try {
-        setHeaterById(req.body);
+        const heater = req.body as Heater;
+        setHeaterById(heater.chipId, heater);
 
         return res.status(200).json({
             message: 'success',

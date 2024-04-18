@@ -1,5 +1,5 @@
 /**
- * @group ut/template
+ * @group ut
  */
 
 describe('something', () => {

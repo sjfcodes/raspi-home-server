@@ -7,24 +7,27 @@
  *  Zone is responsible of turning heater off/on.
  */
 
-import { Thermostat, Zone } from '../../../../../types/main';
+import { Heater, Thermostat, Zone } from '../../../../../types/main';
 import {
     getHeaterById,
     setHeaterById,
-    handleMessageOut,
+    handleHeaterMessageOut,
 } from '../heater/store';
 import { getZoneById, getZones } from './store';
 import { getRemoteById } from '../remote/store';
 import { getThermostatById } from '../thermostat/store';
 import { logger } from '../../../services/logger';
+import { HEATER_OVERRIDE_STATUS } from '../../../../../constant/constant';
+import { getDate } from '../../../services/utility';
 
 const debug = true;
 
 export enum errorMessage {
-    missingZones = 'MISSING ZONES',
-    missingZone = 'MISSING ZONE',
+    missingHeater = 'MISSING HEATER',
     missingRemote = 'MISSING REMOTE',
     missingThermostat = 'MISSING THERMOSTAT',
+    missingZone = 'MISSING ZONE',
+    missingZones = 'MISSING ZONES',
 }
 
 export enum statusMessage {
@@ -59,10 +62,6 @@ export function onThermostatUpdate(thermostat: Thermostat) {
     compareZoneRemoteAndThermostat(zone);
 }
 
-export enum compareRemoteAndThermostatError {
-
-}
-
 function compareZoneRemoteAndThermostat(zone: Zone) {
     const remote = getRemoteById(zone.remoteId);
     if (!remote) {
@@ -76,41 +75,67 @@ function compareZoneRemoteAndThermostat(zone: Zone) {
         return;
     }
 
-    // When thermostat's temperature is greater then remote's max,
-    if (thermostat.tempF > remote.max) {
-        // then turn heater off.
-        turnHeaterOff(zone.heaterId);
+    const heater = getHeaterById(zone.heaterId);
+    if (!heater) {
+        debug && logger.debug(errorMessage.missingHeater);
+        return;
+    }
+
+    const heaterIsOn = heater.heaterPinVal === 1;
+    const heaterOverride = checkHeaterOverrideStatus(heater);
+    const temperatureAboveMax = thermostat.tempF > remote.max;
+    const temperatureBelowMin = thermostat.tempF < remote.min;
+
+    if (
+        heaterOverride === HEATER_OVERRIDE_STATUS.FORCE_OFF ||
+        (heaterIsOn && temperatureAboveMax)
+    ) {
+        turnHeaterOffById(heater.chipId);
         debug && logger.debug(statusMessage.heaterOff);
         return;
     }
 
-    // When thermostat's temperature is less then remote's min,
-    if (thermostat.tempF < remote.min) {
-        // then turn heater on.
-        turnHeaterOn(zone.heaterId);
+    if (
+        heaterOverride === HEATER_OVERRIDE_STATUS.FORCE_ON ||
+        (!heaterIsOn && temperatureBelowMin)
+    ) {
+        turnHeaterOnById(heater.chipId);
         debug && logger.debug(statusMessage.heaterOn);
         return;
     }
+
     debug && logger.debug(statusMessage.noUpdate);
 }
 
-function turnHeaterOff(heaterId: string) {
-    console.log(heaterId)
-    const heater = getHeaterById(heaterId);
-    if (!heater || heater.heaterPinVal === 0) return;
-
+function turnHeaterOffById(heaterId: string) {
     const heaterPinVal = 0;
-    setHeaterById({ ...heater, heaterPinVal });
-    handleMessageOut(heaterPinVal);
+    setHeaterById(heaterId, { heaterPinVal });
+    handleHeaterMessageOut(heaterPinVal);
 }
 
-function turnHeaterOn(heaterId: string) {
-    const heater = getHeaterById(heaterId);
-    if (!heater || heater.heaterPinVal === 1) return;
-
+function turnHeaterOnById(heaterId: string) {
     const heaterPinVal = 1;
-    setHeaterById({ ...heater, heaterPinVal });
-    handleMessageOut(heaterPinVal);
+    setHeaterById(heaterId, { heaterPinVal });
+    handleHeaterMessageOut(heaterPinVal);
 }
 
-export const testExport = { compareRemoteAndThermostat: compareZoneRemoteAndThermostat, turnHeaterOff, turnHeaterOn }
+function checkHeaterOverrideStatus(heater: Heater) {
+    // If heater override not set, return
+    if (!heater.override?.status) return;
+
+    // If heater has expired override, delete override;
+    if (heater.override.expireAt < getDate()) {
+        setHeaterById(heater.chipId, { state: undefined });
+        return;
+    }
+
+    // return override status
+    return heater.override.status;
+}
+
+export const testExport = {
+    compareZoneRemoteAndThermostat,
+    turnHeaterOffById,
+    turnHeaterOnById,
+    checkHeaterOverrideStatus,
+};

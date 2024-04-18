@@ -4,7 +4,7 @@ export const RASP_PI = {
   wsPort: 3001,
 };
 
-export enum HEATER_STATE {
+export enum HEATER_OVERRIDE_STATUS {
   FORCE_OFF = "FORCE_OFF",
   FORCE_ON = "FORCE_ON",
 }

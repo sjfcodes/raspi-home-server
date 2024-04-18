@@ -1,8 +1,8 @@
-import { HEATER_STATE } from "../constant/constant";
+import { HEATER_OVERRIDE_STATUS } from "../constant/constant";
 import { ITEM_TYPE } from "../server/src/config/globals";
 
-export type HeaterCabState = {
-  status: HEATER_STATE;
+export type HeaterOverrideStatus = {
+  status: HEATER_OVERRIDE_STATUS;
   expireAt: string;
 };
 
@@ -15,7 +15,7 @@ export type Heater = {
   cabHumidity: number;
   cabTempF: number;
   heaterPinVal: HeaterPinVal;
-  state?: HeaterCabState;
+  override?: HeaterOverrideStatus;
   updatedAt: string;
   itemType: ITEM_TYPE.HEATER;
 };

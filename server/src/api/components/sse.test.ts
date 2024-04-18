@@ -1,7 +1,6 @@
 /**
  * @group ut
 */
-import { receiveMessageOnPort } from 'worker_threads';
 import { SseManager, sseErrorMessage } from './sse';
 
 const req = {
