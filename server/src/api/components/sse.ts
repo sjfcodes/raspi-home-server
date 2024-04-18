@@ -3,6 +3,11 @@ import { formatSseLog, logger, logging } from '../../services/logger';
 import { generateUuid } from '../../services/utility';
 
 type Subscriber = { id: string; itemId?: string; res: Response };
+export enum sseErrorMessage {
+    missingItemId = '"itemId" must be defined.',
+    missingPath = 'sse "path" must be set for logging".',
+}
+
 export class SseManager<T> {
     private path?: string;
     private state: Record<string, T>;
@@ -17,20 +22,27 @@ export class SseManager<T> {
         this.path = path;
     }
 
+    public getSubCount(): number {
+        return this.subs.length;
+    }
+
     public getState(): Record<string, T> {
         const data = structuredClone(this.state);
-
         return data;
     }
 
     public setState(itemId: string, item: T) {
-        if (!itemId) throw new Error('"itemId" must be defined');
+        if (!itemId) throw new Error(sseErrorMessage.missingItemId);
         this.state[itemId] = item;
         this.publish(itemId);
     }
 
+    private getPayload() {
+        return JSON.stringify(this.state)
+    }
+
     public publish(itemId = '') {
-        if (!this.path) throw new Error('missing sse path');
+        if (!this.path) throw new Error(sseErrorMessage.missingPath);
         if (!this.subs.length) return;
 
         if (logging.includeSsePublish) {
@@ -42,13 +54,13 @@ export class SseManager<T> {
             if (sub.itemId && sub.itemId !== itemId) continue;
 
             // if sending to sub, check if sub wants one item or entire map.
-            sub.res.write(`data: ${JSON.stringify(this.state)}\n\n`);
+            sub.res.write(`data: ${this.getPayload()}}\n\n`);
             sub.res.flush(); // required for sse with compression https://expressjs.com/en/resources/middleware/compression.html#:~:text=add%20all%20routes-,Server%2DSent%20Events,-Because%20of%20the
         }
     }
 
     public subscribe(req: Request, res: Response) {
-        if (!this.path) throw new Error('missing sse path');
+        if (!this.path) throw new Error(sseErrorMessage.missingPath);
         const id = generateUuid();
 
         res.writeHead(200, {
@@ -56,7 +68,7 @@ export class SseManager<T> {
             Connection: 'keep-alive',
             'Cache-Control': 'no-cache',
         });
-        res.write(`data: ${JSON.stringify(this.state)}\n\n`);
+        res.write(`data: ${this.getPayload()}\n\n`);
         res.flush(); // required for sse with compression https://expressjs.com/en/resources/middleware/compression.html#:~:text=add%20all%20routes-,Server%2DSent%20Events,-Because%20of%20the
 
         req.on('close', () => this.unsubscribe(id));
@@ -67,7 +79,7 @@ export class SseManager<T> {
     }
 
     public unsubscribe(id: string) {
-        if (!this.path) throw new Error('missing sse path');
+        if (!this.path) throw new Error(sseErrorMessage.missingPath);
         this.subs = this.subs.filter((sub) => sub.id !== id);
         if (logging.includeSseUnsubScribe) {
             logger.info(formatSseLog('UNSUBSCRIBE', this.path, id));
