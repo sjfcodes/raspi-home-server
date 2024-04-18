@@ -3,7 +3,7 @@ import { HeaterMap } from '../../../types/main';
 import { dispatch } from './dispatch';
 import { urls } from '../config.global';
 import { store } from './store.global';
-import { HEATER_STATE } from '../../../constant/constant';
+import { HEATER_OVERRIDE_STATUS } from '../../../constant/constant';
 
 export const heaterMapAtom = atom({} as HeaterMap);
 
@@ -29,7 +29,7 @@ export const overrideOn = (heaterId: string, step = 10) => {
     dispatch(urls.heater.put, {
         ...heater,
         state: {
-            status: HEATER_STATE.FORCE_ON,
+            status: HEATER_OVERRIDE_STATUS.FORCE_ON,
             expireAt: Date.now() + minuteSeconds * step,
         },
     });
@@ -42,7 +42,7 @@ export const overrideOff = (heaterId: string, step = 10) => {
     dispatch(urls.heater.put, {
         ...heater,
         state: {
-            status: HEATER_STATE.FORCE_OFF,
+            status: HEATER_OVERRIDE_STATUS.FORCE_OFF,
             expireAt: Date.now() + minuteSeconds * step,
         },
     });

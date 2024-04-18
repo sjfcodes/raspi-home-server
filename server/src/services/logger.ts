@@ -14,6 +14,11 @@ export const logging = {
     includeSsePublish: !true,
     includeSseSubScribe: !true,
     includeSseUnsubScribe: !true,
+    debug: {
+        remote: {
+            compareZoneRemoteAndThermostat: false,
+        }
+    }
 };
 
 const logDir = 'logs';

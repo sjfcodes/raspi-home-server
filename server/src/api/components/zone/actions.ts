@@ -16,24 +16,24 @@ import {
 import { getZoneById, getZones } from './store';
 import { getRemoteById } from '../remote/store';
 import { getThermostatById } from '../thermostat/store';
-import { logger } from '../../../services/logger';
+import { logger, logging } from '../../../services/logger';
 import { HEATER_OVERRIDE_STATUS } from '../../../../../constant/constant';
 import { getDate } from '../../../services/utility';
 
-const debug = true;
+const debug = logging.debug.remote.compareZoneRemoteAndThermostat;
 
-export enum errorMessage {
-    missingHeater = 'MISSING HEATER',
-    missingRemote = 'MISSING REMOTE',
-    missingThermostat = 'MISSING THERMOSTAT',
-    missingZone = 'MISSING ZONE',
-    missingZones = 'MISSING ZONES',
+export const errorMessage =  {
+    missingHeater: 'MISSING HEATER',
+    missingRemote: 'MISSING REMOTE',
+    missingThermostat: 'MISSING THERMOSTAT',
+    missingZone: 'MISSING ZONE',
+    missingZones: 'MISSING ZONES',
 }
 
-export enum statusMessage {
-    heaterOff = 'HEATER OFF',
-    heaterOn = 'HEATER ON',
-    noUpdate = 'NO UPDATE',
+export const statusMessage = {
+    heaterOff: 'HEATER OFF',
+    heaterOn: 'HEATER ON',
+    noUpdate: 'NO UPDATE',
 }
 
 export function onRemoteUpdate(zoneId: string) {
