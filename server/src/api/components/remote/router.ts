@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import { readItems, writeItem } from './controller';
-import { sseManager } from './store';
+import { remoteStore } from './store';
 
 export function registerRemoteRoutes(router: Router, prefix: string) {
-    sseManager.setPath(prefix);
+    remoteStore.setPath(prefix);
     // router.get(prefix + '/:id', readItem);
     router.get(prefix + '/', readItems);
     router.put(prefix + '/', writeItem);

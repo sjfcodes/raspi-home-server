@@ -21,7 +21,7 @@ export enum HEATER_ID {
 
 export enum THERMOSTAT_ID {
     HOME = '9efc8ad4',
-    OFFICE = '',
+    OFFICE = 'abe342a8',
 }
 
 export enum WSS_CHANNEL {

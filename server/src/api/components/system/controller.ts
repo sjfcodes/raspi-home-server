@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { getPiCpuInfo, getPiTemp, sseManager } from './store';
+import { getPiCpuInfo, getPiTemp, systemStore } from './store';
 
 export async function readInfo(
     _req: Request,
@@ -24,11 +24,11 @@ export async function readTemperature(
 ): Promise<Response | void> {
     try {
         if (req.query.subscribe === 'true') {
-            return sseManager.subscribe(req, res);
+            return systemStore.subscribe(req, res);
         } else {
             return res.status(200).json({
                 message: 'success',
-                data: sseManager.getState(),
+                data: systemStore.getState(),
             });
         }
     } catch (err) {

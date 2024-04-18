@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { formatSseLog, logger, logging } from '../../config/logger';
+import { formatSseLog, logger, logging } from '../../services/logger';
 import { generateUuid } from '../../services/utility';
 
 type Subscriber = { id: string; itemId?: string; res: Response };

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { sseManager, setThermostat } from './store';
+import { thermostatStore, setThermostat } from './store';
 
 export async function readItems(
     req: Request,
@@ -8,11 +8,11 @@ export async function readItems(
 ): Promise<Response | void> {
     try {
         if (req.query.subscribe === 'true') {
-            return sseManager.subscribe(req, res);
+            return thermostatStore.subscribe(req, res);
         } else {
             return res.status(200).json({
                 message: 'success',
-                data: sseManager.getState(),
+                data: thermostatStore.getState(),
             });
         }
     } catch (err) {
@@ -27,11 +27,11 @@ export async function readItem(
 ): Promise<Response | void> {
     try {
         if (req.query.subscribe === 'true') {
-            return sseManager.subscribe(req, res);
+            return thermostatStore.subscribe(req, res);
         } else {
             return res.status(200).json({
                 message: 'success',
-                data: sseManager.getState(),
+                data: thermostatStore.getState(),
             });
         }
     } catch (err) {

@@ -5,10 +5,10 @@ import { SseManager } from '../sse';
 import { onThermostatUpdate } from '../zone/actions';
 import { Item, ItemMap } from './model';
 
-export const sseManager = new SseManager({} as ItemMap);
+export const thermostatStore = new SseManager({} as ItemMap);
 
 export function getThermostats(): ItemMap {
-    return sseManager.getState() as ItemMap;
+    return thermostatStore.getState() as ItemMap;
 }
 
 export function getThermostatById(id: string): Item | undefined {
@@ -51,7 +51,7 @@ export function setThermostat(candidate: Item): Item | void {
         itemType: ITEM_TYPE.THERMOSTAT,
     };
 
-    sseManager.setState(nextState.chipId, nextState);
+    thermostatStore.setState(nextState.chipId, nextState);
     onThermostatUpdate(nextState);
 
     if (nextState.chipId === THERMOSTAT_ID.HOME) {

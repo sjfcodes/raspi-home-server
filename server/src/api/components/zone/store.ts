@@ -1,13 +1,13 @@
-import { ITEM_TYPE, REMOTE_ID, ZONE_ID } from '../../../config/globals';
+import { HEATER_ID, ITEM_TYPE, REMOTE_ID, THERMOSTAT_ID, ZONE_ID } from '../../../config/globals';
 import { SseManager } from '../sse';
 import { Item, ItemMap } from './model';
 
-export const sseManager: SseManager<Item> = new SseManager({
+export const zoneStore: SseManager<Item> = new SseManager({
     [ZONE_ID.HOME]: {
         zoneId: ZONE_ID.HOME,
         remoteId: REMOTE_ID.HOME,
-        heaterId: 'd0fc8ad4',
-        thermostatId: '9efc8ad4',
+        heaterId: HEATER_ID.HOME,
+        thermostatId: THERMOSTAT_ID.HOME,
         zoneName: 'home',
         isActive: true,
         itemType: ITEM_TYPE.ZONE,
@@ -16,7 +16,7 @@ export const sseManager: SseManager<Item> = new SseManager({
         zoneId: ZONE_ID.OFFICE,
         remoteId: REMOTE_ID.OFFICE,
         heaterId: '',
-        thermostatId: 'abe342a8',
+        thermostatId: THERMOSTAT_ID.OFFICE,
         zoneName: 'office',
         isActive: false,
         itemType: ITEM_TYPE.ZONE,
@@ -24,7 +24,7 @@ export const sseManager: SseManager<Item> = new SseManager({
 });
 
 export function getZones(): ItemMap {
-    return sseManager.getState() as ItemMap;
+    return zoneStore.getState() as ItemMap;
 }
 
 export function getZoneById(zoneId: string): Item | undefined {
@@ -33,5 +33,5 @@ export function getZoneById(zoneId: string): Item | undefined {
 }
 
 export function setZone(item: Item): void {
-    sseManager.setState(item.zoneId, item);
+    zoneStore.setState(item.zoneId, item);
 }

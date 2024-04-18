@@ -1,6 +1,6 @@
 import { SseManager } from '../sse';
 import { Item, ItemMap } from './model';
-import { logger } from '../../../config/logger';
+import { logger } from '../../../services/logger';
 import { getDate } from '../../../services/utility';
 import {
     WSS_CHANNEL,
@@ -13,10 +13,10 @@ import { writeHeaterLog } from '../../../services/pi';
 import { HeaterPinVal } from '../../../../../types/main';
 import { getWss } from './wss';
 
-export const sseManager = new SseManager({} as ItemMap);
+export const heaterStore = new SseManager({} as ItemMap);
 
 export function getHeaters(): ItemMap {
-    return sseManager.getState() as ItemMap;
+    return heaterStore.getState() as ItemMap;
 }
 
 export function getHeaterById(heaterId: string): Item | undefined {
@@ -25,7 +25,7 @@ export function getHeaterById(heaterId: string): Item | undefined {
 }
 
 export function setHeaterById(item: Item): void {
-    sseManager.setState(item.chipId, item);
+    heaterStore.setState(item.chipId, item);
     writeHeaterLog(item);
 }
 

@@ -1,7 +1,7 @@
 import { RedisClientType, createClient } from 'redis';
 
 import { env } from '../config/globals';
-import { logger } from '../config/logger';
+import { logger } from './logger';
 
 export class RedisService {
     private static client: RedisClientType;

@@ -5,7 +5,7 @@ import cors from 'cors';
 
 import { handleError } from '../../services/utility';
 import { env } from '../../config/globals';
-import { logger, logging } from '../../config/logger';
+import { logger, logging } from '../../services/logger';
 
 export function routeLogger(req: Request, _res: Response, next: NextFunction) {
     if (logging.includeMethods.includes(req.method)) {

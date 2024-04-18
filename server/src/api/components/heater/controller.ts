@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { sseManager, setHeaterById } from './store';
+import { heaterStore, setHeaterById } from './store';
 
 export function readItems(
     req: Request,
@@ -8,11 +8,11 @@ export function readItems(
 ): Response | void {
     try {
         if (req.query.subscribe === 'true') {
-            return sseManager.subscribe(req, res);
+            return heaterStore.subscribe(req, res);
         } else {
             return res.status(200).json({
                 message: 'success',
-                data: sseManager.getState(),
+                data: heaterStore.getState(),
             });
         }
     } catch (err) {

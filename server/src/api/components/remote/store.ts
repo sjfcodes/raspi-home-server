@@ -4,7 +4,7 @@ import { SseManager } from '../sse';
 import { onRemoteUpdate } from '../zone/actions';
 import { Item, ItemMap } from './model';
 
-export const sseManager = new SseManager({
+export const remoteStore = new SseManager({
     [ZONE_ID.HOME]: {
         remoteId: REMOTE_ID.HOME,
         zoneId: ZONE_ID.HOME,
@@ -26,7 +26,7 @@ export const sseManager = new SseManager({
 } as ItemMap);
 
 export function getRemotes(): ItemMap {
-    return sseManager.getState();
+    return remoteStore.getState();
 }
 
 export function getRemoteById(id: string): Item | undefined {
@@ -52,7 +52,7 @@ export function setRemote(candidate: Item): void {
         throw new Error('max must be >= min');
     }
 
-    const prevState = sseManager.getState()[candidate.remoteId];
+    const prevState = remoteStore.getState()[candidate.remoteId];
 
     // Only update if candidate contains relevant changes
     if (
@@ -65,7 +65,7 @@ export function setRemote(candidate: Item): void {
             updatedAt: getDate(),
         };
         // candidate.itemType = ITEM_TYPE.REMOTE;
-        sseManager.setState(nextState.remoteId, nextState);
+        remoteStore.setState(nextState.remoteId, nextState);
         onRemoteUpdate(nextState.zoneId);
     }
 }

@@ -2,7 +2,7 @@ import { compare, genSalt, hash } from 'bcryptjs';
 import { v4 } from 'uuid';
 import * as crypto from 'crypto';
 
-import { logger } from '../config/logger';
+import { logger } from './logger';
 
 export function handleError(err: any): void {
     logger.error(err.stack || err);

@@ -1,11 +1,11 @@
 import { readFileSync } from 'fs';
-import { logger } from '../../../config/logger';
+import { logger } from '../../../services/logger';
 import { Info, Temperature } from './model';
 import { SseManager } from '../sse';
 import { getDate } from '../../../services/utility';
 import { ITEM_TYPE } from '../../../config/globals';
 
-export const sseManager = new SseManager({} as Record<string, Temperature>);
+export const systemStore = new SseManager({} as Record<string, Temperature>);
 
 let cpuInfo: Info | null;
 export async function getPiCpuInfo(): Promise<Info | undefined> {
@@ -60,6 +60,6 @@ export async function getPiTemp(): Promise<Temperature | undefined> {
     setInterval(async () => {
         const data = await getPiTemp();
         if (!data) return;
-        sseManager.setState('system', data);
+        systemStore.setState('system', data);
     }, 5000);
 })();
