@@ -16,21 +16,34 @@ import {
 import { getZoneById, getZones } from './store';
 import { getRemoteById } from '../remote/store';
 import { getThermostatById } from '../thermostat/store';
-import { logger } from '../../../config/logger';
+import { logger } from '../../../services/logger';
 
 const debug = true;
+
+export enum errorMessage {
+    missingZones = 'MISSING ZONES',
+    missingZone = 'MISSING ZONE',
+    missingRemote = 'MISSING REMOTE',
+    missingThermostat = 'MISSING THERMOSTAT',
+}
+
+export enum statusMessage {
+    heaterOff = 'HEATER OFF',
+    heaterOn = 'HEATER ON',
+    noUpdate = 'NO UPDATE',
+}
 
 export function onRemoteUpdate(zoneId: string) {
     const zone = getZoneById(zoneId);
     if (!zone) return;
 
-    compareRemoteAndThermostat(zone);
+    compareZoneRemoteAndThermostat(zone);
 }
 
 export function onThermostatUpdate(thermostat: Thermostat) {
     const zones = getZones();
     if (!zones) {
-        debug && logger.debug(`MISSING ZONES ${JSON.stringify(thermostat)}`);
+        debug && logger.debug(errorMessage.missingZones);
         return;
     }
 
@@ -39,23 +52,27 @@ export function onThermostatUpdate(thermostat: Thermostat) {
         (zone) => zone?.thermostatId === thermostat.chipId
     );
     if (!zone) {
-        debug && logger.debug(`MISSING ZONE ${JSON.stringify(thermostat)}`);
+        debug && logger.debug(errorMessage.missingZone);
         return;
     }
 
-    compareRemoteAndThermostat(zone);
+    compareZoneRemoteAndThermostat(zone);
 }
 
-function compareRemoteAndThermostat(zone: Zone) {
+export enum compareRemoteAndThermostatError {
+
+}
+
+function compareZoneRemoteAndThermostat(zone: Zone) {
     const remote = getRemoteById(zone.remoteId);
     if (!remote) {
-        debug && logger.debug(`MISSING REMOTE ${JSON.stringify(zone)}`);
+        debug && logger.debug(errorMessage.missingRemote);
         return;
     }
 
     const thermostat = getThermostatById(zone.thermostatId);
     if (!thermostat) {
-        debug && logger.debug(`MISSING THERMOSTAT ${JSON.stringify(zone)}`);
+        debug && logger.debug(errorMessage.missingThermostat);
         return;
     }
 
@@ -63,7 +80,7 @@ function compareRemoteAndThermostat(zone: Zone) {
     if (thermostat.tempF > remote.max) {
         // then turn heater off.
         turnHeaterOff(zone.heaterId);
-        debug && logger.debug(`HEATER OFF ${JSON.stringify(zone)}`);
+        debug && logger.debug(statusMessage.heaterOff);
         return;
     }
 
@@ -71,13 +88,14 @@ function compareRemoteAndThermostat(zone: Zone) {
     if (thermostat.tempF < remote.min) {
         // then turn heater on.
         turnHeaterOn(zone.heaterId);
-        debug && logger.debug(`HEATER ON ${JSON.stringify(zone)}`);
+        debug && logger.debug(statusMessage.heaterOn);
         return;
     }
-    debug && logger.debug(`NO UPDATE ${JSON.stringify(zone)}`);
+    debug && logger.debug(statusMessage.noUpdate);
 }
 
 function turnHeaterOff(heaterId: string) {
+    console.log(heaterId)
     const heater = getHeaterById(heaterId);
     if (!heater || heater.heaterPinVal === 0) return;
 
@@ -94,3 +112,5 @@ function turnHeaterOn(heaterId: string) {
     setHeaterById({ ...heater, heaterPinVal });
     handleMessageOut(heaterPinVal);
 }
+
+export const testExport = { compareRemoteAndThermostat: compareZoneRemoteAndThermostat, turnHeaterOff, turnHeaterOn }
