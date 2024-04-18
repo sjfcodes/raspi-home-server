@@ -4,7 +4,7 @@ config();
 
 import { createServer, Server as HttpServer } from 'http';
 import { env } from './config/globals';
-import { logger } from './config/logger';
+import { logger } from './services/logger';
 import { app } from './api/server';
 // import { RedisService } from './services/redis';
 
