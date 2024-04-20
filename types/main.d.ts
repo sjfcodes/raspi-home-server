@@ -1,11 +1,6 @@
 import { HEATER_OVERRIDE_STATUS } from "../constant/constant";
 import { ITEM_TYPE } from "../server/src/config/globals";
 
-export type HeaterOverrideStatus = {
-  status: HEATER_OVERRIDE_STATUS;
-  expireAt: string;
-};
-
 export type HeaterMap = Record<string, Heater | undefined>;
 
 export type HeaterPinVal = 1 | 0;
@@ -15,7 +10,6 @@ export type Heater = {
   cabHumidity: number;
   cabTempF: number;
   heaterPinVal: HeaterPinVal;
-  override?: HeaterOverrideStatus;
   updatedAt: string;
   itemType: ITEM_TYPE.HEATER;
 };
@@ -50,6 +44,11 @@ export type SytemTemperature = {
   itemType: ITEM_TYPE.SYSTEM_TEMPERATURE;
 };
 
+export type HeaterOverrideStatus = {
+  status: HEATER_OVERRIDE_STATUS;
+  expireAt: string;
+};
+
 export type ZoneMap = Record<string, Zone | undefined>;
 export type Zone = {
   zoneId: string;
@@ -57,6 +56,7 @@ export type Zone = {
   remoteId: string;
   thermostatId: string;
   heaterId: string;
+  heaterOverride?: HeaterOverrideStatus;
   isActive: boolean;
   itemType: ITEM_TYPE.ZONE;
 };

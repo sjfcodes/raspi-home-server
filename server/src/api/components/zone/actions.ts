@@ -82,7 +82,7 @@ function compareZoneRemoteAndThermostat(zone: Zone) {
     }
 
     const heaterIsOn = heater.heaterPinVal === 1;
-    const heaterOverride = checkHeaterOverrideStatus(heater);
+    const heaterOverride = checkZoneHeaterOverrideStatus(zone);
     const temperatureAboveMax = thermostat.tempF > remote.max;
     const temperatureBelowMin = thermostat.tempF < remote.min;
 
@@ -119,23 +119,23 @@ function turnHeaterOnById(heaterId: string) {
     handleHeaterMessageOut(heaterPinVal);
 }
 
-function checkHeaterOverrideStatus(heater: Heater) {
+function checkZoneHeaterOverrideStatus(zone: Zone) {
     // If heater override not set, return
-    if (!heater.override?.status) return;
+    if (!zone.heaterOverride?.status) return;
 
     // If heater has expired override, delete override;
-    if (heater.override.expireAt < getDate()) {
-        setHeaterById(heater.chipId, { state: undefined });
+    if (zone.heaterOverride.expireAt < getDate()) {
+        setHeaterById(zone.heaterId, { state: undefined });
         return;
     }
 
     // return override status
-    return heater.override.status;
+    return zone.heaterOverride.status;
 }
 
 export const testExport = {
     compareZoneRemoteAndThermostat,
     turnHeaterOffById,
     turnHeaterOnById,
-    checkHeaterOverrideStatus,
+    checkHeaterOverrideStatus: checkZoneHeaterOverrideStatus,
 };
