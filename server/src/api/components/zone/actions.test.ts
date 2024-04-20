@@ -71,7 +71,7 @@ afterEach(() => {
 //     });
 // });
 
-describe('compareRemoteAndThermostat', () => {
+describe('checkRemoteHeaterOverrideStatus', () => {
     it.skip('logs and return if no remote found', () => {
         testExport.compareZoneRemoteAndThermostat({} as Zone);
         expect(logger.debug).toHaveBeenCalledTimes(1);
@@ -160,7 +160,7 @@ describe('compareRemoteAndThermostat', () => {
 describe('checkHeaterOverrideStatus', () => {
     it('returns undefined when no override set', () => {
         expect(
-            testExport.checkHeaterOverrideStatus({} as Zone)
+            testExport.checkHeaterOverrideStatus('', {} as Remote)
         ).toBeUndefined();
     });
 
@@ -169,16 +169,22 @@ describe('checkHeaterOverrideStatus', () => {
         // @ts-expect-error partial item
         zoneStore.setState(ZONE_ID.HOME, {
             heaterId: HEATER_ID.HOME,
+            remoteId: REMOTE_ID.HOME,
+        });
+        // @ts-expect-error partial item
+        remoteStore.setState(REMOTE_ID.HOME, {
+            remoteId: HEATER_ID.HOME,
             heaterOverride: {
                 expireAt,
                 status: HEATER_OVERRIDE_STATUS.FORCE_ON,
             },
         });
-        const beforeState = zoneStore.getState()[ZONE_ID.HOME];
+
+        const beforeState = remoteStore.getState()[REMOTE_ID.HOME] as Remote;
 
         expect(beforeState?.heaterOverride?.expireAt).toEqual(expireAt);
         expect(
-            testExport.checkHeaterOverrideStatus(beforeState)
+            testExport.checkHeaterOverrideStatus(HEATER_ID.HOME, beforeState)
         ).toBeUndefined();
     });
 
@@ -187,16 +193,21 @@ describe('checkHeaterOverrideStatus', () => {
         // @ts-expect-error partial item
         zoneStore.setState(ZONE_ID.HOME, {
             heaterId: HEATER_ID.HOME,
+            remoteId: REMOTE_ID.HOME,
+        });
+        // @ts-expect-error partial item
+        remoteStore.setState(REMOTE_ID.HOME, {
+            remoteId: HEATER_ID.HOME,
             heaterOverride: {
                 expireAt,
                 status: HEATER_OVERRIDE_STATUS.FORCE_ON,
             },
         });
-        const beforeState = zoneStore.getState()[ZONE_ID.HOME];
+        const beforeState = remoteStore.getState()[REMOTE_ID.HOME] as Remote;
 
         expect(beforeState?.heaterOverride?.expireAt).toEqual(expireAt);
         expect(
-            testExport.checkHeaterOverrideStatus(beforeState)
+            testExport.checkHeaterOverrideStatus(HEATER_ID.HOME, beforeState)
         ).toEqual(HEATER_OVERRIDE_STATUS.FORCE_ON);
     });
 });

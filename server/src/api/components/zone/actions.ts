@@ -7,7 +7,7 @@
  *  Zone is responsible of turning heater off/on.
  */
 
-import { Heater, Thermostat, Zone } from '../../../../../types/main';
+import { Heater, Remote, Thermostat, Zone } from '../../../../../types/main';
 import {
     getHeaterById,
     setHeaterById,
@@ -82,7 +82,7 @@ function compareZoneRemoteAndThermostat(zone: Zone) {
     }
 
     const heaterIsOn = heater.heaterPinVal === 1;
-    const heaterOverride = checkZoneHeaterOverrideStatus(zone);
+    const heaterOverride = checkRemoteHeaterOverrideStatus(zone.heaterId, remote);
     const temperatureAboveMax = thermostat.tempF > remote.max;
     const temperatureBelowMin = thermostat.tempF < remote.min;
 
@@ -119,23 +119,23 @@ function turnHeaterOnById(heaterId: string) {
     handleHeaterMessageOut(heaterPinVal);
 }
 
-function checkZoneHeaterOverrideStatus(zone: Zone) {
-    // If heater override not set, return
-    if (!zone.heaterOverride?.status) return;
+function checkRemoteHeaterOverrideStatus(heaterId: string, remote: Remote) {
+    // If missing requirements, return
+    if (!heaterId || !remote || !remote.heaterOverride?.status) return;
 
     // If heater has expired override, delete override;
-    if (zone.heaterOverride.expireAt < getDate()) {
-        setHeaterById(zone.heaterId, { state: undefined });
+    if (remote.heaterOverride.expireAt < getDate()) {
+        setHeaterById(heaterId, { state: undefined });
         return;
     }
 
     // return override status
-    return zone.heaterOverride.status;
+    return remote.heaterOverride.status;
 }
 
 export const testExport = {
     compareZoneRemoteAndThermostat,
     turnHeaterOffById,
     turnHeaterOnById,
-    checkHeaterOverrideStatus: checkZoneHeaterOverrideStatus,
+    checkHeaterOverrideStatus: checkRemoteHeaterOverrideStatus,
 };

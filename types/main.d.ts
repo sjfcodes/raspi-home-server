@@ -31,6 +31,7 @@ export type Remote = {
   unit: "F" | "C";
   max: number;
   min: number;
+  heaterOverride?: HeaterOverrideStatus;
   updatedAt: string;
   itemType: ITEM_TYPE.REMOTE;
 };
@@ -56,7 +57,6 @@ export type Zone = {
   remoteId: string;
   thermostatId: string;
   heaterId: string;
-  heaterOverride?: HeaterOverrideStatus;
   isActive: boolean;
   itemType: ITEM_TYPE.ZONE;
 };
