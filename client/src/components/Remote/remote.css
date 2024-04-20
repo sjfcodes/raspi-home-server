@@ -16,7 +16,14 @@
     overflow-y: scroll;
 }
 
-.remote-card-half {
+/* full width x half of width tall */
+.remote-card-full-x-half {
+    width: calc(100% - 1rem);
+    aspect-ratio: 2 / 1;
+}
+
+/* half width x quarter of width tall */
+.remote-card-half-x-quarter {
     width: calc(50% - 1rem);
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 2 / 1;
 }

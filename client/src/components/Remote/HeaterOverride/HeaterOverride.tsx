@@ -15,23 +15,22 @@ const { FORCE_OFF, FORCE_ON } = HEATER_OVERRIDE_STATUS;
 type Props = { remoteId: string };
 export default function HeaterOverride({ remoteId }: Props) {
     const [remoteMap] = useAtom(remoteMapAtom);
-    const [selectedStatus, setSelectedStatus] = useState(off);
-    const [expireInSeconds, setExpireInSeconds] = useState(10);
-
     const remote = remoteMap[remoteId];
-    
+    const [selectedStatus, setSelectedStatus] = useState(off);
+    const [expireInMinutes, setExpireInMinutes] = useState(10);
+
+
     useEffect(() => {
         if (!remote) return;
         const status = remote.heaterOverride?.status;
         if (status === FORCE_OFF) setSelectedStatus(off);
         if (status === FORCE_ON) setSelectedStatus(on);
     }, [remote?.heaterOverride?.status]);
-    
+
     if (!remote) return null;
 
-
     function setHeaterOverride() {
-        const expireAtMilliseconds = Date.now() + expireInSeconds * 1000;
+        const expireAtMilliseconds = Date.now() + expireInMinutes * 60 * 1000;
         const expireAt = new Date(expireAtMilliseconds).toISOString();
         const status = selectedStatus === off ? FORCE_OFF : FORCE_ON;
         const heaterOverride: HeaterOverrideStatus = { expireAt, status };
@@ -49,26 +48,26 @@ export default function HeaterOverride({ remoteId }: Props) {
 
     const onChangeExpireAt: ChangeEventHandler<HTMLSelectElement> = (e) => {
         e.stopPropagation();
-        setExpireInSeconds(Number(e.target.value));
+        setExpireInMinutes(Number(e.target.value));
     };
 
     const whenCleared = (
         <>
-            <div>
-                <span>Turn</span>
-                <select onChange={onSelectStatus}>
+            <div className="configure-override">
+                Turn
+                <select onChange={onSelectStatus} value={selectedStatus}>
                     <option value={off}>off</option>
                     <option value={on}>on</option>
                 </select>
-                <span>for</span>
-                <select onChange={onChangeExpireAt}>
-                    <option value={60 * 15}>15</option>
-                    <option value={60 * 30}>30</option>
-                    <option value={60 * 45}>45</option>
-                    <option value={60 * 60}>60</option>
-                    <option value={60 * .1}>.1</option>
+                for
+                <select onChange={onChangeExpireAt} value={expireInMinutes} >
+                    <option value={15}>15</option>
+                    <option value={30}>30</option>
+                    <option value={45}>45</option>
+                    <option value={60}>60</option>
+                    <option value={0.1}>.1</option>
                 </select>
-                <span>minute{expireInSeconds > 1 ? 's' : ''}.</span>
+                minute{expireInMinutes > 1 ? 's' : ''}
             </div>
             <button id="set-override" onClick={setHeaterOverride}>
                 apply
@@ -89,7 +88,7 @@ export default function HeaterOverride({ remoteId }: Props) {
     );
 
     return (
-        <RemoteControl className="remote-control-heater-override remote-card-full">
+        <RemoteControl className="remote-control-heater-override remote-card-full-x-half">
             {remote.heaterOverride?.expireAt ? whenActive : whenCleared}
         </RemoteControl>
     );
