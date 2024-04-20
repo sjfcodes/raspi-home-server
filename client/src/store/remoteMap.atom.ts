@@ -9,7 +9,6 @@ export const remoteMapAtom = atom({} as RemoteMap);
 const stream = new EventSource(urls.remote.get);
 stream.onerror = console.error;
 stream.onmessage = (e) => {
-    console.log('onmessage', urls.remote.get);
     let data = JSON.parse(e.data);
     if (!data) {
         console.warn('data is undefined', { data });

@@ -8,7 +8,6 @@ export const thermostatMapAtom = atom({} as ThermostatMap);
 const stream = new EventSource(urls.thermostat.get);
 stream.onerror = console.error;
 stream.onmessage = (e) => {
-    console.log('onmessage', urls.thermostat.get);
     let data = JSON.parse(e.data);
     if (!data) {
         console.warn('data is undefined', { data });

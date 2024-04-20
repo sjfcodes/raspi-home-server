@@ -1,9 +1,9 @@
 import { atom } from 'jotai';
-import { SytemInformation } from '../../../types/main';
+import { SystemInformation } from '../../../types/main';
 import { urls } from '../config.global';
 import { store } from './store.global';
 
-export const systemInformationAtom = atom({} as SytemInformation);
+export const systemInformationAtom = atom({} as SystemInformation);
 
 const startTime = Date.now();
 // [TODO] if fetch returns 404, retry until 200 response, or 1 minute passes;

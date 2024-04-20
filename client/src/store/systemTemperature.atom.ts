@@ -8,7 +8,6 @@ export const systemTemperatureAtom = atom({} as SystemTemperatureMap);
 const stream = new EventSource(urls.system.temperature.get);
 stream.onerror = console.error;
 stream.onmessage = (e) => {
-    console.log('onmessage', urls.system.temperature.get);
     let data = JSON.parse(e.data);
     if (!data) {
         console.warn('data is undefined', { data });
