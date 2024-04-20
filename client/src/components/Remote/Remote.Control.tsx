@@ -5,13 +5,13 @@ import './remote.control.css';
 type Props = {
     style?: CSSProperties;
     children: ReactNode;
-    onClick: () => void;
+    onClick?: () => void;
     className: string;
 };
 export default function RemoteControl({
     className = '',
     children,
-    onClick,
+    onClick = () => null,
 }: Props) {
     const classNames = ['remote-control', className];
     return (

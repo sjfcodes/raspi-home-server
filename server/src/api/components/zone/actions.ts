@@ -7,14 +7,14 @@
  *  Zone is responsible of turning heater off/on.
  */
 
-import { Heater, Remote, Thermostat, Zone } from '../../../../../types/main';
+import { Remote, Thermostat, Zone } from '../../../../../types/main';
 import {
     getHeaterById,
     setHeaterById,
     handleHeaterMessageOut,
 } from '../heater/store';
 import { getZoneById, getZones } from './store';
-import { getRemoteById } from '../remote/store';
+import { getRemoteById, setRemoteById } from '../remote/store';
 import { getThermostatById } from '../thermostat/store';
 import { logger, logging } from '../../../services/logger';
 import { HEATER_OVERRIDE_STATUS } from '../../../../../constant/constant';
@@ -22,19 +22,19 @@ import { getDate } from '../../../services/utility';
 
 const debug = logging.debug.remote.compareZoneRemoteAndThermostat;
 
-export const errorMessage =  {
+export const errorMessage = {
     missingHeater: 'MISSING HEATER',
     missingRemote: 'MISSING REMOTE',
     missingThermostat: 'MISSING THERMOSTAT',
     missingZone: 'MISSING ZONE',
     missingZones: 'MISSING ZONES',
-}
+};
 
 export const statusMessage = {
     heaterOff: 'HEATER OFF',
     heaterOn: 'HEATER ON',
     noUpdate: 'NO UPDATE',
-}
+};
 
 export function onRemoteUpdate(zoneId: string) {
     const zone = getZoneById(zoneId);
@@ -82,23 +82,29 @@ function compareZoneRemoteAndThermostat(zone: Zone) {
     }
 
     const heaterIsOn = heater.heaterPinVal === 1;
-    const heaterOverride = checkRemoteHeaterOverrideStatus(zone.heaterId, remote);
+    const heaterOverrideStatus = checkRemoteHeaterOverrideStatus(remote);
     const temperatureAboveMax = thermostat.tempF > remote.max;
     const temperatureBelowMin = thermostat.tempF < remote.min;
 
-    if (
-        heaterOverride === HEATER_OVERRIDE_STATUS.FORCE_OFF ||
-        (heaterIsOn && temperatureAboveMax)
-    ) {
+    // Check for active overrides
+    if (heaterOverrideStatus === HEATER_OVERRIDE_STATUS.FORCE_OFF) {
         turnHeaterOffById(heater.chipId);
         debug && logger.debug(statusMessage.heaterOff);
         return;
     }
+    if (heaterOverrideStatus === HEATER_OVERRIDE_STATUS.FORCE_ON) {
+        turnHeaterOnById(heater.chipId);
+        debug && logger.debug(statusMessage.heaterOn);
+        return;
+    }
 
-    if (
-        heaterOverride === HEATER_OVERRIDE_STATUS.FORCE_ON ||
-        (!heaterIsOn && temperatureBelowMin)
-    ) {
+    // Check for respond to temp change
+    if (heaterIsOn && temperatureAboveMax) {
+        turnHeaterOffById(heater.chipId);
+        debug && logger.debug(statusMessage.heaterOff);
+        return;
+    }
+    if (!heaterIsOn && temperatureBelowMin) {
         turnHeaterOnById(heater.chipId);
         debug && logger.debug(statusMessage.heaterOn);
         return;
@@ -119,13 +125,13 @@ function turnHeaterOnById(heaterId: string) {
     handleHeaterMessageOut(heaterPinVal);
 }
 
-function checkRemoteHeaterOverrideStatus(heaterId: string, remote: Remote) {
+function checkRemoteHeaterOverrideStatus(remote: Remote) {
     // If missing requirements, return
-    if (!heaterId || !remote || !remote.heaterOverride?.status) return;
+    if (!remote?.heaterOverride?.status) return;
 
     // If heater has expired override, delete override;
     if (remote.heaterOverride.expireAt < getDate()) {
-        setHeaterById(heaterId, { state: undefined });
+        setRemoteById(remote.remoteId, { heaterOverride: undefined } as Remote);
         return;
     }
 

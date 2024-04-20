@@ -11,6 +11,7 @@ import './remote.css';
 import Snippet from '../Snippet/Snippet';
 import { thermostatMapAtom } from '../../store/thermostatMap.atom';
 import { HeaterPinVal, Remote as TRemote, Zone } from '../../../../types/main';
+import HeaterOverride from './HeaterOverride/HeaterOverride';
 
 type Props = { zone: Zone };
 export default function Remote({ zone }: Props) {
@@ -45,6 +46,8 @@ export default function Remote({ zone }: Props) {
                     />
                 </div>
             </RemoteInfo>
+
+            {zone.heaterId && <HeaterOverride remoteId={zone.remoteId} />}
 
             <RemoteControl
                 className="remote-control-cooler remote-card-half"

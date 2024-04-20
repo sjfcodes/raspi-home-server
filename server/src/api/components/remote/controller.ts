@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { remoteStore, setRemote } from './store';
+import { remoteStore, setRemoteById } from './store';
+import { Remote } from '../../../../../types/main';
 
 export async function readItems(
     req: Request,
@@ -45,7 +46,8 @@ export async function writeItem(
     next: NextFunction
 ): Promise<Response | void> {
     try {
-        setRemote(req.body);
+        const remote = req.body as Remote;
+        setRemoteById(remote.remoteId, remote);
 
         return res.status(200).json({
             message: 'success',

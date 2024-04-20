@@ -7,6 +7,31 @@
 .remote-control:hover {
     cursor: pointer;
 }
+
+.remote-control-heater-override {
+    display: flex;
+    flex-direction:column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 9rem;
+    background-color: var(--color-info-green-00);
+    font-size: 1rem;
+    select {
+        height: 2rem;
+        width: 5rem;
+        margin-inline: .3rem;
+        border-radius: var(--border-radius-25);
+        text-align: center;
+        font-size: 1.5rem;
+    }
+    button[id="set-override"] {
+        height: 3rem;
+        width: 90%;
+        border-radius: var(--border-radius-25);
+    }
+
+}
+
 .remote-control-cooler {
     background-color: var(--color-cold-blue-00);
 }

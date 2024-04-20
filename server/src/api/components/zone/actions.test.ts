@@ -4,8 +4,9 @@
 
 const loggerM = {
     debug: jest.fn(),
-    log: jest.fn(),
-    info: jest.fn(),
+    log: jest.fn(console.log),
+    info: jest.fn(console.info),
+    error: jest.fn(console.error),
     add: jest.fn(),
     exceptions: {
         handle: jest.fn(),
@@ -30,7 +31,7 @@ jest.mock('winston', () => ({
 
 import * as winston from 'winston';
 import { logger } from '../../../services/logger';
-import { errorMessage, onThermostatUpdate, testExport } from './actions';
+import { errorMessage, testExport } from './actions';
 import { Heater, Remote, Thermostat, Zone } from '../../../../../types/main';
 import {
     HEATER_ID,
@@ -42,7 +43,6 @@ import {
 import { thermostatStore } from '../thermostat/store';
 import { remoteStore } from '../remote/store';
 import { heaterStore } from '../heater/store';
-import { getWss } from '../heater/wss';
 import { HEATER_OVERRIDE_STATUS } from '../../../../../constant/constant';
 import { zoneStore } from './store';
 
@@ -160,7 +160,7 @@ describe('checkRemoteHeaterOverrideStatus', () => {
 describe('checkHeaterOverrideStatus', () => {
     it('returns undefined when no override set', () => {
         expect(
-            testExport.checkHeaterOverrideStatus('', {} as Remote)
+            testExport.checkHeaterOverrideStatus({} as Remote)
         ).toBeUndefined();
     });
 
@@ -184,7 +184,7 @@ describe('checkHeaterOverrideStatus', () => {
 
         expect(beforeState?.heaterOverride?.expireAt).toEqual(expireAt);
         expect(
-            testExport.checkHeaterOverrideStatus(HEATER_ID.HOME, beforeState)
+            testExport.checkHeaterOverrideStatus(beforeState)
         ).toBeUndefined();
     });
 
@@ -207,7 +207,7 @@ describe('checkHeaterOverrideStatus', () => {
 
         expect(beforeState?.heaterOverride?.expireAt).toEqual(expireAt);
         expect(
-            testExport.checkHeaterOverrideStatus(HEATER_ID.HOME, beforeState)
+            testExport.checkHeaterOverrideStatus(beforeState)
         ).toEqual(HEATER_OVERRIDE_STATUS.FORCE_ON);
     });
 });

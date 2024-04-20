@@ -1,5 +1,5 @@
 import { atom } from 'jotai';
-import { RemoteMap } from '../../../types/main';
+import { HeaterOverrideStatus, RemoteMap } from '../../../types/main';
 import { dispatch } from './dispatch';
 import { urls } from '../config.global';
 import { store } from './store.global';
@@ -40,3 +40,13 @@ export const remoteControlDown = (remoteId: string, step = 1) => {
         min: remote.min - step,
     });
 };
+
+export const remoteControlSetHeaterOverride = (remoteId:string, heaterOverride: HeaterOverrideStatus ) => {
+    const remote = store.get(remoteMapAtom)[remoteId];
+    if (!remote) return;
+
+    dispatch(urls.remote.put, {
+        ...remote,
+        heaterOverride,
+    });
+}

@@ -1,4 +1,6 @@
+import { HEATER_OVERRIDE_STATUS } from '../../../../../constant/constant';
 import { ITEM_TYPE, REMOTE_ID, ZONE_ID } from '../../../config/globals';
+import { logger } from '../../../services/logger';
 import { getDate } from '../../../services/utility';
 import { SseManager } from '../sse';
 import { onRemoteUpdate } from '../zone/actions';
@@ -34,37 +36,47 @@ export function getRemoteById(id: string): Item | undefined {
     return items[id];
 }
 
-export function setRemote(candidate: Item): void {
-    if (candidate === undefined) {
-        throw new Error('candidate must be defined');
+export function setRemoteById(id: string, payload: Item): void {
+    if (!id) {
+        logger.error('"id" must be defined');
+        return;
+    }
+    if (!payload) {
+        logger.error('payload must be defined');
+        return;
+    }
+    if (payload?.min && typeof payload?.min !== 'number') {
+        logger.error(`remote.min must be type number.`);
+        return;
+    }
+    if (payload?.max && typeof payload?.max !== 'number') {
+        logger.error(`remote.max must be type number.`);
+        return;
     }
 
-    // if either is not number
-    if (
-        typeof candidate?.max !== 'number' ||
-        typeof candidate?.min !== 'number'
-    ) {
-        throw new Error(`unexpected state: ${JSON.stringify(candidate)}`);
+    if (payload.min && payload.max && payload.min > payload.max) {
+        logger.error(`remote.min & remote.max pair out of range.`);
+        return;
+    }
+    if(payload.heaterOverride) {
+        if (payload.heaterOverride.status && !Object.values(HEATER_OVERRIDE_STATUS).includes(payload.heaterOverride.status)) {
+            logger.error('remote.heaterOverride.status is invalid')
+        }
     }
 
-    // if out of range
-    if (candidate.max < candidate.min) {
-        throw new Error('max must be >= min');
+    const prevState = remoteStore.getState()[id];
+    if (!prevState) {
+        logger.error('"prevState" must be defined');
     }
 
-    const prevState = remoteStore.getState()[candidate.remoteId];
-
-    // Only update if candidate contains relevant changes
-    if (
-        prevState &&
-        (prevState.max !== candidate.max || prevState.min !== candidate.min)
-    ) {
+    // Only update if payload contains relevant changes
+    if (prevState) {
         const nextState = {
             ...prevState,
-            ...candidate,
+            ...payload,
             updatedAt: getDate(),
         };
-        // candidate.itemType = ITEM_TYPE.REMOTE;
+        // payload.itemType = ITEM_TYPE.REMOTE;
         remoteStore.setState(nextState.remoteId, nextState);
         onRemoteUpdate(nextState.zoneId);
     }
