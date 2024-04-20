@@ -5,6 +5,8 @@ export const env = {
     WSS_PORT: process.env.WSS_PORT ? Number(process.env.WSS_PORT) : 3001
 };
 
+export const isTestEnv = env.NODE_ENV.toLowerCase() === 'test'
+
 export enum ZONE_ID {
     HOME = 'home',
     OFFICE = 'office',

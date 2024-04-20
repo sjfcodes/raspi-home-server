@@ -1,5 +1,6 @@
 import fs from 'fs';
 import { Heater, Thermostat } from '../../../types/main';
+import { isTestEnv } from '../config/globals';
 
 enum LOG_LABEL {
     THERMOSTAT = 'THERMOSTAT',
@@ -8,9 +9,11 @@ enum LOG_LABEL {
 }
 const thisDir = __dirname; // /home/sjfox/code/raspi-home-server/server/src/service/pi
 const logPath = `${thisDir}/../../../logs/logs.v1.txt`;
+
 let lastLogCache: Record<string, object> = {};
 function writeLog(label: LOG_LABEL, data: object) {
-    if (!data) return;
+    // [TODO] mock this module for testing instead of node env
+    if (isTestEnv || !data) return;
 
     const stringified = JSON.stringify(data);
     fs.appendFileSync(logPath, '\n' + label + '::' + stringified, 'utf-8');
