@@ -1,4 +1,5 @@
 import { ITEM_TYPE, THERMOSTAT_ID } from '../../../config/globals';
+import { logger } from '../../../services/logger';
 import { writeThermostatLog } from '../../../services/pi';
 import { getDate } from '../../../services/utility';
 import { SseManager } from '../sse';
@@ -25,23 +26,36 @@ export function getThermostatById(id: string): Item | undefined {
 const historyCache = {} as Record<string, number[]>;
 export function setThermostat(candidate: Item): Item | void {
     if (candidate === undefined) {
-        console.error(new Error('candidate must be defined'));
+        logger.error(new Error('setThermostat: "candidate" must be defined'));
         return;
     }
 
     if (!candidate.chipId) {
-        console.error(new Error('candidate.chipId must be defined'));
+        logger.error(new Error('setThermostat: "chipId" must be defined'));
+        return;
+    }
+
+    if (typeof candidate.tempF !== 'number') {
+        logger.error(new Error('setThermostat: unexpected type for: "tempF"'));
         return;
     }
 
     const maxCacheLength = 60;
     const temp = Math.trunc(candidate.tempF);
-    let cache = historyCache[candidate.chipId] || [];
-    if (cache.length < maxCacheLength) cache.unshift(temp);
-    else cache = [temp, ...cache.slice(0, maxCacheLength - 1)];
+
+    // get 
+    let history = historyCache[candidate.chipId] || [];
+
+    // if history has max items, remove first item.
+    if (history.length >= maxCacheLength) {
+        history.shift();
+    }
+
+    // add last item
+    history.push(temp);
 
     const averageTemperature = Math.trunc(
-        cache.reduce((acc, curr) => acc + curr, 0) / cache.length
+        history.reduce((acc, curr) => acc + curr, 0) / history.length
     );
 
     const nextState: Item = {
@@ -50,9 +64,10 @@ export function setThermostat(candidate: Item): Item | void {
         updatedAt: getDate(),
         itemType: ITEM_TYPE.THERMOSTAT,
     };
-
+    
     thermostatStore.setState(nextState.chipId, nextState);
     onThermostatUpdate(nextState);
+    historyCache[candidate.chipId] = history;
 
     if (nextState.chipId === THERMOSTAT_ID.HOME) {
         writeThermostatLog(nextState);
