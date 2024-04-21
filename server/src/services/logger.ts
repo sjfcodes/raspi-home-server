@@ -7,8 +7,8 @@ import { env } from '../config/globals';
 export const logging = {
     includeData: true,
     includeMethods: [
-        // 'GET',
-        // 'POST',
+        'GET',
+        'POST',
         'PUT',
     ],
     includeSsePublish: !true,

@@ -12,7 +12,6 @@ import Snippet from '../Snippet/Snippet';
 import { thermostatMapAtom } from '../../store/thermostatMap.atom';
 import { HeaterPinVal, Remote as TRemote, Zone } from '../../../../types/main';
 import HeaterOverride from './HeaterOverride/HeaterOverride';
-import Block from '../Block';
 
 type Props = { zone: Zone };
 export default function Remote({ zone }: Props) {
@@ -27,7 +26,6 @@ export default function Remote({ zone }: Props) {
 
     return (
         <div className="remote">
-            <Block />
             <RemoteInfo
                 className="remote-card-full"
                 cover={
@@ -62,8 +60,6 @@ export default function Remote({ zone }: Props) {
                 warmer
             </RemoteControl>
             {zone.heaterId && <HeaterOverride remoteId={zone.remoteId} />}
-            <Block />
-            <Block />
         </div>
     );
 }

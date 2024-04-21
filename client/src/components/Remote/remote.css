@@ -1,16 +1,16 @@
 .remote {
-    aspect-ratio: 1 / 1;
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding: 1rem;
     gap: 1rem;
     color: #1a1a1a;
+    overflow: hidden;
+    border-radius: 1rem;
 }
 
 .remote-card-full {
-    width: calc(100% - 1rem);
+    width: 100%;
     /* aspect-ratio: 2 / 1; */
     aspect-ratio: 1 / 1;
     overflow-y: scroll;
@@ -18,12 +18,12 @@
 
 /* full width x half of width tall */
 .remote-card-full-x-half {
-    width: calc(100% - 1rem);
+    width: 100%;
     aspect-ratio: 2 / 1;
 }
 
 /* half width x quarter of width tall */
 .remote-card-half-x-quarter {
-    width: calc(50% - 1rem);
+    width: calc(50% - .5rem);
     aspect-ratio: 2 / 1;
 }
