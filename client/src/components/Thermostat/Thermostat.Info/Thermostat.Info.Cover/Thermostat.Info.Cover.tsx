@@ -1,32 +1,32 @@
-import { HeaterPinVal, Remote } from '../../../../../../types/main';
-import './remote.info.cover.css';
+import { HeaterPinVal, Thermostat } from '../../../../../../types/main';
+import './thermostat.info.cover.css';
 
-type RemoteCoverProp = {
+type ThermostatCoverProp = {
     tempF?: number;
-    remote?: Remote;
+    thermostat?: Thermostat;
     heaterPinVal?: HeaterPinVal;
 };
-export default function RemoteInfoCover({
+export default function ThermostatInfoCover({
     tempF,
-    remote,
+    thermostat,
     heaterPinVal,
-}: RemoteCoverProp) {
+}: ThermostatCoverProp) {
     let heaterStatus = 'offline';
     if (heaterPinVal === 0) heaterStatus = 'off';
     if (heaterPinVal === 1) heaterStatus = 'on';
 
     return (
-        <div className="remote-info-cover-wrapper">
-            <div className="item-card-full-x-half remote-info-cover">
+        <div className="thermostat-info-cover-wrapper">
+            <div className="item-card-full-x-half thermostat-info-cover">
                 <div className="text-xlarge">
                     <div>
-                        <b>{remote?.remoteId || '-'}</b>
+                        <b>{thermostat?.thermostatId || '-'}</b>
                     </div>
                     <b> is {tempF || '-'}°F</b>
                 </div>
                 <hr />
                 <div className="cover-details text-normal">
-                    <div>Target temperature is {remote?.max || '-'}°F</div>
+                    <div>Target temperature is {thermostat?.max || '-'}°F</div>
                     <div>and heater is {heaterStatus}.</div>
                 </div>
             </div>

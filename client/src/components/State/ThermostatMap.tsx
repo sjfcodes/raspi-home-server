@@ -1,17 +1,17 @@
 import { useAtom } from 'jotai';
 import OldCard from '../Old.Card';
 import Snippet from '../Snippet/Snippet';
-import { remoteMapAtom } from '../../store/remoteMap.atom';
+import { thermostatMapAtom } from '../../store/thermostatMap.atom';
 
-export default function RemoteMap() {
-    const [remoteState] = useAtom(remoteMapAtom);
+export default function ThermostatMap() {
+    const [thermostatState] = useAtom(thermostatMapAtom);
 
     return (
         <OldCard
-            label={`Remote State`}
+            label={`Thermostat State`}
             content={
                 <div style={{ width: '100%', overflow: 'scroll' }}>
-                    <Snippet text={JSON.stringify(remoteState, null, 2)} />
+                    <Snippet text={JSON.stringify(thermostatState, null, 2)} />
                 </div>
             }
         />

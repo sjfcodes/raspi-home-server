@@ -1,30 +1,30 @@
 /**
  * Zone consists of:
- *  1 remote
+ *  1 thermostat
  *  1 heater
  *  1 thermometer
  *
  *  Zone is responsible of turning heater off/on.
  */
 
-import { Remote, Thermometer, Zone } from '../../../../../types/main';
+import { Thermostat, Thermometer, Zone } from '../../../../../types/main';
 import {
     getHeaterById,
     setHeaterById,
     handleHeaterMessageOut,
 } from '../heater/store';
 import { getZoneById, getZones } from './store';
-import { getRemoteById, setRemoteById } from '../remote/store';
+import { getThermostatById, setThermostatById } from '../thermostat/store';
 import { getThermometerById } from '../thermometer/store';
 import { logger, logging } from '../../../services/logger';
 import { HEATER_OVERRIDE_STATUS } from '../../../../../constant/constant';
 import { getDate } from '../../../services/utility';
 
-const debug = logging.debug.remote.compareZoneRemoteAndThermometer;
+const debug = logging.debug.thermostat.compareZoneThermostatAndThermometer;
 
 export const errorMessage = {
     missingHeater: 'MISSING HEATER',
-    missingRemote: 'MISSING REMOTE',
+    missingThermostat: 'MISSING THERMOSTAT',
     missingThermometer: 'MISSING THERMOSTAT',
     missingZone: 'MISSING ZONE',
     missingZones: 'MISSING ZONES',
@@ -36,11 +36,11 @@ export const statusMessage = {
     noUpdate: 'NO UPDATE',
 };
 
-export function onRemoteUpdate(zoneId: string) {
+export function onThermostatUpdate(zoneId: string) {
     const zone = getZoneById(zoneId);
     if (!zone) return;
 
-    compareZoneRemoteAndThermometer(zone);
+    compareZoneThermostatAndThermometer(zone);
 }
 
 export function onThermometerUpdate(thermometer: Thermometer) {
@@ -59,13 +59,13 @@ export function onThermometerUpdate(thermometer: Thermometer) {
         return;
     }
 
-    compareZoneRemoteAndThermometer(zone);
+    compareZoneThermostatAndThermometer(zone);
 }
 
-function compareZoneRemoteAndThermometer(zone: Zone) {
-    const remote = getRemoteById(zone.remoteId);
-    if (!remote) {
-        debug && logger.debug(errorMessage.missingRemote);
+function compareZoneThermostatAndThermometer(zone: Zone) {
+    const thermostat = getThermostatById(zone.thermostatId);
+    if (!thermostat) {
+        debug && logger.debug(errorMessage.missingThermostat);
         return;
     }
 
@@ -82,9 +82,9 @@ function compareZoneRemoteAndThermometer(zone: Zone) {
     }
 
     const heaterIsOn = heater.heaterPinVal === 1;
-    const heaterOverrideStatus = checkRemoteHeaterOverrideStatus(remote);
-    const temperatureAboveMax = thermometer.tempF > remote.max;
-    const temperatureBelowMin = thermometer.tempF < remote.min;
+    const heaterOverrideStatus = checkThermostatHeaterOverrideStatus(thermostat);
+    const temperatureAboveMax = thermometer.tempF > thermostat.max;
+    const temperatureBelowMin = thermometer.tempF < thermostat.min;
 
     // Check for active overrides
     if (heaterOverrideStatus === HEATER_OVERRIDE_STATUS.FORCE_OFF) {
@@ -125,23 +125,23 @@ function turnHeaterOnById(heaterId: string) {
     handleHeaterMessageOut(heaterPinVal);
 }
 
-function checkRemoteHeaterOverrideStatus(remote: Remote) {
+function checkThermostatHeaterOverrideStatus(thermostat: Thermostat) {
     // If missing requirements, return
-    if (!remote?.heaterOverride?.status) return;
+    if (!thermostat?.heaterOverride?.status) return;
 
     // If heater has expired override, delete override;
-    if (remote.heaterOverride.expireAt < getDate()) {
-        setRemoteById(remote.remoteId, { heaterOverride: undefined } as Remote);
+    if (thermostat.heaterOverride.expireAt < getDate()) {
+        setThermostatById(thermostat.thermostatId, { heaterOverride: undefined } as Thermostat);
         return;
     }
 
     // return override status
-    return remote.heaterOverride.status;
+    return thermostat.heaterOverride.status;
 }
 
 export const testExport = {
-    compareZoneRemoteAndThermometer,
+    compareZoneThermostatAndThermometer,
     turnHeaterOffById,
     turnHeaterOnById,
-    checkHeaterOverrideStatus: checkRemoteHeaterOverrideStatus,
+    checkHeaterOverrideStatus: checkThermostatHeaterOverrideStatus,
 };

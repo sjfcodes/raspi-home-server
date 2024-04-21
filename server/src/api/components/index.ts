@@ -2,14 +2,14 @@ import { Router } from 'express';
 import { registerThermometerRoutes } from './thermometer/router';
 import { registerItemRoutes } from './_template/router';
 import { registerHeaterRoutes } from './heater/router';
-import { registerRemoteRoutes } from './remote/router';
+import { registerThermostatRoutes } from './thermostat/router';
 import { registerZoneRoutes } from './zone/router';
 import { registerSystemRoutes } from './system/router';
 
 export function registerApiRoutes(router: Router, prefix: string = ''): void {
     registerItemRoutes(router, `${prefix}/item`);
     registerHeaterRoutes(router, `${prefix}/heater`);
-    registerRemoteRoutes(router, `${prefix}/remote`);
+    registerThermostatRoutes(router, `${prefix}/thermostat`);
     registerZoneRoutes(router, `${prefix}/zone`);
     registerSystemRoutes(router, `${prefix}/system`);
 

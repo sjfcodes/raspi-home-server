@@ -5,12 +5,12 @@ type Props = {
     children: ReactNode;
     onClick: (e: any) => void;
 };
-export default function RemoteCard({
+export default function ThermostatCard({
     className = '',
     onClick,
     children,
 }: Props) {
-    const classNames = ['remote-card', className];
+    const classNames = ['thermostat-card', className];
     return (
         <div className={classNames.join(' ')} onClick={onClick}>
             {children}

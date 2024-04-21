@@ -1,48 +1,48 @@
 import { useState } from 'react';
-import './remote.info.css';
-import RemoteCard from '../Remote.Card';
+import './thermostat.info.css';
+import ThermostatCard from '../Thermostat.Card';
 import { Zone } from '../../../../../types/main';
 import { useAtom } from 'jotai';
 import { thermometerMapAtom } from '../../../store/thermometerMap.atom';
-import { remoteMapAtom } from '../../../store/remoteMap.atom';
+import { thermostatMapAtom } from '../../../store/thermostatMap.atom';
 import { heaterMapAtom } from '../../../store/heaterMap.atom';
-import RemoteInfoCover from './Remote.Info.Cover/Remote.Info.Cover';
-import RemoteInfoDetails from './Remote.Info.Details/Remote.Info.Details';
+import ThermostatInfoCover from './Thermostat.Info.Cover/Thermostat.Info.Cover';
+import ThermostatInfoDetails from './Thermostat.Info.Details/Thermostat.Info.Details';
 
 type Props = { zone: Zone };
-export default function RemoteInfo({ zone }: Props) {
+export default function ThermostatInfo({ zone }: Props) {
     const [thermometerMap] = useAtom(thermometerMapAtom);
-    const [remoteMap] = useAtom(remoteMapAtom);
+    const [thermostatMap] = useAtom(thermostatMapAtom);
     const [heaterMap] = useAtom(heaterMapAtom);
 
     const [showCover, setShowCover] = useState(true);
 
     if (!zone) return null;
     const thermometer = thermometerMap?.[zone.thermometerId];
-    const remote = remoteMap?.[zone.remoteId];
+    const thermostat = thermostatMap?.[zone.thermostatId];
     const heater = heaterMap?.[zone.heaterId];
 
     return (
-        <RemoteCard
-            className="item-card-full remote-info"
+        <ThermostatCard
+            className="item-card-full thermostat-info"
             onClick={(e) => {
                 e.stopPropagation();
                 setShowCover((curr) => !curr);
             }}
         >
             {showCover ? (
-                <RemoteInfoCover
+                <ThermostatInfoCover
                     tempF={thermometer?.tempF}
-                    remote={remote}
+                    thermostat={thermostat}
                     heaterPinVal={heater?.heaterPinVal}
                 />
             ) : (
-                <RemoteInfoDetails
-                    remote={remote}
+                <ThermostatInfoDetails
+                    thermostat={thermostat}
                     thermometer={thermometer}
                     heater={heater}
                 />
             )}
-        </RemoteCard>
+        </ThermostatCard>
     );
 }

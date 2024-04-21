@@ -1,4 +1,4 @@
-.remote-info-cover-wrapper {
+.thermostat-info-cover-wrapper {
     width: 100%;
     height: 100%;
     
@@ -7,7 +7,7 @@
     justify-content: center;
 }
 
-.remote-info-cover {
+.thermostat-info-cover {
     text-align: center;
 
     hr {

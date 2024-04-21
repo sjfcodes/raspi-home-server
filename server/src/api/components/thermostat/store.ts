@@ -1,42 +1,42 @@
 import { HEATER_OVERRIDE_STATUS } from '../../../../../constant/constant';
-import { ITEM_TYPE, REMOTE_ID, ZONE_ID } from '../../../config/globals';
+import { ITEM_TYPE, THERMOSTAT_ID, ZONE_ID } from '../../../config/globals';
 import { logger } from '../../../services/logger';
 import { getDate } from '../../../services/utility';
 import { SseManager } from '../sse';
-import { onRemoteUpdate } from '../zone/actions';
+import { onThermostatUpdate } from '../zone/actions';
 import { Item, ItemMap } from './model';
 
-export const remoteStore = new SseManager({
+export const thermostatStore = new SseManager({
     [ZONE_ID.HOME]: {
-        remoteId: REMOTE_ID.HOME,
+        thermostatId: THERMOSTAT_ID.HOME,
         zoneId: ZONE_ID.HOME,
         unit: 'F',
         max: 66,
         min: 66,
         updatedAt: new Date().toISOString(),
-        itemType: ITEM_TYPE.REMOTE,
+        itemType: ITEM_TYPE.THERMOSTAT,
     },
     [ZONE_ID.OFFICE.toString()]: {
-        remoteId: REMOTE_ID.OFFICE,
+        thermostatId: THERMOSTAT_ID.OFFICE,
         zoneId: ZONE_ID.OFFICE,
         unit: 'F',
         max: 66,
         min: 66,
         updatedAt: new Date().toISOString(),
-        itemType: ITEM_TYPE.REMOTE,
+        itemType: ITEM_TYPE.THERMOSTAT,
     },
 } as ItemMap);
 
-export function getRemotes(): ItemMap {
-    return remoteStore.getState();
+export function getThermostats(): ItemMap {
+    return thermostatStore.getState();
 }
 
-export function getRemoteById(id: string): Item | undefined {
-    const items = getRemotes();
+export function getThermostatById(id: string): Item | undefined {
+    const items = getThermostats();
     return items[id];
 }
 
-export function setRemoteById(id: string, payload: Item): void {
+export function setThermostatById(id: string, payload: Item): void {
     if (!id) {
         logger.error('"id" must be defined');
         return;
@@ -46,25 +46,25 @@ export function setRemoteById(id: string, payload: Item): void {
         return;
     }
     if (payload?.min && typeof payload?.min !== 'number') {
-        logger.error(`remote.min must be type number.`);
+        logger.error(`thermostat.min must be type number.`);
         return;
     }
     if (payload?.max && typeof payload?.max !== 'number') {
-        logger.error(`remote.max must be type number.`);
+        logger.error(`thermostat.max must be type number.`);
         return;
     }
 
     if (payload.min && payload.max && payload.min > payload.max) {
-        logger.error(`remote.min & remote.max pair out of range.`);
+        logger.error(`thermostat.min & thermostat.max pair out of range.`);
         return;
     }
     if(payload.heaterOverride) {
         if (payload.heaterOverride.status && !Object.values(HEATER_OVERRIDE_STATUS).includes(payload.heaterOverride.status)) {
-            logger.error('remote.heaterOverride.status is invalid')
+            logger.error('thermostat.heaterOverride.status is invalid')
         }
     }
 
-    const prevState = remoteStore.getState()[id];
+    const prevState = thermostatStore.getState()[id];
     if (!prevState) {
         logger.error('"prevState" must be defined');
     }
@@ -76,8 +76,7 @@ export function setRemoteById(id: string, payload: Item): void {
             ...payload,
             updatedAt: getDate(),
         };
-        // payload.itemType = ITEM_TYPE.REMOTE;
-        remoteStore.setState(nextState.remoteId, nextState);
-        onRemoteUpdate(nextState.zoneId);
+        thermostatStore.setState(nextState.thermostatId, nextState);
+        onThermostatUpdate(nextState.zoneId);
     }
 }

@@ -1,13 +1,13 @@
-.remote-control {
+.thermostat-control {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.remote-control:hover {
+.thermostat-control:hover {
     cursor: pointer;
 }
 
-.remote-control-heater-override {
+.thermostat-control-heater-override {
     display: flex;
     gap: 1rem;
     flex-direction:column;
@@ -41,13 +41,13 @@
 
 }
 
-.remote-control-cooler {
+.thermostat-control-cooler {
     background-color: var(--color-cold-blue-00);
     border-top-right-radius: var(--border-radius-200);
     border-bottom-right-radius: var(--border-radius-200);
 }
 
-.remote-control-warmer {
+.thermostat-control-warmer {
     background-color: var(--color-hot-red-00);
     border-top-left-radius: var(--border-radius-200);
     border-bottom-left-radius: var(--border-radius-200);

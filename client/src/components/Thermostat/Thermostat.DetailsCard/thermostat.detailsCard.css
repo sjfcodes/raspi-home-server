@@ -1,4 +1,4 @@
-.remote-details-card {
+.thermostat-details-card {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -7,7 +7,7 @@
     border-radius: var(--border-radius-200);
 }
 
-.remote-details-cover {
+.thermostat-details-cover {
     width: 100%;
     padding: 1rem;
     display: flex;

@@ -2,10 +2,10 @@ import { useAtom } from 'jotai';
 import { HEATER_OVERRIDE_STATUS } from '../../../../../constant/constant';
 import { HeaterOverrideStatus, Zone } from '../../../../../types/main';
 import {
-    remoteControlSetHeaterOverride,
-    remoteMapAtom,
-} from '../../../store/remoteMap.atom';
-import RemoteControl from '../Remote.Control';
+    thermostatControlSetHeaterOverride,
+    thermostatMapAtom,
+} from '../../../store/thermostatMap.atom';
+import ThermostatControl from '../Thermostat.Control';
 import { ChangeEventHandler, useEffect, useState } from 'react';
 import { formatDate } from '../../../utils/date';
 
@@ -15,33 +15,33 @@ const options = [15, 30, 45, 60, .1]
 const { FORCE_OFF, FORCE_ON } = HEATER_OVERRIDE_STATUS;
 type Props = { zone: Zone };
 export default function HeaterOverride({ zone }: Props) {
-    const remoteId = zone.remoteId;
+    const thermostatId = zone.thermostatId;
     const heaterId = zone.heaterId;
 
-    const [remoteMap] = useAtom(remoteMapAtom);
-    const remote = remoteMap[remoteId];
+    const [thermostatMap] = useAtom(thermostatMapAtom);
+    const thermostat = thermostatMap[thermostatId];
     const [selectedStatus, setSelectedStatus] = useState(off);
     const [expireInMinutes, setExpireInMinutes] = useState(options[0]);
 
     useEffect(() => {
-        if (!remote) return;
-        const status = remote.heaterOverride?.status;
+        if (!thermostat) return;
+        const status = thermostat.heaterOverride?.status;
         if (status === FORCE_OFF) setSelectedStatus(off);
         if (status === FORCE_ON) setSelectedStatus(on);
-    }, [remote?.heaterOverride?.status]);
+    }, [thermostat?.heaterOverride?.status]);
 
-    if (!heaterId || !remote) return null;
+    if (!heaterId || !thermostat) return null;
 
     function setHeaterOverride() {
         const expireAtMilliseconds = Date.now() + expireInMinutes * 60 * 1000;
         const expireAt = new Date(expireAtMilliseconds).toISOString();
         const status = selectedStatus === off ? FORCE_OFF : FORCE_ON;
         const heaterOverride: HeaterOverrideStatus = { expireAt, status };
-        remoteControlSetHeaterOverride(remoteId, heaterOverride);
+        thermostatControlSetHeaterOverride(thermostatId, heaterOverride);
     }
 
     function clearHeaterOverride() {
-        remoteControlSetHeaterOverride(remoteId, {} as HeaterOverrideStatus);
+        thermostatControlSetHeaterOverride(thermostatId, {} as HeaterOverrideStatus);
     }
 
     const onSelectStatus: ChangeEventHandler<HTMLSelectElement> = (e) => {
@@ -74,12 +74,12 @@ export default function HeaterOverride({ zone }: Props) {
         </>
     );
 
-    const whenActive = remote.heaterOverride?.expireAt ? (
+    const whenActive = thermostat.heaterOverride?.expireAt ? (
         <>
             <div>
                 Heater {selectedStatus} until{' '}
-                {formatDate(remote.heaterOverride?.expireAt as string)}{' '}
-                (<DateCountDown endAtDate={remote.heaterOverride.expireAt} />)
+                {formatDate(thermostat.heaterOverride?.expireAt as string)}{' '}
+                (<DateCountDown endAtDate={thermostat.heaterOverride.expireAt} />)
             </div>
             <button id="set-override" onClick={clearHeaterOverride}>
                 stop
@@ -88,9 +88,9 @@ export default function HeaterOverride({ zone }: Props) {
     ) : null;
 
     return (
-        <RemoteControl className="remote-control-heater-override item-card-full-x-third text-normal">
-            {remote.heaterOverride?.expireAt ? whenActive : whenCleared}
-        </RemoteControl>
+        <ThermostatControl className="thermostat-control-heater-override item-card-full-x-third text-normal">
+            {thermostat.heaterOverride?.expireAt ? whenActive : whenCleared}
+        </ThermostatControl>
     );
 }
 

@@ -1,11 +1,11 @@
-import { HEATER_ID, ITEM_TYPE, REMOTE_ID, THERMOMETER_ID, ZONE_ID } from '../../../config/globals';
+import { HEATER_ID, ITEM_TYPE, THERMOSTAT_ID, THERMOMETER_ID, ZONE_ID } from '../../../config/globals';
 import { SseManager } from '../sse';
 import { Item, ItemMap } from './model';
 
 export const zoneStore: SseManager<Item> = new SseManager({
     [ZONE_ID.HOME]: {
         zoneId: ZONE_ID.HOME,
-        remoteId: REMOTE_ID.HOME,
+        thermostatId: THERMOSTAT_ID.HOME,
         heaterId: HEATER_ID.HOME,
         thermometerId: THERMOMETER_ID.HOME,
         zoneName: 'home',
@@ -14,7 +14,7 @@ export const zoneStore: SseManager<Item> = new SseManager({
     },
     [ZONE_ID.OFFICE]: {
         zoneId: ZONE_ID.OFFICE,
-        remoteId: REMOTE_ID.OFFICE,
+        thermostatId: THERMOSTAT_ID.OFFICE,
         heaterId: '',
         thermometerId: THERMOMETER_ID.OFFICE,
         zoneName: 'office',

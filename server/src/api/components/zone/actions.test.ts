@@ -32,16 +32,16 @@ jest.mock('winston', () => ({
 import * as winston from 'winston';
 import { logger } from '../../../services/logger';
 import { errorMessage, testExport } from './actions';
-import { Heater, Remote, Thermometer, Zone } from '../../../../../types/main';
+import { Heater, Thermostat, Thermometer, Zone } from '../../../../../types/main';
 import {
     HEATER_ID,
     ITEM_TYPE,
-    REMOTE_ID,
+    THERMOSTAT_ID,
     THERMOMETER_ID,
     ZONE_ID,
 } from '../../../config/globals';
 import { thermometerStore } from '../thermometer/store';
-import { remoteStore } from '../remote/store';
+import { thermostatStore } from '../thermostat/store';
 import { heaterStore } from '../heater/store';
 import { HEATER_OVERRIDE_STATUS } from '../../../../../constant/constant';
 import { zoneStore } from './store';
@@ -49,7 +49,7 @@ import { zoneStore } from './store';
 beforeAll(() => {
     zoneStore.setPath('/zone');
     heaterStore.setPath('/heater');
-    remoteStore.setPath('/remote');
+    thermostatStore.setPath('/thermostat');
     thermometerStore.setPath('/thermometer');
 });
 
@@ -71,16 +71,16 @@ afterEach(() => {
 //     });
 // });
 
-describe('checkRemoteHeaterOverrideStatus', () => {
-    it.skip('logs and return if no remote found', () => {
-        testExport.compareZoneRemoteAndThermometer({} as Zone);
+describe('checkThermostatHeaterOverrideStatus', () => {
+    it.skip('logs and return if no thermostat found', () => {
+        testExport.compareZoneThermostatAndThermometer({} as Zone);
         expect(logger.debug).toHaveBeenCalledTimes(1);
-        expect(logger.debug).toHaveBeenCalledWith(errorMessage.missingRemote);
+        expect(logger.debug).toHaveBeenCalledWith(errorMessage.missingThermostat);
     });
 
     it.skip('logs and return if no thermometer found', () => {
-        testExport.compareZoneRemoteAndThermometer({
-            remoteId: REMOTE_ID.HOME,
+        testExport.compareZoneThermostatAndThermometer({
+            thermostatId: THERMOSTAT_ID.HOME,
         } as Zone);
         expect(logger.debug).toHaveBeenCalledTimes(1);
         expect(logger.debug).toHaveBeenCalledWith(
@@ -93,17 +93,17 @@ describe('checkRemoteHeaterOverrideStatus', () => {
             chipId: THERMOMETER_ID.HOME,
         } as Thermometer;
         thermometerStore.setState(THERMOMETER_ID.HOME, thermometer);
-        testExport.compareZoneRemoteAndThermometer({
-            remoteId: REMOTE_ID.HOME,
+        testExport.compareZoneThermostatAndThermometer({
+            thermostatId: THERMOSTAT_ID.HOME,
             thermometerId: THERMOMETER_ID.HOME,
         } as Zone);
         expect(logger.debug).toHaveBeenCalledTimes(1);
         expect(logger.debug).toHaveBeenCalledWith(errorMessage.missingHeater);
     });
 
-    it('turns heater off when thermometer temp greater then remote max', () => {
+    it('turns heater off when thermometer temp greater then thermostat max', () => {
         // Arrange
-        remoteStore.setState(REMOTE_ID.HOME, { max: 66 } as Remote);
+        thermostatStore.setState(THERMOSTAT_ID.HOME, { max: 66 } as Thermostat);
         heaterStore.setState(HEATER_ID.HOME, {
             chipId: HEATER_ID.HOME,
             heaterPinVal: 1,
@@ -114,7 +114,7 @@ describe('checkRemoteHeaterOverrideStatus', () => {
 
         const zone: Zone = {
             zoneId: ZONE_ID.HOME,
-            remoteId: REMOTE_ID.HOME,
+            thermostatId: THERMOSTAT_ID.HOME,
             heaterId: HEATER_ID.HOME,
             thermometerId: THERMOMETER_ID.HOME,
             zoneName: 'home',
@@ -123,16 +123,16 @@ describe('checkRemoteHeaterOverrideStatus', () => {
         };
 
         // Act
-        testExport.compareZoneRemoteAndThermometer(zone);
+        testExport.compareZoneThermostatAndThermometer(zone);
 
         // Assert
         const heater = heaterStore.getState()[HEATER_ID.HOME];
         expect(heater?.heaterPinVal).toEqual(0);
     });
 
-    it('turns heater on when remote min less than thermometer temp', () => {
+    it('turns heater on when thermostat min less than thermometer temp', () => {
         // Arrange
-        remoteStore.setState(REMOTE_ID.HOME, { min: 66 } as Remote);
+        thermostatStore.setState(THERMOSTAT_ID.HOME, { min: 66 } as Thermostat);
         heaterStore.setState(HEATER_ID.HOME, {
             chipId: HEATER_ID.HOME,
             heaterPinVal: 0,
@@ -143,13 +143,13 @@ describe('checkRemoteHeaterOverrideStatus', () => {
 
         const zone = {
             zoneId: ZONE_ID.HOME,
-            remoteId: REMOTE_ID.HOME,
+            thermostatId: THERMOSTAT_ID.HOME,
             heaterId: HEATER_ID.HOME,
             thermometerId: THERMOMETER_ID.HOME,
         } as Zone;
 
         // Act
-        testExport.compareZoneRemoteAndThermometer(zone);
+        testExport.compareZoneThermostatAndThermometer(zone);
 
         // Assert
         const heater = heaterStore.getState()[HEATER_ID.HOME];
@@ -160,7 +160,7 @@ describe('checkRemoteHeaterOverrideStatus', () => {
 describe('checkHeaterOverrideStatus', () => {
     it('returns undefined when no override set', () => {
         expect(
-            testExport.checkHeaterOverrideStatus({} as Remote)
+            testExport.checkHeaterOverrideStatus({} as Thermostat)
         ).toBeUndefined();
     });
 
@@ -169,18 +169,18 @@ describe('checkHeaterOverrideStatus', () => {
         // @ts-expect-error partial item
         zoneStore.setState(ZONE_ID.HOME, {
             heaterId: HEATER_ID.HOME,
-            remoteId: REMOTE_ID.HOME,
+            thermostatId: THERMOSTAT_ID.HOME,
         });
         // @ts-expect-error partial item
-        remoteStore.setState(REMOTE_ID.HOME, {
-            remoteId: HEATER_ID.HOME,
+        thermostatStore.setState(THERMOSTAT_ID.HOME, {
+            thermostatId: HEATER_ID.HOME,
             heaterOverride: {
                 expireAt,
                 status: HEATER_OVERRIDE_STATUS.FORCE_ON,
             },
         });
 
-        const beforeState = remoteStore.getState()[REMOTE_ID.HOME] as Remote;
+        const beforeState = thermostatStore.getState()[THERMOSTAT_ID.HOME] as Thermostat;
 
         expect(beforeState?.heaterOverride?.expireAt).toEqual(expireAt);
         expect(
@@ -193,17 +193,17 @@ describe('checkHeaterOverrideStatus', () => {
         // @ts-expect-error partial item
         zoneStore.setState(ZONE_ID.HOME, {
             heaterId: HEATER_ID.HOME,
-            remoteId: REMOTE_ID.HOME,
+            thermostatId: THERMOSTAT_ID.HOME,
         });
         // @ts-expect-error partial item
-        remoteStore.setState(REMOTE_ID.HOME, {
-            remoteId: HEATER_ID.HOME,
+        thermostatStore.setState(THERMOSTAT_ID.HOME, {
+            thermostatId: HEATER_ID.HOME,
             heaterOverride: {
                 expireAt,
                 status: HEATER_OVERRIDE_STATUS.FORCE_ON,
             },
         });
-        const beforeState = remoteStore.getState()[REMOTE_ID.HOME] as Remote;
+        const beforeState = thermostatStore.getState()[THERMOSTAT_ID.HOME] as Thermostat;
 
         expect(beforeState?.heaterOverride?.expireAt).toEqual(expireAt);
         expect(

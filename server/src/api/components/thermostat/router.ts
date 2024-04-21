@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import { readItems, writeItem } from './controller';
-import { remoteStore } from './store';
+import { thermostatStore } from './store';
 
-export function registerRemoteRoutes(router: Router, prefix: string) {
-    remoteStore.setPath(prefix);
+export function registerThermostatRoutes(router: Router, prefix: string) {
+    thermostatStore.setPath(prefix);
     // router.get(prefix + '/:id', readItem);
     router.get(prefix + '/', readItems);
     router.put(prefix + '/', writeItem);

@@ -1,6 +1,6 @@
 import { CSSProperties, ReactNode } from 'react';
-import RemoteCard from './Remote.Card';
-import './remote.control.css';
+import ThermostatCard from './Thermostat.Card';
+import './thermostat.control.css';
 
 type Props = {
     style?: CSSProperties;
@@ -8,15 +8,15 @@ type Props = {
     onClick?: () => void;
     className: string;
 };
-export default function RemoteControl({
+export default function ThermostatControl({
     className = '',
     children,
     onClick = () => null,
 }: Props) {
-    const classNames = ['remote-control', className];
+    const classNames = ['thermostat-control', className];
     return (
-        <RemoteCard className={classNames.join(' ')} onClick={onClick}>
+        <ThermostatCard className={classNames.join(' ')} onClick={onClick}>
             {children}
-        </RemoteCard>
+        </ThermostatCard>
     );
 }

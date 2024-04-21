@@ -50,8 +50,8 @@ import { app } from './api/server';
 
 /**
  * --- GLOSSARY ---
- * REMOTE    : manager of a zone's min/max temperature and any component overrides.
- * THERMOSTAT: reports of zone's temperature.
+ * THERMOSTAT    : manager of a zone's min/max temperature and any component overrides.
+ * THERMOMETER: reports of zone's temperature.
  * HEATER    : manager of a heater's on/off state.
  * ZONE      : group of one heater, termostat, & controller.
  *
@@ -70,15 +70,15 @@ import { app } from './api/server';
  *             GET  : read sse status stream
  *             PATCH: write heater state
  *
- * REMOTE
- *     PATH: /remote
+ * THERMOSTAT
+ *     PATH: /thermostat
  *     PUT : write min, max, override to store
  *     GET : read controllers
  *
- *     [TODO] PATH: /remote/:id
- *            GET : read one remote
+ *     [TODO] PATH: /thermostat/:id
+ *            GET : read one thermostat
  *
- * THERMOSTAT
+ * THERMOMETER
  *     PATH: /thermometer
  *     POST: write temperature to store
  *     GET : read thermometers

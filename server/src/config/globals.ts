@@ -12,7 +12,7 @@ export enum ZONE_ID {
     OFFICE = 'office',
 }
 
-export enum REMOTE_ID {
+export enum THERMOSTAT_ID {
     HOME = 'home',
     OFFICE = 'office',
 }
@@ -33,7 +33,7 @@ export enum WSS_CHANNEL {
 export enum ITEM_TYPE {
     HEATER = 'HEATER',
     THERMOMETER = 'THERMOMETER',
-    REMOTE = 'REMOTE',
+    THERMOSTAT = 'THERMOSTAT',
     ZONE = 'ZONE',
     SYSTEM_TEMPERATURE = 'SYSTEM_TEMPERATURE',
 }

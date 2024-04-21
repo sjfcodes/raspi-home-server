@@ -9,9 +9,9 @@ export const urls = {
         get: api + '/heater?subscribe=true',
         put: api + '/heater',
     },
-    remote: {
-        get: api + '/remote?subscribe=true',
-        put: api + '/remote',
+    thermostat: {
+        get: api + '/thermostat?subscribe=true',
+        put: api + '/thermostat',
     },
     system: {
         temperature: {

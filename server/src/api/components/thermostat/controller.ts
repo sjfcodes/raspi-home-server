@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { remoteStore, setRemoteById } from './store';
-import { Remote } from '../../../../../types/main';
+import { thermostatStore, setThermostatById } from './store';
+import { Thermostat } from '../../../../../types/main';
 
 export async function readItems(
     req: Request,
@@ -9,11 +9,11 @@ export async function readItems(
 ): Promise<Response | void> {
     try {
         if (req.query.subscribe === 'true') {
-            return remoteStore.subscribe(req, res);
+            return thermostatStore.subscribe(req, res);
         } else {
             return res.status(200).json({
                 message: 'success',
-                data: remoteStore.getState(),
+                data: thermostatStore.getState(),
             });
         }
     } catch (err) {
@@ -28,11 +28,11 @@ export async function readItem(
 ): Promise<Response | void> {
     try {
         if (req.query.subscribe === 'true') {
-            return remoteStore.subscribe(req, res);
+            return thermostatStore.subscribe(req, res);
         } else {
             return res.status(200).json({
                 message: 'success',
-                data: remoteStore.getState(),
+                data: thermostatStore.getState(),
             });
         }
     } catch (err) {
@@ -46,8 +46,8 @@ export async function writeItem(
     next: NextFunction
 ): Promise<Response | void> {
     try {
-        const remote = req.body as Remote;
-        setRemoteById(remote.remoteId, remote);
+        const thermostat = req.body as Thermostat;
+        setThermostatById(thermostat.thermostatId, thermostat);
 
         return res.status(200).json({
             message: 'success',

@@ -24,16 +24,16 @@ export type Thermometer = {
   itemType: ITEM_TYPE.THERMOMETER;
 };
 
-export type RemoteMap = Record<string, Remote | undefined>;
-export type Remote = {
-  remoteId: string;
+export type ThermostatMap = Record<string, Thermostat | undefined>;
+export type Thermostat = {
+  thermostatId: string;
   zoneId: string;
   unit: "F" | "C";
   max: number;
   min: number;
   heaterOverride?: HeaterOverrideStatus;
   updatedAt: string;
-  itemType: ITEM_TYPE.REMOTE;
+  itemType: ITEM_TYPE.THERMOSTAT;
 };
 
 export type SystemTemperatureMap = Record<string, SytemTemperature | undefined>;
@@ -54,7 +54,7 @@ export type ZoneMap = Record<string, Zone | undefined>;
 export type Zone = {
   zoneId: string;
   zoneName: string;
-  remoteId: string;
+  thermostatId: string;
   thermometerId: string;
   heaterId: string;
   isActive: boolean;

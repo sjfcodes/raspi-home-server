@@ -1,24 +1,24 @@
-import { Heater, Remote, Thermometer } from '../../../../../../types/main';
+import { Heater, Thermostat, Thermometer } from '../../../../../../types/main';
 import HeaterDetailsCard from '../../../Heater/Heater.DetailsCard/Heater.DetailsCard';
 import ThermometerDetailsCard from '../../../Thermometer/Thermometer.DetailsCard/Thermometer.DetailsCard';
-import RemoteDetailsCard from '../../Remote.DetailsCard/Remote.DetailsCard';
-import './remote.info.details.css';
+import ThermostatDetailsCard from '../../Thermostat.DetailsCard/Thermostat.DetailsCard';
+import './thermostat.info.details.css';
 
 type Props = {
-    remote: Remote | undefined;
+    thermostat: Thermostat | undefined;
     thermometer: Thermometer | undefined;
     heater: Heater | undefined;
 };
-export default function RemoteInfoDetails({
-    remote,
+export default function ThermostatInfoDetails({
+    thermostat,
     thermometer,
     heater,
 }: Props) {
     return (
-        <div className="remote-info-details">
+        <div className="thermostat-info-details">
             <ThermometerDetailsCard thermometer={thermometer} />
             <HeaterDetailsCard heater={heater} />
-            <RemoteDetailsCard remote={remote} />
+            <ThermostatDetailsCard thermostat={thermostat} />
         </div>
     );
 }
