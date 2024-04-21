@@ -1,4 +1,5 @@
 import { MouseEventHandler, useState } from 'react';
+import { GiComputerFan } from "react-icons/gi";
 import { Heater } from '../../../../../types/main';
 import Snippet from '../../Snippet/Snippet';
 import './heater.detailsCard.css';
@@ -17,7 +18,12 @@ export default function HeaterDetailsCard({ heater }: Props) {
     const content = showJson ? (
         <Snippet text={JSON.stringify({ heater }, null, 2)} />
     ) : (
-        'heater'
+        <div className="heater-details-cover text-medium">
+            <div className="icon text-xlarge" >
+            <GiComputerFan />
+            </div>
+            <div>heater</div>
+        </div>
     );
 
     return (

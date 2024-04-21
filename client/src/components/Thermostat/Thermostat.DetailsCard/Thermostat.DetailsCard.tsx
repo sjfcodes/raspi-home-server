@@ -1,5 +1,5 @@
 import { MouseEventHandler, useState } from 'react';
-import { FaArrowDownUpAcrossLine } from 'react-icons/fa6';
+import { RiTimer2Line } from "react-icons/ri";
 import { Thermostat } from '../../../../../types/main';
 import Snippet from '../../Snippet/Snippet';
 import './thermostat.detailsCard.css';
@@ -20,7 +20,7 @@ export default function ThermostatDetailsCard({ thermostat }: Props) {
     ) : (
         <div className="thermostat-details-cover text-medium">
             <div className="icon text-xlarge" >
-                <FaArrowDownUpAcrossLine />
+                <RiTimer2Line />
             </div>
             <div>thermostat</div>
         </div>

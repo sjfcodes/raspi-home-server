@@ -6,3 +6,15 @@
     overflow: scroll;
     border-radius: var(--border-radius-200);
 }
+
+.thermometer-details-cover {
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: 'flex-start';
+
+    .icon {
+        width: 3rem;
+    }
+}

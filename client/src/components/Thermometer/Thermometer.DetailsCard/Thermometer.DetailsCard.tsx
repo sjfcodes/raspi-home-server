@@ -1,4 +1,5 @@
 import { MouseEventHandler, useState } from 'react';
+import { TbTemperatureMinus } from "react-icons/tb";
 import { Thermometer } from '../../../../../types/main';
 import Snippet from '../../Snippet/Snippet';
 import './thermometer.detailsCard.css';
@@ -17,7 +18,12 @@ export default function ThermometerDetailsCard({ thermometer }: Props) {
     const content = showJson ? (
         <Snippet text={JSON.stringify({ thermometer }, null, 2)} />
     ) : (
-        'thermometer'
+        <div className="thermometer-details-cover text-medium">
+            <div className="icon text-xlarge" >
+            <TbTemperatureMinus />
+            </div>
+            <div>thermometer</div>
+        </div>
     );
 
     return (
