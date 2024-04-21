@@ -17,7 +17,7 @@ export default function RemoteInfoCover({
 
     return (
         <div className="remote-info-cover-wrapper">
-            <div className="remote-card-half-x-half remote-info-cover">
+            <div className="item-card-half-x-half remote-info-cover">
                 <div>
                     <b>{remote?.remoteId || '-'}</b>
                     <br />
@@ -26,7 +26,7 @@ export default function RemoteInfoCover({
                 <hr />
                 <div className="cover-details">
                     <div>heater is: {heaterStatus}</div>
-                    <div>target(℉): {remote?.max}</div>
+                    <div>target: {remote?.max || '-'}°F</div>
                 </div>
             </div>
         </div>

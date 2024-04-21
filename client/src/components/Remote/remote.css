@@ -8,39 +8,3 @@
     overflow: hidden;
     border-radius: 2rem;
 }
-
-.remote-card-full {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    overflow-y: scroll;
-}
-
-/* full width x half of width tall */
-.remote-card-full-x-half {
-    width: 100%;
-    aspect-ratio: 2 / 1;
-}
-
-/* half width x quarter of width tall */
-.remote-card-full-x-quarter {
-    width: 100%;
-    aspect-ratio: 4 / 1;
-}
-
-/* half width x quarter of width tall */
-.remote-card-full-x-third {
-    width: 100%;
-    aspect-ratio: 3 / 1;
-}
-
-/* half width x quarter of width tall */
-.remote-card-half-x-quarter {
-    width: calc(50% - 0.5rem);
-    aspect-ratio: 2 / 1;
-}
-
-/* half width x half of width tall */
-.remote-card-half-x-half {
-    width: calc(50% - 0.5rem);
-    aspect-ratio: 1 / 1;
-}

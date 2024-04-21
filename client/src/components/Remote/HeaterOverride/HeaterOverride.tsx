@@ -88,7 +88,7 @@ export default function HeaterOverride({ zone }: Props) {
     ) : null;
 
     return (
-        <RemoteControl className="remote-control-heater-override remote-card-full-x-third">
+        <RemoteControl className="remote-control-heater-override item-card-full-x-third">
             {remote.heaterOverride?.expireAt ? whenActive : whenCleared}
         </RemoteControl>
     );

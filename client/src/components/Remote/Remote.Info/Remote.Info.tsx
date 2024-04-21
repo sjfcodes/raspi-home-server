@@ -26,7 +26,7 @@ export default function RemoteInfo({ zone }: Props) {
 
     return (
         <RemoteCard
-            className="remote-info remote-card-full"
+            className="remote-info item-card-full"
             onClick={(e) => {
                 e.stopPropagation();
                 setShowCover((curr) => !curr);

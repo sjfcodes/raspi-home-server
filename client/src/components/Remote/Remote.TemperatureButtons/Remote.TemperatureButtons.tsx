@@ -12,15 +12,15 @@ export default function RemoteTemperatureButtons({ zone }: Props) {
     if (!heater) return null;
 
     return (
-        <div className="remote-card-full-x-quarter remote-temperature-buttons">
+        <div className="item-card-full-x-quarter remote-temperature-buttons">
             <RemoteControl
-                className="remote-control-cooler remote-card-half-x-quarter"
+                className="remote-control-cooler item-card-half-x-quarter"
                 onClick={() => remoteControlDown(zone.remoteId)}
             >
                 cooler
             </RemoteControl>
             <RemoteControl
-                className="remote-control-warmer remote-card-half-x-quarter"
+                className="remote-control-warmer item-card-half-x-quarter"
                 onClick={() => remoteControlUp(zone.remoteId)}
             >
                 warmer
