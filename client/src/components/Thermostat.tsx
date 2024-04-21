@@ -1,5 +1,5 @@
 import { Thermostat as _Thermostat } from '../../../types/main';
-import Card from './Card';
+import OldCard from './Old.Card';
 import Snippet from './Snippet/Snippet';
 
 export default function Thermostat({
@@ -13,7 +13,7 @@ export default function Thermostat({
     const copy = structuredClone(thermostat);
 
     return (
-        <Card
+        <OldCard
             label={`${copy.chipName}:  ${isNaN(curTemp) ? '-' : curTemp + '℉'}`}
             content={<Snippet text={JSON.stringify(copy, null, 2)} />}
         />

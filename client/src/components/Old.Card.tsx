@@ -1,6 +1,6 @@
 import { CSSProperties, useState } from "react";
 
-export default function Card({
+export default function OldCard({
   label,
   content,
   preview,

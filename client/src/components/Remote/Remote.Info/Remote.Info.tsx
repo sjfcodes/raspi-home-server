@@ -15,7 +15,7 @@ export default function RemoteInfo({ zone }: Props) {
     const [remoteMap] = useAtom(remoteMapAtom);
     const [heaterMap] = useAtom(heaterMapAtom);
 
-    const [showCover, setShowCover] = useState(!true);
+    const [showCover, setShowCover] = useState(true);
 
     if (!zone) return null;
     const thermostat = thermostatMap?.[zone.thermostatId];

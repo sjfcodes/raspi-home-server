@@ -1,4 +1,7 @@
 .remote-details-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: 1px solid orange; 
     overflow: scroll;
     border-radius: var(--border-radius-200);

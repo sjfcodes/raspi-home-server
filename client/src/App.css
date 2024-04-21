@@ -67,6 +67,10 @@
     aspect-ratio: 1 / 1;
 }
 
+.text-small {
+    font-size: .6rem;
+}
+
 @media only screen and (max-width: var(--app-max-width)) {
     #root {
         width: 100%;

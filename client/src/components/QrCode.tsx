@@ -1,9 +1,9 @@
 import QRCode from "react-qr-code";
-import Card from "./Card";
+import OldCard from "./Old.Card";
 
 export default function QrCode({ value }: { value: string }) {
   return (
-    <Card
+    <OldCard
       label="QR Code"
       content={
         // Can be anything instead of `maxWidth` that limits the width.

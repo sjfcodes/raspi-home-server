@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai';
-import Card from '../Card';
+import OldCard from '../Old.Card';
 import Snippet from '../Snippet/Snippet';
 import { systemTemperatureAtom } from '../../store/systemTemperature.atom';
 
@@ -14,7 +14,7 @@ export default function SystemTemperatureMap() {
     const json = JSON.stringify(piTemp, null, 2);
 
     return (
-        <Card
+        <OldCard
             label={`Pi Temp: ${pi.tempF ? pi.tempF + '℉' : '-'} (${
                 isNaN(percentage) ? '-' : Math.trunc(percentage) + '%'
             })`}

@@ -1,13 +1,13 @@
 import { useAtom } from 'jotai';
 import { thermostatMapAtom } from '../../store/thermostatMap.atom';
-import Card from '../Card';
+import OldCard from '../Old.Card';
 import Snippet from '../Snippet/Snippet';
 
 export default function ThermostatState() {
     const [state] = useAtom(thermostatMapAtom);
 
     return (
-        <Card
+        <OldCard
             label={`Thermostat State`}
             content={
                 <div style={{ width: '100%', overflow: 'scroll' }}>
