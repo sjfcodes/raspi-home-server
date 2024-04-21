@@ -1,16 +1,16 @@
-import { Thermostat as _Thermostat } from '../../../types/main';
+import { Thermometer as _Thermometer } from '../../../types/main';
 import OldCard from './Old.Card';
 import Snippet from './Snippet/Snippet';
 
-export default function Thermostat({
-    thermostat,
+export default function Thermometer({
+    thermometer,
 }: {
-    thermostat: _Thermostat;
+    thermometer: _Thermometer;
 }) {
-    if (!thermostat) return null;
+    if (!thermometer) return null;
 
-    const curTemp = thermostat?.tempF + thermostat?.calibrate;
-    const copy = structuredClone(thermostat);
+    const curTemp = thermometer?.tempF;
+    const copy = structuredClone(thermometer);
 
     return (
         <OldCard

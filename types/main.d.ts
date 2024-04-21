@@ -14,14 +14,14 @@ export type Heater = {
   itemType: ITEM_TYPE.HEATER;
 };
 
-export type ThermostatMap = Record<string, Thermostat | undefined>;
-export type Thermostat = {
+export type ThermometerMap = Record<string, Thermometer | undefined>;
+export type Thermometer = {
   zoneId: string;
   chipName: string;
   chipId: string;
   tempF: number;
   updatedAt: string;
-  itemType: ITEM_TYPE.THERMOSTAT;
+  itemType: ITEM_TYPE.THERMOMETER;
 };
 
 export type RemoteMap = Record<string, Remote | undefined>;
@@ -55,7 +55,7 @@ export type Zone = {
   zoneId: string;
   zoneName: string;
   remoteId: string;
-  thermostatId: string;
+  thermometerId: string;
   heaterId: string;
   isActive: boolean;
   itemType: ITEM_TYPE.ZONE;

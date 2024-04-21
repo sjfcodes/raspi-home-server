@@ -2,12 +2,12 @@
  * Zone consists of:
  *  1 remote
  *  1 heater
- *  1 thermostat
+ *  1 thermometer
  *
  *  Zone is responsible of turning heater off/on.
  */
 
-import { Remote, Thermostat, Zone } from '../../../../../types/main';
+import { Remote, Thermometer, Zone } from '../../../../../types/main';
 import {
     getHeaterById,
     setHeaterById,
@@ -15,17 +15,17 @@ import {
 } from '../heater/store';
 import { getZoneById, getZones } from './store';
 import { getRemoteById, setRemoteById } from '../remote/store';
-import { getThermostatById } from '../thermostat/store';
+import { getThermometerById } from '../thermometer/store';
 import { logger, logging } from '../../../services/logger';
 import { HEATER_OVERRIDE_STATUS } from '../../../../../constant/constant';
 import { getDate } from '../../../services/utility';
 
-const debug = logging.debug.remote.compareZoneRemoteAndThermostat;
+const debug = logging.debug.remote.compareZoneRemoteAndThermometer;
 
 export const errorMessage = {
     missingHeater: 'MISSING HEATER',
     missingRemote: 'MISSING REMOTE',
-    missingThermostat: 'MISSING THERMOSTAT',
+    missingThermometer: 'MISSING THERMOSTAT',
     missingZone: 'MISSING ZONE',
     missingZones: 'MISSING ZONES',
 };
@@ -40,38 +40,38 @@ export function onRemoteUpdate(zoneId: string) {
     const zone = getZoneById(zoneId);
     if (!zone) return;
 
-    compareZoneRemoteAndThermostat(zone);
+    compareZoneRemoteAndThermometer(zone);
 }
 
-export function onThermostatUpdate(thermostat: Thermostat) {
+export function onThermometerUpdate(thermometer: Thermometer) {
     const zones = getZones();
     if (!zones) {
         debug && logger.debug(errorMessage.missingZones);
         return;
     }
 
-    // thermostat belongs to one zone, get first match
+    // thermometer belongs to one zone, get first match
     const [zone] = Object.values(zones).filter(
-        (zone) => zone?.thermostatId === thermostat.chipId
+        (zone) => zone?.thermometerId === thermometer.chipId
     );
     if (!zone) {
         debug && logger.debug(errorMessage.missingZone);
         return;
     }
 
-    compareZoneRemoteAndThermostat(zone);
+    compareZoneRemoteAndThermometer(zone);
 }
 
-function compareZoneRemoteAndThermostat(zone: Zone) {
+function compareZoneRemoteAndThermometer(zone: Zone) {
     const remote = getRemoteById(zone.remoteId);
     if (!remote) {
         debug && logger.debug(errorMessage.missingRemote);
         return;
     }
 
-    const thermostat = getThermostatById(zone.thermostatId);
-    if (!thermostat) {
-        debug && logger.debug(errorMessage.missingThermostat);
+    const thermometer = getThermometerById(zone.thermometerId);
+    if (!thermometer) {
+        debug && logger.debug(errorMessage.missingThermometer);
         return;
     }
 
@@ -83,8 +83,8 @@ function compareZoneRemoteAndThermostat(zone: Zone) {
 
     const heaterIsOn = heater.heaterPinVal === 1;
     const heaterOverrideStatus = checkRemoteHeaterOverrideStatus(remote);
-    const temperatureAboveMax = thermostat.tempF > remote.max;
-    const temperatureBelowMin = thermostat.tempF < remote.min;
+    const temperatureAboveMax = thermometer.tempF > remote.max;
+    const temperatureBelowMin = thermometer.tempF < remote.min;
 
     // Check for active overrides
     if (heaterOverrideStatus === HEATER_OVERRIDE_STATUS.FORCE_OFF) {
@@ -140,7 +140,7 @@ function checkRemoteHeaterOverrideStatus(remote: Remote) {
 }
 
 export const testExport = {
-    compareZoneRemoteAndThermostat,
+    compareZoneRemoteAndThermometer,
     turnHeaterOffById,
     turnHeaterOnById,
     checkHeaterOverrideStatus: checkRemoteHeaterOverrideStatus,

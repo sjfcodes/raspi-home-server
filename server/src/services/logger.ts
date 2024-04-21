@@ -16,7 +16,7 @@ export const logging = {
     includeSseUnsubScribe: !true,
     debug: {
         remote: {
-            compareZoneRemoteAndThermostat: false,
+            compareZoneRemoteAndThermometer: false,
         }
     }
 };

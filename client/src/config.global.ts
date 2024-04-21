@@ -21,8 +21,8 @@ export const urls = {
             get: api + '/system/information',
         },
     },
-    thermostat: {
-        get: api + '/thermostat?subscribe=true',
+    thermometer: {
+        get: api + '/thermometer?subscribe=true',
     },
     zone: {
         get: api + '/zone',

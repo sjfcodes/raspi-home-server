@@ -1,14 +1,14 @@
 import { useAtom } from 'jotai';
-import { thermostatMapAtom } from '../../store/thermostatMap.atom';
+import { thermometerMapAtom } from '../../store/thermometerMap.atom';
 import OldCard from '../Old.Card';
 import Snippet from '../Snippet/Snippet';
 
-export default function ThermostatState() {
-    const [state] = useAtom(thermostatMapAtom);
+export default function ThermometerState() {
+    const [state] = useAtom(thermometerMapAtom);
 
     return (
         <OldCard
-            label={`Thermostat State`}
+            label={`Thermometer State`}
             content={
                 <div style={{ width: '100%', overflow: 'scroll' }}>
                     <Snippet text={JSON.stringify(state, null, 2)} />

@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { Heater, Thermostat } from '../../../types/main';
+import { Heater, Thermometer } from '../../../types/main';
 import { isTestEnv } from '../config/globals';
 
 enum LOG_LABEL {
@@ -19,12 +19,12 @@ function writeLog(label: LOG_LABEL, data: object) {
     fs.appendFileSync(logPath, '\n' + label + '::' + stringified, 'utf-8');
 }
 
-export function writeThermostatLog(thermostat: Thermostat) {
-    const cache = lastLogCache[thermostat.chipId] as unknown as Thermostat;
-    if (cache?.tempF === thermostat.tempF) return;
-    lastLogCache[thermostat.chipId] = thermostat;
+export function writeThermometerLog(thermometer: Thermometer) {
+    const cache = lastLogCache[thermometer.chipId] as unknown as Thermometer;
+    if (cache?.tempF === thermometer.tempF) return;
+    lastLogCache[thermometer.chipId] = thermometer;
 
-    writeLog(LOG_LABEL.THERMOSTAT, thermostat);
+    writeLog(LOG_LABEL.THERMOSTAT, thermometer);
 }
 
 export function writeHeaterLog(heater: Heater) {

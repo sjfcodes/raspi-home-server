@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { registerThermostatRoutes } from './thermostat/router';
+import { registerThermometerRoutes } from './thermometer/router';
 import { registerItemRoutes } from './_template/router';
 import { registerHeaterRoutes } from './heater/router';
 import { registerRemoteRoutes } from './remote/router';
@@ -13,7 +13,7 @@ export function registerApiRoutes(router: Router, prefix: string = ''): void {
     registerZoneRoutes(router, `${prefix}/zone`);
     registerSystemRoutes(router, `${prefix}/system`);
 
-    // [TODO] update thermostats to use new route & PUT instead of POST
-    registerThermostatRoutes(router, `${prefix}/thermostat`);
-    registerThermostatRoutes(router, `/api/temperature`);
+    // [TODO] update thermometers to use new route & PUT instead of POST
+    registerThermometerRoutes(router, `${prefix}/thermometer`);
+    registerThermometerRoutes(router, `/api/temperature`);
 }

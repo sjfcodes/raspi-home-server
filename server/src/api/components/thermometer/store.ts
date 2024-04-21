@@ -1,42 +1,42 @@
-import { ITEM_TYPE, THERMOSTAT_ID } from '../../../config/globals';
+import { ITEM_TYPE, THERMOMETER_ID } from '../../../config/globals';
 import { logger } from '../../../services/logger';
-import { writeThermostatLog } from '../../../services/pi';
+import { writeThermometerLog } from '../../../services/pi';
 import { getDate } from '../../../services/utility';
 import { SseManager } from '../sse';
-import { onThermostatUpdate } from '../zone/actions';
+import { onThermometerUpdate } from '../zone/actions';
 import { Item, ItemMap } from './model';
 
-export const thermostatStore = new SseManager({} as ItemMap);
+export const thermometerStore = new SseManager({} as ItemMap);
 
-export function getThermostats(): ItemMap {
-    return thermostatStore.getState() as ItemMap;
+export function getThermometers(): ItemMap {
+    return thermometerStore.getState() as ItemMap;
 }
 
-export function getThermostatById(id: string): Item | undefined {
-    const items = getThermostats();
+export function getThermometerById(id: string): Item | undefined {
+    const items = getThermometers();
     return items[id];
 }
 
 /**
  * [NOTE]
- *      To slow thermostats form quick temperature swings,
+ *      To slow thermometers form quick temperature swings,
  *      track temperatures for last minute and calculate
  *      average to set as the current temperatuer.
  */
 const historyCache = {} as Record<string, number[]>;
-export function setThermostat(candidate: Item): Item | void {
+export function setThermometer(candidate: Item): Item | void {
     if (candidate === undefined) {
-        logger.error(new Error('setThermostat: "candidate" must be defined'));
+        logger.error(new Error('setThermometer: "candidate" must be defined'));
         return;
     }
 
     if (!candidate.chipId) {
-        logger.error(new Error('setThermostat: "chipId" must be defined'));
+        logger.error(new Error('setThermometer: "chipId" must be defined'));
         return;
     }
 
     if (typeof candidate.tempF !== 'number') {
-        logger.error(new Error('setThermostat: unexpected type for: "tempF"'));
+        logger.error(new Error('setThermometer: unexpected type for: "tempF"'));
         return;
     }
 
@@ -62,14 +62,14 @@ export function setThermostat(candidate: Item): Item | void {
         ...candidate,
         tempF: averageTemperature,
         updatedAt: getDate(),
-        itemType: ITEM_TYPE.THERMOSTAT,
+        itemType: ITEM_TYPE.THERMOMETER,
     };
     
-    thermostatStore.setState(nextState.chipId, nextState);
-    onThermostatUpdate(nextState);
+    thermometerStore.setState(nextState.chipId, nextState);
+    onThermometerUpdate(nextState);
     historyCache[candidate.chipId] = history;
 
-    if (nextState.chipId === THERMOSTAT_ID.HOME) {
-        writeThermostatLog(nextState);
+    if (nextState.chipId === THERMOMETER_ID.HOME) {
+        writeThermometerLog(nextState);
     }
 }

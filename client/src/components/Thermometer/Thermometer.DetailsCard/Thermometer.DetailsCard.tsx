@@ -1,13 +1,13 @@
 import { MouseEventHandler, useState } from 'react';
-import { Thermostat } from '../../../../../types/main';
+import { Thermometer } from '../../../../../types/main';
 import Snippet from '../../Snippet/Snippet';
-import './thermostat.detailsCard.css';
+import './thermometer.detailsCard.css';
 
-type Props = { thermostat: Thermostat | undefined };
-export default function ThermostatDetailsCard({ thermostat }: Props) {
+type Props = { thermometer: Thermometer | undefined };
+export default function ThermometerDetailsCard({ thermometer }: Props) {
     const [showJson, setShowJson] = useState(false);
 
-    if (!thermostat) return null;
+    if (!thermometer) return null;
 
     const onClick: MouseEventHandler<HTMLDivElement> = (e) => {
         e.stopPropagation();
@@ -15,14 +15,14 @@ export default function ThermostatDetailsCard({ thermostat }: Props) {
     };
 
     const content = showJson ? (
-        <Snippet text={JSON.stringify({ thermostat }, null, 2)} />
+        <Snippet text={JSON.stringify({ thermometer }, null, 2)} />
     ) : (
-        'thermostat'
+        'thermometer'
     );
 
     return (
         <div
-            className="item-card-full-x-quarter thermostat-details-card"
+            className="item-card-full-x-quarter thermometer-details-card"
             onClick={onClick}
         >
             {content}

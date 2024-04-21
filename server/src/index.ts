@@ -79,12 +79,12 @@ import { app } from './api/server';
  *            GET : read one remote
  *
  * THERMOSTAT
- *     PATH: /thermostat
+ *     PATH: /thermometer
  *     POST: write temperature to store
- *     GET : read thermostats
+ *     GET : read thermometers
  *
- *     [TODO] PATH: /thermostat/:id
- *            GET : read one thermostat
+ *     [TODO] PATH: /thermometer/:id
+ *            GET : read one thermometer
  *
  * ZONE
  *     PATH: /zone
