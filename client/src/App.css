@@ -1,13 +1,20 @@
-#root {
-    max-width: 1280px;
-    margin: 0 auto;
-    /* text-align: center; */
-    font-family: monospace;
-}
+
 
 *::-webkit-scrollbar {
     display: none;
 }
+
+.app {
+    width: 100vw;
+    max-width: var(--app-max-width);
+    
+    min-height: 100vh;
+  }
+  
+  footer {
+    min-height: 50px;
+    text-align: center;
+  }
 
 .logo {
     height: 3em;
@@ -19,52 +26,13 @@
 .logo:hover {
     filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
     filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-/* @keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(1) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-} */
-
-h1,
-h2 {
-    margin: 0;
-}
-
-.text-green {
-    color: green;
-}
-.text-red {
-    color: red;
-}
-.background-on {
-    color: white;
-    background-color: green;
-}
-.background-off {
-    color: white;
-    background-color: #1a1a1a;
-}
-
-textarea {
-    width: 400px;
-}
-
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: var(--app-max-width)) {
     #root {
-        /* background-color: lightblue; */
         width: 100%;
         margin: 0;
     }

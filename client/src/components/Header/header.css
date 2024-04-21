@@ -1,0 +1,16 @@
+header {
+    height: var(--app-header-height);
+    width: 100%;
+    max-width: var(--app-max-width);
+    position: fixed;
+    padding-inline: 1rem;
+
+    /* border: 1px solid orange; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    opacity: .95;
+    background-color: var(--bg-color-dark);
+    backdrop-filter: blur(100px);
+    z-index: 100;
+  }

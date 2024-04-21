@@ -1,17 +1,35 @@
 .remote {
     width: 100%;
+
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
-    color: #1a1a1a;
+    color: var(--bg-color-dark);
     overflow: hidden;
-    border-radius: 1rem;
+    border-radius: 2rem;
+
+    .remote-code-snippet {
+        height: 100%;
+        overflow: scroll;
+    }
+
+    .remote-card-cover {
+        text-align: center;
+
+        .cover-details {
+            font-size: 1rem;
+        }
+
+        hr {
+            border: .5rem solid var(--bg-color-dark);
+            border-radius: 2rem;
+        }
+    }
 }
 
 .remote-card-full {
     width: 100%;
-    /* aspect-ratio: 2 / 1; */
     aspect-ratio: 1 / 1;
     overflow-y: scroll;
 }
@@ -24,6 +42,6 @@
 
 /* half width x quarter of width tall */
 .remote-card-half-x-quarter {
-    width: calc(50% - .5rem);
+    width: calc(50% - 0.5rem);
     aspect-ratio: 2 / 1;
 }

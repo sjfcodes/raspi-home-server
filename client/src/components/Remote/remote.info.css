@@ -1,8 +1,10 @@
 .remote-info {
+    width: 100%;
+
     font-size: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: var(--color-info-purple-00);
-    position: relative;
+    overflow-y: scroll;
 }

@@ -19,7 +19,6 @@ export default function HeaterOverride({ remoteId }: Props) {
     const [selectedStatus, setSelectedStatus] = useState(off);
     const [expireInMinutes, setExpireInMinutes] = useState(10);
 
-
     useEffect(() => {
         if (!remote) return;
         const status = remote.heaterOverride?.status;
@@ -60,7 +59,7 @@ export default function HeaterOverride({ remoteId }: Props) {
                     <option value={on}>on</option>
                 </select>
                 for
-                <select onChange={onChangeExpireAt} value={expireInMinutes} >
+                <select onChange={onChangeExpireAt} value={expireInMinutes}>
                     <option value={15}>15</option>
                     <option value={30}>30</option>
                     <option value={45}>45</option>

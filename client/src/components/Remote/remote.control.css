@@ -21,24 +21,37 @@
         align-items: center;
     }
     select {
+        height: 1.9rem;
         width: 5rem;
         margin-inline: .3rem;
-        border-radius: var(--border-radius-25);
+        color: var(--bg-color-dark);
+        border: 1px solid var(--bg-color-dark);
+        border-radius: var(--border-radius-200);
         text-align: center;
         font-size: 1.25rem;
+        background-color: var(--color-info-green-00);
     }
     button[id="set-override"] {
         height: 3rem;
         width: 100%;
-        border-radius: var(--border-radius-25);
+        border-radius: var(--border-radius-200);
+        font-size: 1.25rem;
+        color: var(--bg-color-dark);
+        border: 1px solid var(--bg-color-dark);
+        background-color: var(--color-info-green-00);
+        border-radius: var(--border-radius-200);
     }
 
 }
 
 .remote-control-cooler {
     background-color: var(--color-cold-blue-00);
+    border-top-right-radius: var(--border-radius-200);
+    border-bottom-right-radius: var(--border-radius-200);
 }
 
 .remote-control-warmer {
     background-color: var(--color-hot-red-00);
+    border-top-left-radius: var(--border-radius-200);
+    border-bottom-left-radius: var(--border-radius-200);
 }

@@ -24,29 +24,8 @@ export default function Remote({ zone }: Props) {
     const heater = heaterMap?.[zone.heaterId];
     const remote = remoteMap?.[zone.remoteId];
 
-    return (
-        <div className="remote">
-            <RemoteInfo
-                className="remote-card-full"
-                cover={
-                    <RemoteCover
-                        tempF={thermostat?.tempF}
-                        remote={remote}
-                        heaterPinVal={heater?.heaterPinVal}
-                    />
-                }
-            >
-                <div style={{ position: 'absolute', top: '0px' }}>
-                    <Snippet
-                        text={JSON.stringify(
-                            { remote, thermostat, heater },
-                            null,
-                            2
-                        )}
-                    />
-                </div>
-            </RemoteInfo>
-
+    const controls = !!heater ? (
+        <>
             <RemoteControl
                 className="remote-control-cooler remote-card-half-x-quarter"
                 onClick={() => remoteControlDown(zone.remoteId)}
@@ -60,6 +39,32 @@ export default function Remote({ zone }: Props) {
                 warmer
             </RemoteControl>
             {zone.heaterId && <HeaterOverride remoteId={zone.remoteId} />}
+        </>
+    ) : null;
+
+    return (
+        <div className="remote">
+            <RemoteInfo
+                className="remote-card-full"
+                cover={
+                    <RemoteCover
+                        tempF={thermostat?.tempF}
+                        remote={remote}
+                        heaterPinVal={heater?.heaterPinVal}
+                    />
+                }
+            >
+                <div className="remote-code-snippet">
+                    <Snippet
+                        text={JSON.stringify(
+                            { remote, thermostat, heater },
+                            null,
+                            2
+                        )}
+                    />
+                </div>
+            </RemoteInfo>
+            {controls}
         </div>
     );
 }
@@ -75,21 +80,17 @@ function RemoteCover({ tempF, remote, heaterPinVal }: RemoteCoverProp) {
     if (heaterPinVal === 1) heaterStatus = 'on';
 
     return (
-        <div>
-            <div style={{ textAlign: 'center' }}>
-                <b>{tempF || '-'}℉</b>
+        <div className="remote-card-cover">
+            <div>
+                <b>{tempF || '-'}°F</b>
                 <br />
                 <b>{remote?.remoteId || '-'}</b>
             </div>
             <hr />
-            <ul style={{ fontSize: '1rem' }}>
-                <li>
-                    <div>heater is: {heaterStatus}</div>
-                </li>
-                <li>
-                    <div>target(℉): {remote?.max}</div>
-                </li>
-            </ul>
+            <div className="cover-details">
+            <div>heater is: {heaterStatus}</div>
+            <div>target(℉): {remote?.max}</div>
+            </div>
         </div>
     );
 }

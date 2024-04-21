@@ -1,19 +1,20 @@
 :root {
+    --app-max-width: 500px;
+    --app-header-height: 4rem;
     --color-info-purple-00: #b1a3d3;
     --color-info-green-00: #77ce8a;
     --color-cold-blue-00: #6bbcd1;
     --color-hot-red-00: #e23201;
+    --bg-color-dark: #242424;
     --bg-color-dark-purple: #1b142c;
-    --border-radius-25: 0.25rem;
+    --border-radius-200: 2rem;
 
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
 
-    color-scheme: light;
-    color: rgba(255, 255, 255, 0.87);
-    background-color: #242424;
-
+    color-scheme: dark;
+    
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -29,24 +30,22 @@ body {
     display: flex;
     width: 100vw;
     min-height: 100vh;
-}
+    background-color: var(--bg-color-dark);
 
-a {
-    font-weight: 500;
-    color: #646cff;
-    text-decoration: inherit;
-    &:hover {
-        color: #535bf2;
-    }
 }
 
 button, select {
     border: none;
 }
 
-@media (prefers-color-scheme: light) {
+#root {
+    max-width: 1280px;
+    margin: 0 auto;
+    font-family: monospace;
+}
+
+/* @media (prefers-color-scheme: light) {
     :root {
-        color: #213547;
         background-color: #ffffff;
     }
     a:hover {
@@ -55,4 +54,4 @@ button, select {
     button {
         background-color: #f9f9f9;
     }
-}
+} */
