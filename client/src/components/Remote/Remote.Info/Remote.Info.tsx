@@ -37,7 +37,11 @@ export default function RemoteInfo({ zone }: Props) {
                     heaterPinVal={heater?.heaterPinVal}
                 />
             ) : (
-                <RemoteInfoDetails remote={remote} thermostat={thermostat} />
+                <RemoteInfoDetails
+                    remote={remote}
+                    thermostat={thermostat}
+                    heater={heater}
+                />
             )}
         </RemoteCard>
     );
