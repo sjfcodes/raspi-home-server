@@ -1,97 +1,17 @@
-import { useAtom } from 'jotai';
-import {
-    remoteMapAtom,
-    remoteControlDown,
-    remoteControlUp,
-} from '../../store/remoteMap.atom';
-import { heaterMapAtom } from '../../store/heaterMap.atom';
-import RemoteControl from './Remote.Control';
-import RemoteInfo from './Remote.Info';
+import RemoteInfo from './Remote.Info/Remote.Info';
 import './remote.css';
-import Snippet from '../Snippet/Snippet';
-import { thermostatMapAtom } from '../../store/thermostatMap.atom';
-import { HeaterPinVal, Remote as TRemote, Zone } from '../../../../types/main';
+import { Zone } from '../../../../types/main';
 import HeaterOverride from './HeaterOverride/HeaterOverride';
+import RemoteTemperatureButtons from './Remote.TemperatureButtons/Remote.TemperatureButtons';
 
 type Props = { zone: Zone };
 export default function Remote({ zone }: Props) {
-    const [thermostatMap] = useAtom(thermostatMapAtom);
-    const [heaterMap] = useAtom(heaterMapAtom);
-    const [remoteMap] = useAtom(remoteMapAtom);
-
     if (!zone) return null;
-    const thermostat = thermostatMap?.[zone.thermostatId];
-    const heater = heaterMap?.[zone.heaterId];
-    const remote = remoteMap?.[zone.remoteId];
-
-    const controls = !!heater ? (
-        <>
-            <RemoteControl
-                className="remote-control-cooler remote-card-half-x-quarter"
-                onClick={() => remoteControlDown(zone.remoteId)}
-            >
-                cooler
-            </RemoteControl>
-            <RemoteControl
-                className="remote-control-warmer remote-card-half-x-quarter"
-                onClick={() => remoteControlUp(zone.remoteId)}
-            >
-                warmer
-            </RemoteControl>
-            
-            {zone.heaterId && <HeaterOverride remoteId={zone.remoteId} />}
-        </>
-    ) : null;
-
     return (
         <div className="remote">
-            <RemoteInfo
-                className="remote-card-full"
-                cover={
-                    <RemoteCover
-                        tempF={thermostat?.tempF}
-                        remote={remote}
-                        heaterPinVal={heater?.heaterPinVal}
-                    />
-                }
-            >
-                <div className="remote-code-snippet">
-                    <Snippet
-                        text={JSON.stringify(
-                            { remote, thermostat, heater },
-                            null,
-                            2
-                        )}
-                    />
-                </div>
-            </RemoteInfo>
-            {controls}
-        </div>
-    );
-}
-
-type RemoteCoverProp = {
-    tempF?: number;
-    remote?: TRemote;
-    heaterPinVal?: HeaterPinVal;
-};
-function RemoteCover({ tempF, remote, heaterPinVal }: RemoteCoverProp) {
-    let heaterStatus = 'offline';
-    if (heaterPinVal === 0) heaterStatus = 'off';
-    if (heaterPinVal === 1) heaterStatus = 'on';
-
-    return (
-        <div className="remote-card-cover">
-            <div>
-                <b>{tempF || '-'}°F</b>
-                <br />
-                <b>{remote?.remoteId || '-'}</b>
-            </div>
-            <hr />
-            <div className="cover-details">
-            <div>heater is: {heaterStatus}</div>
-            <div>target(℉): {remote?.max}</div>
-            </div>
+            <RemoteInfo zone={zone} />
+            <RemoteTemperatureButtons zone={zone} />
+            <HeaterOverride zone={zone} />
         </div>
     );
 }

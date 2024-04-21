@@ -1,6 +1,6 @@
 import { useAtom } from 'jotai';
 import { HEATER_OVERRIDE_STATUS } from '../../../../../constant/constant';
-import { HeaterOverrideStatus } from '../../../../../types/main';
+import { HeaterOverrideStatus, Zone } from '../../../../../types/main';
 import {
     remoteControlSetHeaterOverride,
     remoteMapAtom,
@@ -13,8 +13,11 @@ const off = 'off';
 const on = 'on';
 const options = [15, 30, 45, 60, .1]
 const { FORCE_OFF, FORCE_ON } = HEATER_OVERRIDE_STATUS;
-type Props = { remoteId: string };
-export default function HeaterOverride({ remoteId }: Props) {
+type Props = { zone: Zone };
+export default function HeaterOverride({ zone }: Props) {
+    const remoteId = zone.remoteId;
+    const heaterId = zone.heaterId;
+
     const [remoteMap] = useAtom(remoteMapAtom);
     const remote = remoteMap[remoteId];
     const [selectedStatus, setSelectedStatus] = useState(off);
@@ -27,7 +30,7 @@ export default function HeaterOverride({ remoteId }: Props) {
         if (status === FORCE_ON) setSelectedStatus(on);
     }, [remote?.heaterOverride?.status]);
 
-    if (!remote) return null;
+    if (!heaterId || !remote) return null;
 
     function setHeaterOverride() {
         const expireAtMilliseconds = Date.now() + expireInMinutes * 60 * 1000;
