@@ -41,8 +41,8 @@ const technologies = [
 ];
 
 export default function Header() {
-    const items = technologies.map((item) => (
-        <a href={item.href} target="_blank">
+    const items = technologies.map((item, idx) => (
+        <a key={idx} href={item.href} target="_blank">
             <img src={item.src} className="logo" alt={item.alt} />
         </a>
     ));

@@ -38,6 +38,7 @@ export default function Remote({ zone }: Props) {
             >
                 warmer
             </RemoteControl>
+            
             {zone.heaterId && <HeaterOverride remoteId={zone.remoteId} />}
         </>
     ) : null;

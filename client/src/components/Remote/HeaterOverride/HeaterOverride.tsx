@@ -11,13 +11,14 @@ import { formatDate } from '../../../utils/date';
 
 const off = 'off';
 const on = 'on';
+const options = [15, 30, 45, 60, .1]
 const { FORCE_OFF, FORCE_ON } = HEATER_OVERRIDE_STATUS;
 type Props = { remoteId: string };
 export default function HeaterOverride({ remoteId }: Props) {
     const [remoteMap] = useAtom(remoteMapAtom);
     const remote = remoteMap[remoteId];
     const [selectedStatus, setSelectedStatus] = useState(off);
-    const [expireInMinutes, setExpireInMinutes] = useState(10);
+    const [expireInMinutes, setExpireInMinutes] = useState(options[0]);
 
     useEffect(() => {
         if (!remote) return;
@@ -60,35 +61,60 @@ export default function HeaterOverride({ remoteId }: Props) {
                 </select>
                 for
                 <select onChange={onChangeExpireAt} value={expireInMinutes}>
-                    <option value={15}>15</option>
-                    <option value={30}>30</option>
-                    <option value={45}>45</option>
-                    <option value={60}>60</option>
-                    <option value={0.1}>.1</option>
+                    {options.map(option => <option key={option} value={option}>{option}</option>)}
                 </select>
                 minute{expireInMinutes > 1 ? 's' : ''}
             </div>
             <button id="set-override" onClick={setHeaterOverride}>
-                apply
+                start
             </button>
         </>
     );
 
-    const whenActive = (
+    const whenActive = remote.heaterOverride?.expireAt ? (
         <>
             <div>
-                Heater is {selectedStatus} until{' '}
-                {formatDate(remote.heaterOverride?.expireAt as string)}
+                Heater {selectedStatus} until{' '}
+                {formatDate(remote.heaterOverride?.expireAt as string)}{' '}
+                (<DateCountDown endAtDate={remote.heaterOverride.expireAt} />)
             </div>
             <button id="set-override" onClick={clearHeaterOverride}>
-                clear
+                stop
             </button>
         </>
-    );
+    ) : null;
 
     return (
-        <RemoteControl className="remote-control-heater-override remote-card-full-x-half">
+        <RemoteControl className="remote-control-heater-override remote-card-full-x-third">
             {remote.heaterOverride?.expireAt ? whenActive : whenCleared}
         </RemoteControl>
+    );
+}
+
+type _Props = { className?: string; endAtDate: string };
+function DateCountDown({ className = '', endAtDate }: _Props) {
+    const [endTimeMill, setEndTimeMill] = useState(
+        new Date(endAtDate).getTime() - Date.now() + 1000
+    );
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            if (endTimeMill <= 1000) {
+                clearTimeout(timeout);
+                return;
+            }
+            setEndTimeMill(new Date(endAtDate).getTime() - Date.now());
+        }, 900);
+
+        return () =>    clearTimeout(timeout);
+    }, [endTimeMill]);
+
+    const [,mm,last] = new Date(endTimeMill).toLocaleTimeString().split(':');
+    const [ss] = last.split(' ')
+
+    return (
+        <span className={className}>
+            {`${mm}:${ss}`}
+        </span>
     );
 }
