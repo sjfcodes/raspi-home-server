@@ -17,16 +17,17 @@ export default function RemoteInfoCover({
 
     return (
         <div className="remote-info-cover-wrapper">
-            <div className="item-card-half-x-half remote-info-cover">
-                <div>
-                    <b>{remote?.remoteId || '-'}</b>
-                    <br />
-                    <b>{tempF || '-'}°F</b>
+            <div className="item-card-full-x-half remote-info-cover">
+                <div className="text-xlarge">
+                    <div>
+                        <b>{remote?.remoteId || '-'}</b>
+                    </div>
+                    <b> is {tempF || '-'}°F</b>
                 </div>
                 <hr />
-                <div className="cover-details">
-                    <div>heater is: {heaterStatus}</div>
-                    <div>target: {remote?.max || '-'}°F</div>
+                <div className="cover-details text-normal">
+                    <div>Target temperature is {remote?.max || '-'}°F</div>
+                    <div>and heater is {heaterStatus}.</div>
                 </div>
             </div>
         </div>

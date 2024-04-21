@@ -2,7 +2,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
 }
 .remote-control:hover {
     cursor: pointer;
@@ -16,7 +15,6 @@
     align-items: center;
     padding: 0 1rem 1rem 1rem;
     background-color: var(--color-info-green-00);
-    font-size: 1rem;
     .configure-override {
         display: flex;
         align-items: center;
@@ -29,14 +27,12 @@
         border: 1px solid var(--bg-color-dark);
         border-radius: var(--border-radius-200);
         text-align: center;
-        font-size: 1.25rem;
         background-color: var(--color-info-green-00);
     }
     button[id="set-override"] {
         height: 3rem;
         width: 100%;
         border-radius: var(--border-radius-200);
-        font-size: 1.25rem;
         color: var(--bg-color-dark);
         border: 1px solid var(--bg-color-dark);
         background-color: var(--color-info-green-00);

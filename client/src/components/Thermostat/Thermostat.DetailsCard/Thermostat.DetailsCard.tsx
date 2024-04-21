@@ -15,14 +15,14 @@ export default function ThermostatDetailsCard({ thermostat }: Props) {
     };
 
     const content = showJson ? (
-        <Snippet className="text-small" text={JSON.stringify({ thermostat }, null, 2)} />
+        <Snippet text={JSON.stringify({ thermostat }, null, 2)} />
     ) : (
         'thermostat'
     );
 
     return (
         <div
-            className="item-card-half-x-half thermostat-details-card"
+            className="item-card-full-x-quarter thermostat-details-card"
             onClick={onClick}
         >
             {content}

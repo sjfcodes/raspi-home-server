@@ -1,4 +1,5 @@
 import { MouseEventHandler, useState } from 'react';
+import { FaArrowDownUpAcrossLine } from 'react-icons/fa6';
 import { Remote } from '../../../../../types/main';
 import Snippet from '../../Snippet/Snippet';
 import './remote.detailsCard.css';
@@ -15,14 +16,19 @@ export default function RemoteDetailsCard({ remote }: Props) {
     };
 
     const content = showJson ? (
-        <Snippet className="text-small" text={JSON.stringify({ remote }, null, 2)} />
+        <Snippet text={JSON.stringify({ remote }, null, 2)} />
     ) : (
-        'remote'
+        <div className="remote-details-cover text-medium">
+            <div className="icon text-xlarge" >
+                <FaArrowDownUpAcrossLine />
+            </div>
+            <div>remote</div>
+        </div>
     );
 
     return (
         <div
-            className="item-card-half-x-half remote-details-card"
+            className="item-card-full-x-quarter remote-details-card"
             onClick={onClick}
         >
             {content}

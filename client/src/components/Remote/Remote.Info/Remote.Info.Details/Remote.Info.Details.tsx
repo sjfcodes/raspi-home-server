@@ -16,9 +16,9 @@ export default function RemoteInfoDetails({
 }: Props) {
     return (
         <div className="remote-info-details">
-            <RemoteDetailsCard remote={remote} />
             <ThermostatDetailsCard thermostat={thermostat} />
             <HeaterDetailsCard heater={heater} />
+            <RemoteDetailsCard remote={remote} />
         </div>
     );
 }

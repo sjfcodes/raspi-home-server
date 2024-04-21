@@ -58,12 +58,12 @@ export default function HeaterOverride({ zone }: Props) {
         <>
             <div className="configure-override">
                 Turn
-                <select onChange={onSelectStatus} value={selectedStatus}>
+                <select className="text-medium" onChange={onSelectStatus} value={selectedStatus}>
                     <option value={off}>off</option>
                     <option value={on}>on</option>
                 </select>
                 for
-                <select onChange={onChangeExpireAt} value={expireInMinutes}>
+                <select className="text-medium" onChange={onChangeExpireAt} value={expireInMinutes}>
                     {options.map(option => <option key={option} value={option}>{option}</option>)}
                 </select>
                 minute{expireInMinutes > 1 ? 's' : ''}
@@ -88,7 +88,7 @@ export default function HeaterOverride({ zone }: Props) {
     ) : null;
 
     return (
-        <RemoteControl className="remote-control-heater-override item-card-full-x-third">
+        <RemoteControl className="remote-control-heater-override item-card-full-x-third text-normal">
             {remote.heaterOverride?.expireAt ? whenActive : whenCleared}
         </RemoteControl>
     );
