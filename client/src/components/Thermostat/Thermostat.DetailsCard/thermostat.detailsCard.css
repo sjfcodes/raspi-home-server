@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid orange; 
+    border: 1px solid var(--bg-color-dark); 
     overflow: scroll;
     border-radius: var(--border-radius-200);
 }

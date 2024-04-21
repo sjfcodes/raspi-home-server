@@ -1,5 +1,6 @@
 .remote-info {
     width: 100%;
+    padding: 1rem;
 
     background-color: var(--color-info-purple-00);
     overflow-y: scroll;
