@@ -6,18 +6,16 @@ import { useAtom } from 'jotai';
 import { thermostatMapAtom } from '../../../store/thermostatMap.atom';
 import { remoteMapAtom } from '../../../store/remoteMap.atom';
 import { heaterMapAtom } from '../../../store/heaterMap.atom';
-import RemoteDetailsCard from '../Remote.DetailsCard/Remote.DetailsCard';
-import RemoteInfoCover from './Remote.Info.Cover';
+import RemoteInfoCover from './Remote.Info.Cover/Remote.Info.Cover';
+import RemoteInfoDetails from './Remote.Info.Details/Remote.Info.Details';
 
-type Props = {
-    zone: Zone;
-};
+type Props = { zone: Zone };
 export default function RemoteInfo({ zone }: Props) {
     const [thermostatMap] = useAtom(thermostatMapAtom);
     const [remoteMap] = useAtom(remoteMapAtom);
     const [heaterMap] = useAtom(heaterMapAtom);
-    
-    const [showCover, setShowCover] = useState(true);
+
+    const [showCover, setShowCover] = useState(!true);
 
     if (!zone) return null;
     const thermostat = thermostatMap?.[zone.thermostatId];
@@ -26,7 +24,7 @@ export default function RemoteInfo({ zone }: Props) {
 
     return (
         <RemoteCard
-            className="remote-info item-card-full"
+            className="item-card-full remote-info"
             onClick={(e) => {
                 e.stopPropagation();
                 setShowCover((curr) => !curr);
@@ -39,9 +37,7 @@ export default function RemoteInfo({ zone }: Props) {
                     heaterPinVal={heater?.heaterPinVal}
                 />
             ) : (
-                <>
-                    <RemoteDetailsCard remote={remote} />
-                </>
+                <RemoteInfoDetails remote={remote} thermostat={thermostat} />
             )}
         </RemoteCard>
     );

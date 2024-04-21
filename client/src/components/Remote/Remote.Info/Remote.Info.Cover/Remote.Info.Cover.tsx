@@ -1,4 +1,4 @@
-import { HeaterPinVal, Remote } from '../../../../../types/main';
+import { HeaterPinVal, Remote } from '../../../../../../types/main';
 import './remote.info.cover.css';
 
 type RemoteCoverProp = {
