@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import './thermostat.info.css';
-import ThermostatCard from '../Thermostat.Card';
 import { Zone } from '../../../../../types/main';
 import { useAtom } from 'jotai';
 import { thermometerMapAtom } from '../../../store/thermometerMap.atom';
@@ -8,6 +6,7 @@ import { thermostatMapAtom } from '../../../store/thermostatMap.atom';
 import { heaterMapAtom } from '../../../store/heaterMap.atom';
 import ThermostatInfoCover from './Thermostat.Info.Cover/Thermostat.Info.Cover';
 import ThermostatInfoDetails from './Thermostat.Info.Details/Thermostat.Info.Details';
+import './thermostat.info.css';
 
 type Props = { zone: Zone };
 export default function ThermostatInfo({ zone }: Props) {

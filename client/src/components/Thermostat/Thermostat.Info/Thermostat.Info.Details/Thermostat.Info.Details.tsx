@@ -1,8 +1,4 @@
-import { TbTemperatureMinus } from 'react-icons/tb';
-import { GiComputerFan } from 'react-icons/gi';
-import { RiTimer2Line } from 'react-icons/ri';
 import { Heater, Thermostat, Thermometer } from '../../../../../../types/main';
-import ZoneComponentCard from '../../../ZoneComponentCard/ZoneComponentCard';
 import './thermostat.info.details.css';
 import ThermostatDetailsCard from '../../Thermostat.DetailsCard/Thermostat.DetailsCard';
 import ThermometerDetailsCard from '../../../Thermometer/Thermometer.DetailsCard/Thermometer.DetailsCard';
