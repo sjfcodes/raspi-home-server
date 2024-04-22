@@ -88,7 +88,7 @@ export default function HeaterOverride({ zone }: Props) {
     ) : null;
 
     return (
-        <ThermostatControl className="thermostat-control-heater-override item-card-full-x-third text-normal">
+        <ThermostatControl className="thermostat-control-heater-override item-card-100-x-33 text-normal">
             {thermostat.heaterOverride?.expireAt ? whenActive : whenCleared}
         </ThermostatControl>
     );

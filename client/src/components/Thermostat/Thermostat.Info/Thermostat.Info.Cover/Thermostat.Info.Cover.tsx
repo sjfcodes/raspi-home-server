@@ -17,7 +17,7 @@ export default function ThermostatInfoCover({
 
     return (
         <div className="thermostat-info-cover-wrapper">
-            <div className="item-card-full-x-half thermostat-info-cover">
+            <div className="item-card-100-x-50 thermostat-info-cover">
                 <div className="text-xlarge">
                     <div>
                         <b>{thermostat?.thermostatId || '-'}</b>

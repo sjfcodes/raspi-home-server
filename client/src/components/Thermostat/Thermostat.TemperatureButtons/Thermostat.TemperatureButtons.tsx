@@ -12,15 +12,15 @@ export default function ThermostatTemperatureButtons({ zone }: Props) {
     if (!heater) return null;
 
     return (
-        <div className="item-card-full-x-quarter thermostat-temperature-buttons">
+        <div className="item-card-100-x-25 thermostat-temperature-buttons">
             <ThermostatControl
-                className="thermostat-control-cooler item-card-half-x-quarter"
+                className="thermostat-control-cooler item-card-50-x-25"
                 onClick={() => thermostatControlDown(zone.thermostatId)}
             >
                 cooler
             </ThermostatControl>
             <ThermostatControl
-                className="thermostat-control-warmer item-card-half-x-quarter"
+                className="thermostat-control-warmer item-card-50-x-25"
                 onClick={() => thermostatControlUp(zone.thermostatId)}
             >
                 warmer

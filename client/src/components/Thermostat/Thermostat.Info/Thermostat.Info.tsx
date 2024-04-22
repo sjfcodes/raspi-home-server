@@ -24,7 +24,7 @@ export default function ThermostatInfo({ zone }: Props) {
 
     return (
         <ThermostatCard
-            className="item-card-full thermostat-info"
+            className="item-card-100-x-100 thermostat-info"
             onClick={(e) => {
                 e.stopPropagation();
                 setShowCover((curr) => !curr);

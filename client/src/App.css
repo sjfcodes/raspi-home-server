@@ -24,47 +24,50 @@
 }
 
 .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
+    filter: drop-shadow(0 0 2em #a2a6f9);
 }
 
-.logo.react:hover {
-    filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-.item-card-full {
+.item-card-100-x-100 {
     width: 100%;
     aspect-ratio: 1 / 1;
+    transition: var(--transition-all-05);
     overflow-y: scroll;
 }
 
-/* full width x half of width tall */
-.item-card-full-x-half {
+.item-card-100-x-75 {
+    width: 100%;
+    aspect-ratio: 1.5 / 1;
+    transition: var(--transition-all-05);
+}
+
+.item-card-100-x-50 {
     width: 100%;
     aspect-ratio: 2 / 1;
+    transition: var(--transition-all-05);
 }
 
-/* half width x quarter of width tall */
-.item-card-full-x-quarter {
-    width: 100%;
-    aspect-ratio: 4 / 1;
-}
-
-/* half width x quarter of width tall */
-.item-card-full-x-third {
+.item-card-100-x-33 {
     width: 100%;
     aspect-ratio: 3 / 1;
+    transition: var(--transition-all-05);
 }
 
-/* half width x quarter of width tall */
-.item-card-half-x-quarter {
+.item-card-100-x-25 {
+    width: 100%;
+    aspect-ratio: 4 / 1;
+    transition: var(--transition-all-05);
+}
+
+.item-card-50-x-25 {
     width: calc(50% - 0.5rem);
     aspect-ratio: 2 / 1;
+    transition: var(--transition-all-05);
 }
 
-/* half width x half of width tall */
-.item-card-half-x-half {
+.item-card-50-x-50 {
     width: calc(50% - 0.5rem);
     aspect-ratio: 1 / 1;
+    transition: var(--transition-all-05);
 }
 
 .text-small {

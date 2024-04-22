@@ -21,23 +21,23 @@ export default function ThermostatInfoDetails({
     return (
         <div className="thermostat-info-details">
             <ZoneComponentCard
-                initialCardSize='item-card-full-x-quarter'
-                toggledCardSize='item-card-full-x-half'
-                ShowOnClick={<ThermostatDetailsCard thermostat={thermostat} />}
+                initialCardSize='item-card-100-x-25'
+                toggledCardSize='item-card-100-x-100'
+                ShowOnToggle={<ThermostatDetailsCard thermostat={thermostat} />}
                 componentName="thermostat"
                 Icon={RiTimer2Line}
             />
             <ZoneComponentCard
-                initialCardSize='item-card-full-x-quarter'
-                toggledCardSize='item-card-full-x-half'
-                ShowOnClick={<ThermometerDetailsCard thermometer={thermometer} />}
+                initialCardSize='item-card-100-x-25'
+                toggledCardSize='item-card-100-x-100'
+                ShowOnToggle={<ThermometerDetailsCard thermometer={thermometer} />}
                 componentName="thermometer"
                 Icon={TbTemperatureMinus}
             />
             <ZoneComponentCard
-                initialCardSize='item-card-full-x-quarter'
-                toggledCardSize='item-card-full-x-half'
-                ShowOnClick={<HeaterDetailsCard heater={heater} />}
+                initialCardSize='item-card-100-x-25'
+                toggledCardSize='item-card-100-x-100'
+                ShowOnToggle={<HeaterDetailsCard heater={heater} />}
                 componentName="heater"
                 Icon={GiComputerFan}
             />

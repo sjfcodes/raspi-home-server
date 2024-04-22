@@ -8,6 +8,7 @@
     --bg-color-dark: #242424;
     --bg-color-dark-purple: #1b142c;
     --border-radius-200: 2rem;
+    --transition-all-05: all 0.5s ease-out;
 
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
@@ -23,6 +24,7 @@
 
 * {
     box-sizing: border-box;
+    margin: 0 0 0 0;
 }
 
 body {

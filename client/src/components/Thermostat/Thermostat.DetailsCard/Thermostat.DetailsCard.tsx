@@ -7,7 +7,7 @@ export default function ThermostatDetailsCard({ thermostat }: Props) {
     if (!thermostat) return null;
     return (
         <div className="thermostat-details-card">
-            <Snippet text={JSON.stringify({ thermostat }, null, 2)} />
+            <Snippet text={JSON.stringify(thermostat , null, 2)} />
         </div>
     );
 }
