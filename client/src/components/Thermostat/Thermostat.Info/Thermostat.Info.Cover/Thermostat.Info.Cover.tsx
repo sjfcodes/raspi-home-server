@@ -22,12 +22,12 @@ export default function ThermostatInfoCover({
                     <div>
                         <b>{thermostat?.thermostatId || '-'}</b>
                     </div>
-                    <b> is {tempF || '-'}°F</b>
+                    <b>{tempF || '-'}°F</b>
                 </div>
                 <hr />
                 <div className="cover-details text-normal">
-                    <div>Target temperature is {thermostat?.max || '-'}°F</div>
-                    <div>and heater is {heaterStatus}.</div>
+                    <div>Target is {thermostat?.max || '-'}°F</div>
+                    <div>Heat is {heaterStatus}</div>
                 </div>
             </div>
         </div>

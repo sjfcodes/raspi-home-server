@@ -20,27 +20,9 @@ export default function ThermostatInfoDetails({
 }: Props) {
     return (
         <div className="thermostat-info-details">
-            <ZoneComponentCard
-                initialCardSize='item-card-100-x-25'
-                toggledCardSize='item-card-100-x-100'
-                ShowOnToggle={<ThermostatDetailsCard thermostat={thermostat} />}
-                componentName="thermostat"
-                Icon={RiTimer2Line}
-            />
-            <ZoneComponentCard
-                initialCardSize='item-card-100-x-25'
-                toggledCardSize='item-card-100-x-100'
-                ShowOnToggle={<ThermometerDetailsCard thermometer={thermometer} />}
-                componentName="thermometer"
-                Icon={TbTemperatureMinus}
-            />
-            <ZoneComponentCard
-                initialCardSize='item-card-100-x-25'
-                toggledCardSize='item-card-100-x-100'
-                ShowOnToggle={<HeaterDetailsCard heater={heater} />}
-                componentName="heater"
-                Icon={GiComputerFan}
-            />
+            <ThermostatDetailsCard thermostat={thermostat} />
+            <ThermometerDetailsCard thermometer={thermometer} />
+            <HeaterDetailsCard heater={heater} />
         </div>
     );
 }

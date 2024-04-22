@@ -2,3 +2,15 @@
     display: flex;
     gap: 1rem;
 }
+
+.thermostat-control-cooler {
+    background-color: var(--color-cold-blue-00);
+    border-top-left-radius: var(--border-radius-200);
+    border-bottom-left-radius: var(--border-radius-200);
+}
+
+.thermostat-control-warmer {
+    background-color: var(--color-hot-red-00);
+    border-top-right-radius: var(--border-radius-200);
+    border-bottom-right-radius: var(--border-radius-200);
+}

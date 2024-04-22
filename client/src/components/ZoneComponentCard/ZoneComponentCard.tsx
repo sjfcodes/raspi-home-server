@@ -1,19 +1,16 @@
 import { MouseEventHandler, ReactNode, useState } from 'react';
 import './zone.component.card.css';
-import { IconType } from 'react-icons/lib';
 
 export default function ZoneComponentCard({
     initialCardSize,
     toggledCardSize,
     ShowOnToggle,
-    componentName,
-    Icon,
+    Header,
 }: {
     initialCardSize: string;
     toggledCardSize: string;
     ShowOnToggle: ReactNode;
-    componentName: string;
-    Icon: IconType;
+    Header: ReactNode;
 }) {
     const [toggled, setToggled] = useState(false);
 
@@ -29,12 +26,7 @@ export default function ZoneComponentCard({
             } zone-component-card`}
             onClick={onClick}
         >
-            <div className="zone-component-cover text-medium">
-                <div className="icon text-xlarge">
-                    <Icon />
-                </div>
-                <div>{componentName}</div>
-            </div>
+            <div className="zone-component-header text-medium">{Header}</div>
             {ShowOnToggle}
         </div>
     );

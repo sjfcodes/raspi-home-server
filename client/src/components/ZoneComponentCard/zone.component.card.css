@@ -4,12 +4,13 @@
 
     display: flex;
     flex-direction: column;
+    background-color: var(--color-info-purple-01);
     border: 1px solid var(--bg-color-dark);
-    overflow: scroll;
     border-radius: var(--border-radius-200);
+    overflow: scroll;
 }
 
-.zone-component-cover {
+.zone-component-header {
     width: 100%;
     padding: 1rem;
     padding-top: 1.4rem;

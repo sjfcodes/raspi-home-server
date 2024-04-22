@@ -1,5 +1,4 @@
 import { CSSProperties, ReactNode } from 'react';
-import ThermostatCard from './Thermostat.Card';
 import './thermostat.control.css';
 
 type Props = {
@@ -15,8 +14,8 @@ export default function ThermostatControl({
 }: Props) {
     const classNames = ['thermostat-control', className];
     return (
-        <ThermostatCard className={classNames.join(' ')} onClick={onClick}>
+        <div className={classNames.join(' ')} onClick={onClick}>
             {children}
-        </ThermostatCard>
+        </div>
     );
 }

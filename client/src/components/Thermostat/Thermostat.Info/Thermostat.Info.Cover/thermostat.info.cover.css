@@ -11,7 +11,8 @@
     text-align: center;
 
     hr {
-        border: 0.5rem solid var(--bg-color-dark);
+        border: 0.5rem solid var(--color-info-purple-01);
         border-radius: 2rem;
+        margin-block: 1rem;
     }
 }

@@ -10,7 +10,7 @@
 .thermostat-control-heater-override {
     display: flex;
     gap: 1rem;
-    flex-direction:column;
+    flex-direction: column;
     justify-content: flex-end;
     align-items: center;
     padding: 0 1rem 1rem 1rem;
@@ -22,14 +22,14 @@
     select {
         height: 1.9rem;
         width: 5rem;
-        margin-inline: .3rem;
+        margin-inline: 0.3rem;
         color: var(--bg-color-dark);
         border: 1px solid var(--bg-color-dark);
         border-radius: var(--border-radius-200);
         text-align: center;
         background-color: var(--color-info-green-00);
     }
-    button[id="set-override"] {
+    button[id='set-override'] {
         height: 3rem;
         width: 100%;
         border-radius: var(--border-radius-200);
@@ -38,17 +38,4 @@
         background-color: var(--color-info-green-00);
         border-radius: var(--border-radius-200);
     }
-
-}
-
-.thermostat-control-cooler {
-    background-color: var(--color-cold-blue-00);
-    border-top-right-radius: var(--border-radius-200);
-    border-bottom-right-radius: var(--border-radius-200);
-}
-
-.thermostat-control-warmer {
-    background-color: var(--color-hot-red-00);
-    border-top-left-radius: var(--border-radius-200);
-    border-bottom-left-radius: var(--border-radius-200);
 }

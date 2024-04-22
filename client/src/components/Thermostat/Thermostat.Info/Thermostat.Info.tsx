@@ -23,7 +23,7 @@ export default function ThermostatInfo({ zone }: Props) {
     const heater = heaterMap?.[zone.heaterId];
 
     return (
-        <ThermostatCard
+        <div
             className="item-card-100-x-100 thermostat-info"
             onClick={(e) => {
                 e.stopPropagation();
@@ -43,6 +43,6 @@ export default function ThermostatInfo({ zone }: Props) {
                     heater={heater}
                 />
             )}
-        </ThermostatCard>
+        </div>
     );
 }
