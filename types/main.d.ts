@@ -1,9 +1,8 @@
 import { HEATER_OVERRIDE_STATUS } from "../constant/constant";
 import { ITEM_TYPE } from "../server/src/config/globals";
 
-export type HeaterMap = Record<string, Heater | undefined>;
-
 export type HeaterPinVal = 1 | 0;
+export type HeaterMap = Record<string, Heater | undefined>;
 export type Heater = {
   zoneId: string;
   chipId: string;

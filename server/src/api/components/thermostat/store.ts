@@ -6,13 +6,16 @@ import { SseManager } from '../sse';
 import { onThermostatUpdate } from '../zone/actions';
 import { Item, ItemMap } from './model';
 
+const min = 75;
+const max = min;
+
 export const thermostatStore = new SseManager({
     [ZONE_ID.HOME]: {
         thermostatId: THERMOSTAT_ID.HOME,
         zoneId: ZONE_ID.HOME,
         unit: 'F',
-        max: 66,
-        min: 66,
+        max:max,
+        min:min,
         updatedAt: new Date().toISOString(),
         itemType: ITEM_TYPE.THERMOSTAT,
     },
@@ -20,8 +23,8 @@ export const thermostatStore = new SseManager({
         thermostatId: THERMOSTAT_ID.OFFICE,
         zoneId: ZONE_ID.OFFICE,
         unit: 'F',
-        max: 66,
-        min: 66,
+        max:max,
+        min:min,
         updatedAt: new Date().toISOString(),
         itemType: ITEM_TYPE.THERMOSTAT,
     },
