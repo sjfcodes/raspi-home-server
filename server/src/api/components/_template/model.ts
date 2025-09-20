@@ -1,4 +1,4 @@
-// inport references to data types
+// import references to data types
 type MyImportMap = Record<string, MyImport>;
 type MyImport = {
     id: string;

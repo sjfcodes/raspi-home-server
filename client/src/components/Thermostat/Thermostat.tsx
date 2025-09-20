@@ -1,8 +1,8 @@
 import ThermostatInfo from './Thermostat.Info/Thermostat.Info';
-import './thermostat.css';
 import { Zone } from '../../../../types/main';
 import HeaterOverride from './HeaterOverride/HeaterOverride';
 import ThermostatTemperatureButtons from './Thermostat.TemperatureButtons/Thermostat.TemperatureButtons';
+import './thermostat.css';
 
 type Props = { zone: Zone };
 export default function Thermostat({ zone }: Props) {

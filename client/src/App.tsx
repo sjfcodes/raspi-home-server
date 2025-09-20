@@ -18,7 +18,7 @@ export default function App() {
             <Block />
             <QrCode value={location.href} />
             <Block />
-            <footer> sjfcodes</footer>
+            <footer>http://192.168.68.142:5173/</footer>
         </div>
     );
 }
