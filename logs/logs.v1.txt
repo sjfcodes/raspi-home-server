@@ -35,3 +35,11 @@ THERMOSTAT::{"chipName":"esp32","chipId":"9efc8ad4","tempF":66,"updatedAt":"2024
   HEATER_1::{"chipId":"d0fc8ad4","zoneId":"home","heaterPinVal":1,"cabTempF":91,"cabHumidity":25,"updatedAt":"2024-04-20T11:22:54.041Z","itemType":"HEATER"}
 THERMOSTAT::{"chipName":"esp32","chipId":"9efc8ad4","tempF":65,"updatedAt":"2024-04-20T11:22:54.221Z","itemType":"THERMOSTAT"}
 THERMOSTAT::{"chipName":"esp32","chipId":"9efc8ad4","tempF":66,"updatedAt":"2024-04-20T11:26:39.185Z","itemType":"THERMOSTAT"}
+THERMOSTAT::{"chipName":"esp32","chipId":"9efc8ad4","tempF":67,"updatedAt":"2025-09-20T20:05:20.347Z","itemType":"THERMOMETER"}
+  HEATER_1::{"chipId":"d0fc8ad4","zoneId":"home","heaterPinVal":1,"cabTempF":100,"cabHumidity":30,"updatedAt":"2025-09-20T20:05:29.375Z","itemType":"HEATER"}
+THERMOSTAT::{"chipName":"esp32","chipId":"9efc8ad4","tempF":67,"updatedAt":"2025-09-20T20:09:19.503Z","itemType":"THERMOMETER"}
+  HEATER_1::{"chipId":"d0fc8ad4","zoneId":"home","heaterPinVal":1,"cabTempF":101,"cabHumidity":30,"updatedAt":"2025-09-20T20:09:23.073Z","itemType":"HEATER"}
+THERMOSTAT::{"chipName":"esp32","chipId":"9efc8ad4","tempF":67,"updatedAt":"2025-09-20T20:11:16.308Z","itemType":"THERMOMETER"}
+  HEATER_1::{"chipId":"d0fc8ad4","zoneId":"home","heaterPinVal":1,"cabTempF":102,"cabHumidity":29,"updatedAt":"2025-09-20T20:11:18.110Z","itemType":"HEATER"}
+THERMOSTAT::{"chipName":"esp32","chipId":"9efc8ad4","tempF":67,"updatedAt":"2025-09-20T20:15:21.956Z","itemType":"THERMOMETER"}
+  HEATER_1::{"chipId":"d0fc8ad4","zoneId":"home","heaterPinVal":1,"cabTempF":103,"cabHumidity":29,"updatedAt":"2025-09-20T20:15:23.133Z","itemType":"HEATER"}
