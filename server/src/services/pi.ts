@@ -16,7 +16,9 @@ function writeLog(label: LOG_LABEL, data: object) {
     if (isTestEnv || !data) return;
 
     const stringified = JSON.stringify(data);
-    fs.appendFileSync(logPath, '\n' + label + '::' + stringified, 'utf-8');
+
+    // disable write to file
+    // fs.appendFileSync(logPath, '\n' + label + '::' + stringified, 'utf-8');
 }
 
 export function writeThermometerLog(thermometer: Thermometer) {
