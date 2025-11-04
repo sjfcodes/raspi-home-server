@@ -83,8 +83,8 @@ function compareZoneThermostatAndThermometer(zone: Zone) {
 
     const heaterIsOn = heater.heaterPinVal === 1;
     const heaterOverrideStatus = checkThermostatHeaterOverrideStatus(thermostat);
-    const temperatureAboveMax = thermometer.tempF > thermostat.max;
-    const temperatureBelowMin = thermometer.tempF < thermostat.min;
+    const temperatureAboveMax = thermometer.tempF > thermostat.max + 1; // fewer on/off cycles
+    const temperatureBelowMin = thermometer.tempF < thermostat.min; 
 
     // Check for active overrides
     if (heaterOverrideStatus === HEATER_OVERRIDE_STATUS.FORCE_OFF) {
