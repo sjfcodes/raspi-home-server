@@ -2,7 +2,7 @@
  * @group ut
  */
 
-const loggerM = {
+const mockLogger = {
     debug: jest.fn(),
     log: jest.fn(console.log),
     info: jest.fn(console.info),
@@ -13,23 +13,23 @@ const loggerM = {
     },
 };
 
-// trying to mock createLogger to return a specific loggerM instance
-jest.mock('winston', () => ({
-    format: {
-        colorize: jest.fn(),
-        combine: jest.fn(),
-        label: jest.fn(),
-        simple: jest.fn(),
-        timestamp: jest.fn(),
-        printf: jest.fn(),
+jest.mock('../../../services/logger', () => ({
+    logger: mockLogger,
+    logging: {
+        debug: {
+            thermostat: {
+                compareZoneThermostatAndThermometer: true,
+            },
+        },
+        includeData: true,
+        includeMethods: ['GET', 'POST', 'PUT'],
+        includeSsePublish: false,
+        includeSseSubScribe: false,
+        includeSseUnsubScribe: false,
     },
-    createLogger: jest.fn().mockReturnValue(loggerM),
-    transports: {
-        Console: jest.fn(),
-    },
+    formatSseLog: jest.fn(),
 }));
 
-import * as winston from 'winston';
 import { logger } from '../../../services/logger';
 import { errorMessage, testExport } from './actions';
 import { Heater, Thermostat, Thermometer, Zone } from '../../../../../types/main';
@@ -72,13 +72,13 @@ afterEach(() => {
 // });
 
 describe('checkThermostatHeaterOverrideStatus', () => {
-    it.skip('logs and return if no thermostat found', () => {
+    it('logs and return if no thermostat found', () => {
         testExport.compareZoneThermostatAndThermometer({} as Zone);
         expect(logger.debug).toHaveBeenCalledTimes(1);
         expect(logger.debug).toHaveBeenCalledWith(errorMessage.missingThermostat);
     });
 
-    it.skip('logs and return if no thermometer found', () => {
+    it('logs and return if no thermometer found', () => {
         testExport.compareZoneThermostatAndThermometer({
             thermostatId: THERMOSTAT_ID.HOME,
         } as Zone);
@@ -88,7 +88,7 @@ describe('checkThermostatHeaterOverrideStatus', () => {
         );
     });
 
-    it.skip('log and return if no heater found', () => {
+    it('log and return if no heater found', () => {
         const thermometer = {
             chipId: THERMOMETER_ID.HOME,
         } as Thermometer;
@@ -109,7 +109,7 @@ describe('checkThermostatHeaterOverrideStatus', () => {
             heaterPinVal: 1,
         } as Heater);
         thermometerStore.setState(THERMOMETER_ID.HOME, {
-            tempF: 67,
+            tempF: 68,
         } as Thermometer);
 
         const zone: Zone = {
