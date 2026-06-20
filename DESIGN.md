@@ -135,7 +135,33 @@ on, pointed at heaters.
 - Mains-side work (breaker, wire gauge, contactor install) gets a **licensed electrician** — fire is the failure
   mode.
 
-## 9. Build order (proposed)
+## 9. Heat cell — physical construction
+
+The deployable unit ("heat cell") is a **2 ft section of 10 in metal ducting** (non-combustible structural shell)
+holding the S9 + fan, with components centered in the tube by **adapter plates**. Today those plates are hand-cut
+3/4 in plywood — the slowest step in the build. Plan: **3D-print them** as a repeatable part set.
+
+- **Print "centering spiders," not solid discs:** a hub that cradles the component (S9 aluminum housing, PSU
+  housing) + arms reaching to the tube wall. Less filament, faster print, *better* airflow, and it sidesteps the
+  bed-size problem.
+- **Size:** 10 in ≈ 254 mm exceeds most printer beds. Options: the spider geometry (small hub + arms), print in
+  **interlocking arc segments** that join into a ring, or a large-format printer.
+- **Material by thermal zone (safety-driven):**
+  - Intake / cool side → PETG or ASA.
+  - Hot / exhaust side, or any adapter contacting the hot S9 housing or PSU → **ASA or polycarbonate, ideally a
+    flame-retardant (UL94 V-0) grade. Never PLA** (sags ~60 °C, creeps under load near a kW heater).
+  - Plywood is combustible too, but plastic adds a melt/sag failure mode — use a heat-rated/FR grade so the swap is
+    a net safety *upgrade*. Account for **creep**: load-bearing/hot adapters need heat-tolerant material + generous
+    wall/infill (they hold a heavy S9 + PSU).
+- **Validate on node zero first:** run a printed adapter in the real hot tube for several days; inspect the hot-end
+  part for sag/creep/discoloration. Better — place a temp probe at each adapter position and **measure actual air +
+  contact temps**, turning the material choice from a guess into a spec.
+- **Integrate while printing** (what plywood couldn't): the temp-sensor mount + PZEM current-clamp, cable
+  pass-throughs, snap-fits, vibration-isolating standoffs, the QR claim-plate.
+- **Fleet payoff:** design the adapter set once → print N → every unit centers identically → consistent airflow,
+  thermals, control loop, and cost model across all homes.
+
+## 10. Build order (proposed)
 
 1. **Edge node done right** — ESP32 firmware: digital sensor, local thermostat + schedule, fail-safe, power
    metering, dial-out MQTT client. The safety-critical, reusable unit; everything plugs into it.
@@ -145,7 +171,7 @@ on, pointed at heaters.
 
 Node zero (the S19 home rig) is the proving ground for tiers 1–2 before any remote unit ships.
 
-## 10. Open decisions
+## 11. Open decisions
 - Where the control plane lives (home Pi w/ outbound tunnel · cheap VPS · the operator's existing AWS/platform).
 - Broker: self-hosted Mosquitto vs managed MQTT.
 - One controller per home (cheaper) vs per-zone (more independent).
